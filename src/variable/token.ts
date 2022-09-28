@@ -9,9 +9,10 @@ const getCookie = (name: string) => {
 };
 
 const rmToken = () => {
-  cookies.remove('LoginToken');
+  cookies.remove('accessToken');
+  cookies.remove('refreshToken');
 };
 
-export const LoginToken = getCookie('LoginToken');
-
+export const AccessToken = getCookie('accessToken');
+export const RefreshToken = getCookie('refreshToken');
 export { setCookie, getCookie, rmToken };
