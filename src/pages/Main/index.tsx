@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import QR from 'qrcode.react';
+import axios from 'axios';
+import { backUrl } from '../../variable/url';
 
 const Main = () => {
+  const [url, setUrl] = useState('');
+
+  const urlHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setUrl(e.target.value);
+  }, []);
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    axios.post(`${backUrl}/s3`, {
+      url
+    }).catch(() => window.alert('url에러'));
+  };
   return (
         <MainContainer>
-            <MainDiv>
-                <form>
-                    <Input name="url" placeholder="Shorten your link" />
-                    <Button type="submit">S3</Button>
-                </form>
-            </MainDiv>
+          <MainDiv>
+            <form onSubmit={onSubmit}>
+              <Input name="url" onChange={urlHandler} placeholder="Shorten your link" />
+              <Button id="postUrl" type="submit">S3</Button>
+            </form>
+          </MainDiv>
+            <ServeDiv>
                 <FirstDiv>
                     <Link className="slink">copy link</Link>
                 </FirstDiv>
@@ -72,6 +86,18 @@ const MainDiv = styled.div`
   text-align: center;
   background-color: black;
 `;
+const ServeDiv = styled.div`
+  display: inline-block;
+  font-weight: 400;
+  outline: none;
+  position: center;
+  background-color: white;
+  width:90%;
+  height:500px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  
+`;
 const Input = styled.input`
   display: inline-block;
   font-weight: 400;
@@ -107,8 +133,14 @@ const Link = styled.div`
   border:grey 0.1rem solid;
   opacity:0.7;
   outline: none;
-  width:95%;
-  margin:10px;
+`;
+const Link = styled.div`
+  font-weight: 400;
+  border-radius: 8px;
+  border-color: #1d1d1f;
+  border:0.1rem solid;
+  outline: none;
+  background-color: #fafafa;
 `;
 const SecondDiv = styled.div`
   display: inline-block;

@@ -8,8 +8,7 @@ import { AccessToken } from '../variable/token';
 import { storeThumbnail } from '../redux/slices/ThumbnailSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { GetImg } from '../features/GetImg';
-import { UpdateProfile } from '../features/UpdateProfile';
+import { storeImage } from '../redux/slices/ImageSlice';
 
 interface Props{
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
@@ -24,10 +23,25 @@ const ProfileComponent = ({ onClickToggleModal }: Props) => {
   const [lastname, setLastname] = useState('');
   const thumbnail = useSelector((state: RootState) => state.Thumbnail.url);
   const image = useSelector((state: RootState) => state.Image.id);
-
+  const dispatch = useDispatch();
+  // 1. getMyUser로 로그인한 내 정보들 불러옴
+  //   2. 위에서 불러온 pk로 ReadProfile() 실행, 썸네일 주소 리덕스에 저장
+  //   3. 썸네일 주소로 image 주소(get) 저장
+  //   4.UpdateProfile로 프로필 업데이트 후  위에서 불러온 image
+  const GetImg = async () => {
+    // const thumbnail = useAppSelector(state => state.ThumbnailReducer);
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    await axios.get(`${thumbnail}`, {
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        Authorization: `Bearer ${AccessToken}`
+      }
+    })
+      .then(r => { dispatch(storeImage(r.data.image)); })
+      .catch(err => console.log(err));
+  };
   const ReadProfile = async () => {
     console.log(pk);
-    const dispatch = useDispatch();
     if (pk !== '') {
       await axios.get(`${backUrl}/profile/${pk}/`, {
         headers: {
@@ -39,7 +53,18 @@ const ProfileComponent = ({ onClickToggleModal }: Props) => {
         .catch(err => console.log(err));
     }
   };
-
+  const UpdateProfile = async () => {
+    await axios.post(`${backUrl}/profile/`, {}, {
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        Authorization: `Bearer ${AccessToken}`
+      }
+    })
+      .then(r => {
+        dispatch(storeThumbnail(''));
+        console.log('Updated!!');
+      });
+  };
   const getMyUser = async () => {
     await axios.get(`${backUrl}/token/user/`, {
       headers: {
@@ -56,8 +81,12 @@ const ProfileComponent = ({ onClickToggleModal }: Props) => {
       })
       .catch((err) => { console.log(err); });
   };
-  useEffect(() => {
+  try {
     void getMyUser();
+  } catch {
+    console.log('유저정보 불러오기 실패');
+  }
+  useEffect(() => {
     void ReadProfile();
     void GetImg();
     console.log(image);

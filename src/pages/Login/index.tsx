@@ -33,11 +33,6 @@ const LogIn = () => {
   };
   return (
       <Container>
-        <head>
-          <title>로그인 페이지</title>
-        </head>
-
-        <body className="vsc-initialized">
         <div className="wrapper">
           <div className="title">
             <h1>로그인</h1>
@@ -60,11 +55,9 @@ const LogIn = () => {
             <button id="signUpButton" type="submit">로그인</button>
 
           </form>
-
+            <Link to='/signup'>회원가입 하러가기</Link>
         </div>
-        <Link to='/signup'>회원가입 하러가기</Link>
 
-        </body>
       </Container>
   );
 };

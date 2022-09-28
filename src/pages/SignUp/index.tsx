@@ -53,12 +53,6 @@ const SignUp = () => {
   }, []);
   return (
             <Container>
-                <head>
-                    <title>회원가입 페이지</title>
-
-                </head>
-
-                <body className="vsc-initialized">
                 <div className="wrapper">
                     <div className="title">
                         <h1>회원가입</h1>
@@ -95,7 +89,6 @@ const SignUp = () => {
                         <Link to="/login">로그인 하러 가기</Link>
                 </div>
 
-                </body>
             </Container>
   );
 };
