@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import QR from 'qrcode.react';
 import axios from 'axios';
 import { backUrl } from '../../variable/url';
 
@@ -28,21 +29,56 @@ const Main = () => {
                     <Link className="slink">copy link</Link>
                 </FirstDiv>
                 <Button>copy</Button>
+            <Br/>
                 <SecondDiv>
                     <SDiv>
-                        QR
+                        <QR
+                            id="qr-gen"
+                            size={120}
+                            value={'https://github.com/Team-Discipline'}
+                            includeMargin={false} // QR 테두리 여부
+                            fgColor={'black'} // QR색
+                            style={{ margin: '40px' }}
+                         />
                     </SDiv>
                     <SDiv>
-                        SNS
+                        <Img src={ require('../../image/instagram.png') }/>
+                    </SDiv>
+                    <SDiv>
+                        <Img src={ require('../../image/recent.png') }/>
+                    </SDiv>
+                    <SDiv>
+                        <Img src={ require('../../image/analytics.png') }/>
+                    </SDiv>
+                    <SDiv>
+                        <Img src={ require('../../image/technical-support.png') }/>
                     </SDiv>
                 </SecondDiv>
-            </ServeDiv>
+                <ThirdDiv>
+                    <TDiv>
+                        QR
+                    </TDiv>
+                    <TDiv>
+                        SNS
+                    </TDiv>
+                    <TDiv>
+                        Recent
+                    </TDiv>
+                    <TDiv>
+                        Analysis
+                    </TDiv>
+                    <TDiv>
+                        Technology
+                    </TDiv>
+                </ThirdDiv>
+            <Br/>
+            <div style={{ width: '100%', height: '50px' }}></div>
         </MainContainer>
   );
 };
 const MainContainer = styled.div`
   text-align: center;
-  //background-color:#dcdcdc;
+  background-color:white;
 `;
 const MainDiv = styled.div`
   padding-top: 25px;
@@ -89,8 +125,14 @@ const FirstDiv = styled.div`
   width:40%;
   height:50px;
   font-size:20px;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+`;
+const Link = styled.div`
+  font-weight: 400;
+  border:grey 0.1rem solid;
+  opacity:0.7;
+  outline: none;
 `;
 const Link = styled.div`
   font-weight: 400;
@@ -99,25 +141,61 @@ const Link = styled.div`
   border:0.1rem solid;
   outline: none;
   background-color: #fafafa;
-  width:95%;
-  margin:10px;
 `;
 const SecondDiv = styled.div`
   display: inline-block;
   outline: none;
   position: center;
-  width:60%;
+  width:100%;
   margin-top: 25px;
-  margin-bottom: 25px;
-  padding: 10px;
+  padding:20px;
+  padding-bottom:1px;
 `;
 const SDiv = styled.div`
   font-weight: 400;
   font-size:20px;
   float:left;
-  margin-left:50px;
-  //background-color:#fafafa;
-  width:40%;
-  height:150px;
+  margin-left:38px;
+  width:200px;
+  height:200px;
+  border:grey 0.15rem solid;
+  border-radius:50%; 
 `;
+const Br = styled.div`
+  background-color: grey;
+  opacity: 0.5;
+  height: 0.08rem;
+  width: 90%;
+  margin-left:5%;
+  margin-right:5%;
+`;
+const ThirdDiv = styled.div`
+  display: inline-block;
+  outline: none;
+  position: center;
+  width:100%;
+  padding-left:20px;
+  padding-bottom:20px;
+`;
+const TDiv = styled.div`
+  font-weight: 400;
+  font-size:20px;
+  text-align:center;
+  float:left;
+  margin-left:38px;
+  width:200px;
+  color:grey;
+`;
+const Img = styled.img`
+  width:60%;
+  margin:40px;
+`;
+// const Line = styled.div`
+//   border-left:thin solid grey;
+//   height: 200px;
+//   width:1px;
+//   float:left;
+//   margin-left:20px;
+//   margin-right:20px;
+// `;
 export default Main;
