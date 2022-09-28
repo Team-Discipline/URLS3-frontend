@@ -13,7 +13,7 @@ const Main = () => {
     e.preventDefault();
     axios.post(`${backUrl}/s3`, {
       url
-    }).catch(() => window.alert('로그인에러'));
+    }).catch(() => window.alert('url에러'));
   };
   return (
         <MainContainer>
