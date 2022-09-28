@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { S3URL } from './S3URL';
+import { backUrl } from '../variable/url';
+import axios from 'axios';
+import { AccessToken } from '../variable/token';
 
 const SideBarWrap = styled.div`
   z-index: 5; 
@@ -25,11 +28,50 @@ const Links = styled.div`
   }
   
 `;
+interface S3{
+  url: string
+  issuer: number
+
+  s3_url: string
+
+  target_url: string
+
+  created_at: string
+
+  updated_at: string
+
+}
 const AnalyticsSidebar = () => {
+  const [S3List, setS3List] = useState<S3[]>([]);
+  const getS3List = async () => {
+    await axios.get(`${backUrl}/s3/`, {
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        Authorization: `Bearer ${AccessToken}`
+      }
+    }
+
+    ).then(r => {
+      setS3List(r.data);
+    }).catch(e => console.log(e));
+  };
+
+  useEffect(() => {
+    void getS3List();
+  }, []);
   return (
       <SideBarWrap>
               <Links>
                   <S3URL url="url" s3="s3"/>
+                  {
+                      S3List.map(s3 => {
+                        return (
+                        // eslint-disable-next-line react/jsx-key
+                              <S3URL url={s3.target_url} s3={s3.url}/>
+                        );
+                      })
+
+                  }
 
               </Links>
   </SideBarWrap>
