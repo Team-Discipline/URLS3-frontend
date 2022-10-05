@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import QR from 'qrcode.react';
 import axios from 'axios';
 import { backUrl } from '../../variable/url';
+import { AccessToken } from '../../variable/token';
 
 const Main = () => {
   const [url, setUrl] = useState('');
@@ -10,11 +10,15 @@ const Main = () => {
   const urlHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
   }, []);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // const s3Handler = async () => {
+  //   await axios.get(`${backUrl}/s3`).then(res => console.log(res));
+  // };
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios.post(`${backUrl}/s3`, {
-      url
-    }).catch(() => window.alert('url에러'));
+    await axios.post(`${backUrl}/s3`, {
+      target_url: url
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    }, { withCredentials: true, headers: { Authorization: `Bearer ${AccessToken}` } }).then(res => window.alert(res)).catch(() => window.alert('에러'));
   };
   return (
         <MainContainer>
@@ -29,50 +33,8 @@ const Main = () => {
                     <Link className="slink">copy link</Link>
                 </FirstDiv>
                 <Button>copy</Button>
-            <Br/>
-                <SecondDiv>
-                    <SDiv>
-                        <QR
-                            id="qr-gen"
-                            size={120}
-                            value={'https://github.com/Team-Discipline'}
-                            includeMargin={false} // QR 테두리 여부
-                            fgColor={'black'} // QR색
-                            style={{ margin: '40px' }}
-                         />
-                    </SDiv>
-                    <SDiv>
-                        <Img src={ require('../../image/instagram.png') }/>
-                    </SDiv>
-                    <SDiv>
-                        <Img src={ require('../../image/recent.png') }/>
-                    </SDiv>
-                    <SDiv>
-                        <Img src={ require('../../image/analytics.png') }/>
-                    </SDiv>
-                    <SDiv>
-                        <Img src={ require('../../image/technical-support.png') }/>
-                    </SDiv>
-                </SecondDiv>
-                <ThirdDiv>
-                    <TDiv>
-                        QR
-                    </TDiv>
-                    <TDiv>
-                        SNS
-                    </TDiv>
-                    <TDiv>
-                        Recent
-                    </TDiv>
-                    <TDiv>
-                        Analysis
-                    </TDiv>
-                    <TDiv>
-                        Technology
-                    </TDiv>
-                </ThirdDiv>
-            <Br/>
             <div style={{ width: '100%', height: '50px' }}></div>
+            </ServeDiv>
         </MainContainer>
   );
 };
@@ -130,65 +92,11 @@ const FirstDiv = styled.div`
 `;
 const Link = styled.div`
   font-weight: 400;
-  border:grey 0.1rem solid;
-  opacity:0.7;
-  outline: none;
-`;
-const Link = styled.div`
-  font-weight: 400;
   border-radius: 8px;
   border-color: #1d1d1f;
   border:0.1rem solid;
   outline: none;
   background-color: #fafafa;
-`;
-const SecondDiv = styled.div`
-  display: inline-block;
-  outline: none;
-  position: center;
-  width:100%;
-  margin-top: 25px;
-  padding:20px;
-  padding-bottom:1px;
-`;
-const SDiv = styled.div`
-  font-weight: 400;
-  font-size:20px;
-  float:left;
-  margin-left:38px;
-  width:200px;
-  height:200px;
-  border:grey 0.15rem solid;
-  border-radius:50%; 
-`;
-const Br = styled.div`
-  background-color: grey;
-  opacity: 0.5;
-  height: 0.08rem;
-  width: 90%;
-  margin-left:5%;
-  margin-right:5%;
-`;
-const ThirdDiv = styled.div`
-  display: inline-block;
-  outline: none;
-  position: center;
-  width:100%;
-  padding-left:20px;
-  padding-bottom:20px;
-`;
-const TDiv = styled.div`
-  font-weight: 400;
-  font-size:20px;
-  text-align:center;
-  float:left;
-  margin-left:38px;
-  width:200px;
-  color:grey;
-`;
-const Img = styled.img`
-  width:60%;
-  margin:40px;
 `;
 // const Line = styled.div`
 //   border-left:thin solid grey;
