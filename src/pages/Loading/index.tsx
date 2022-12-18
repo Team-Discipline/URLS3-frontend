@@ -1,27 +1,32 @@
 
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getUtcTime, makeClean } from './GetCaptureData';
 
 const Loading = () => {
-  const [loading, setloading] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const initialLoadedTime = getUtcTime();
+  let pageLoadedTime: string;
+  let pageLeaveTime: string;
   const WaitLoading = () => {
-    setTimeout(() => { console.log('success Loading'); setloading(true); }, 3000);
+    setTimeout(() => { console.log('Loading Button'); setLoading(true); }, 3000);
   };
   useEffect(() => {
-    if (
-      document.querySelector(
-        'script[src=\'./GetUserData.js\']'
-      ) != null
-    ) { return; }
-
-    const script = document.createElement('script');
-    script.src = './GetUserData.js';
-    script.async = true;
-    document.body.appendChild(script);
     WaitLoading();
+  }, []);
+  window.addEventListener('load', function () {
+    pageLoadedTime = getUtcTime();
   });
 
+  window.onbeforeunload = () => {
+    pageLeaveTime = getUtcTime();
+
+    makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime);
+
+    // FIXME below message.
+
+    return 'you are going to out of this page!';
+  };
   return (
       <Body >
 
@@ -39,7 +44,7 @@ const Loading = () => {
 
           {loading &&
               <p className="lead">
-                <a href="#" className="btn btn-lg btn-secondary fw-bold border-white bg-gray">Turn the page</a>
+                <a href="/" className="btn btn-lg btn-secondary fw-bold border-white bg-gray">Turn the page</a>
               </p>
 
           }
