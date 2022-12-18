@@ -1,7 +1,13 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const Loading = () => {
+  const [loading, setloading] = useState(false);
+
+  const WaitLoading = () => {
+    setTimeout(() => { console.log('success Loading'); setloading(true); }, 3000);
+  };
   useEffect(() => {
     if (
       document.querySelector(
@@ -13,10 +19,11 @@ const Loading = () => {
     script.src = './GetUserData.js';
     script.async = true;
     document.body.appendChild(script);
+    WaitLoading();
   });
 
   return (
-      <body className="d-flex h-100 text-center text-bg-dark">
+      <Body >
 
       <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header className="mb-auto">
@@ -26,12 +33,17 @@ const Loading = () => {
         </header>
 
         <main className="px-3">
-          <h1>Cover your page.</h1>
+          <h1>Please wait a moment.....</h1>
           <p className="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit
             the text, and add your own fullscreen background photo to make it your own.</p>
-          <p className="lead">
-            <a href="#" className="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
-          </p>
+
+          {loading &&
+              <p className="lead">
+                <a href="#" className="btn btn-lg btn-secondary fw-bold border-white bg-gray">Turn the page</a>
+              </p>
+
+          }
+
         </main>
 
         <footer className="mt-auto text-white-50">
@@ -40,9 +52,18 @@ const Loading = () => {
         </footer>
       </div>
 
-      </body>
+      </Body>
 
   );
 };
 
+const Body = styled.div`
+  
+  
+  height: 100vh;
+  flex-grow: initial;
+  background-color: #232323;
+  text-align: center;
+  color: antiquewhite;
+`;
 export default Loading;
