@@ -3,32 +3,38 @@
         "browser": true,
         "es2021": true
     },
-    "files": ["*.ts", "*.tsx"],
-    "extends": [
-        "plugin:react/recommended",
-        "standard-with-typescript"
-    ],
+
     "overrides": [
-    ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project": ["tsconfig.json"]
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "semi": [2, "always"],
-        "@typescript-eslint/semi": ["warn", "always"],
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/no-misused-promises": [
-            "error",
-            {
-                "checksVoidReturn": false
+        {
+            "files": ["*.ts", "*.tsx"],
+            "extends": [
+                "plugin:react/recommended",
+                "standard-with-typescript"
+            ],
+            "parserOptions": {
+                "ecmaVersion": "latest",
+                "sourceType": "module",
+                "project": ["tsconfig.json"]
+            },
+            "plugins": [
+                "react"
+            ],
+            "rules": {
+                "semi": [2, "always"],
+                "@typescript-eslint/semi": ["warn", "always"],
+                "@typescript-eslint/explicit-function-return-type": "off",
+                "@typescript-eslint/no-misused-promises": [
+                    "error",
+                    {
+                        "checksVoidReturn": false
+                    }
+                ]
+
+
             }
-        ]
+        }
+    ]
 
 
-    }
+
 }
