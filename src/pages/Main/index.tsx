@@ -6,7 +6,6 @@ import { backUrl } from '../../variable/url';
 import QR from 'qrcode.react';
 import Button from '@mui/material/Button';
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
-// import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 import {
   FacebookShareButton,
@@ -161,7 +160,7 @@ const Input = styled.input`
   outline: none;
 `;
 
-//const Button = styled.button`
+//  const Button = styled.button`
 //  display: inline-block;
 //  box-sizing: content-box;
 //  font-size: 20px;
@@ -169,7 +168,7 @@ const Input = styled.input`
 //  color: #2997ff;
 //  border: 2px solid #2997ff;
 // border-radius: 10px;
-`;
+// `;
 const Bts = styled.button`
   display: inline-block;
   box-sizing: content-box;
