@@ -58,14 +58,14 @@ const Main = () => {
           <MainDiv>
             <form onSubmit={onSubmit}>
               <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" />&nbsp;
-              <Button id="postUrl" type="submit" variant={'contained'} color={'success'} >Make URL</Button>&nbsp;
-              <Button onClick={toggleState} variant={'contained'} color={'success'}>{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
+              <Button id="postUrl" type="submit" variant={'outlined'} >Make URL</Button>&nbsp;
+              <Button onClick={toggleState} variant={'outlined'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
             </form>
           </MainDiv>
           <FirstDiv>
             <Link className="slink">{copyUrl}</Link>
           </FirstDiv>
-          {copied ? <Bts>copied!</Bts> : <Button onClick={copy} variant={'contained'} color={'success'}>copy</Button>}
+          {copied ? <Button variant={'contained'} color={'success'}>copied!</Button> : <Button onClick={copy} variant={'outlined'} >copy</Button>}
           <Br/>
           <SecondDiv>
             <SDiv style={{ marginLeft: '10%', marginRight: '5%' }}>
@@ -169,15 +169,7 @@ const Input = styled.input`
 //  border: 2px solid #2997ff;
 // border-radius: 10px;
 // `;
-const Bts = styled.button`
-  display: inline-block;
-  box-sizing: content-box;
-  font-size: 20px;
-  background-color: green;
-  color: whitesmoke;
-  border: 2px solid #2997ff;
-  border-radius: 10px;
-`;
+
 const FirstDiv = styled.div`
   display: inline-block;
   font-weight: 400;
