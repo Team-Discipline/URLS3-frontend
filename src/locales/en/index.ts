@@ -1,3 +1,3 @@
-import main from "./main.json";
+import main from './main.json';
 
 export { main };
