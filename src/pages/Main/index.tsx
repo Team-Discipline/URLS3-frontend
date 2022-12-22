@@ -207,17 +207,6 @@ const Input = styled.input`
 // border-radius: 10px;
 // `;
 
-
-const Bts = styled.button`
-  display: inline-block;
-  box-sizing: content-box;
-  font-size: 20px;
-  background-color: green;
-  color: whitesmoke;
-  border: 2px solid #2997ff;
-  border-radius: 10px;
-
-`;
 const FirstDiv = styled.div`
   display: inline-flex;
   font-weight: 400;
