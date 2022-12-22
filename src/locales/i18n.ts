@@ -27,6 +27,6 @@ i18n.use(initReactI18next).init({
   react: {
     useSuspense: false
   }
-});
+}).then().catch(()=>window.alert("에러"));
 
 export default i18n;
