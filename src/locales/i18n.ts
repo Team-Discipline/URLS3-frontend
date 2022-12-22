@@ -11,7 +11,7 @@ const resources: Resource = {
     ...ko
   }
 } as const;
-
+// @ts.ignore
 i18n.use(initReactI18next).init({
   resources,
   lng: 'ko-KR', // 초기 설정 언어
