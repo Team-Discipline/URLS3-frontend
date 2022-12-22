@@ -14,6 +14,7 @@ const Loading = () => {
     setTimeout(() => { console.log('Loading Button'); setLoading(true); setPageLoadedTime(getUtcTime()); }, 3000);
   };
   useEffect(() => {
+    const referrer = document.referrer;
     setInitalLoadedTime(getUtcTime());
     WaitLoading();
   }, []);
@@ -21,7 +22,7 @@ const Loading = () => {
   window.onbeforeunload = () => {
     pageLeaveTime = getUtcTime();
     console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
-    setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime));
+    setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer));
 
     // FIXME below message.
 
@@ -40,7 +41,15 @@ const Loading = () => {
         </header>
 
         <main className="px-3">
-          <h1>Please wait a moment.....</h1>
+
+          {!loading &&
+            <h1>Please wait a moment.....</h1>
+          }
+          {loading &&
+
+              <h1>Success Load!!</h1>
+          }
+
           <p className="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit
             the text, and add your own fullscreen background photo to make it your own.</p>
 

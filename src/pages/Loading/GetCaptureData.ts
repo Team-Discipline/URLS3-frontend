@@ -10,13 +10,13 @@ export const getUtcTime = () => {
   console.log(`date: ${date.toISOString()}`);
   return date.toISOString();
 };
-export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string): string {
+export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string, refererUrl: string): string {
   const bodyContent = {
     s3: 'https://urls3.kreimben.com/1965dd',
     js_request_time_UTC: initialLoadedTime,
     page_loaded_time: pageLoadedTime,
     page_leave_time: pageLeaveTime,
-    referer_url: 'document.referrer'
+    referer_url: refererUrl
   };
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const fetch_init = {
