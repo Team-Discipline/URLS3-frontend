@@ -31,7 +31,6 @@ const Main = () => {
     setTimeout(() => {
       setCopied(false);
     }, 1000);
-
   };
   const urlHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
