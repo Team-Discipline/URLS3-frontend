@@ -25,7 +25,7 @@ export const NavComponent = () => {
   }
 
   return (
-        <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="black" style={ { zIndex: 10 } } variant="dark">
             <Container>
                 <Navbar.Brand href="/">URLS3</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />

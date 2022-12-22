@@ -8,22 +8,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
 const SideBarWrap = styled.div`
-  z-index: 5; 
+  z-index: 1; 
   
   background-color: #e7e4e1; 
   height: 100%;  width:20%;  
   left: 0;  top: 57px;  
-  position: fixed;  
+  position: absolute;  
   transition: 0.5s ease;  &.open {    right: 0;    transition: 0.5s ease;  }`;
 const Links = styled.div`
-
-  font-size: 12px;
-
   align-items: center;
   cursor: pointer;
   
   > h3 {
     font-weight: 500;
+    word-break: break-all;
   }
   > h3 > span {
     padding: 15px;

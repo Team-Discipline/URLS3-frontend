@@ -14,6 +14,7 @@ export const S3URL = (props: propsType) => {
 const S3url = styled.h3`
   padding: 10px 0;
   font-weight: 300;
+  font-size: 20%;
   :hover {
     opacity: 0.9;
     background-color: #FFF5DD;

@@ -1,7 +1,7 @@
 
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { backUrl } from '../../variable/url';
 import QR from 'qrcode.react';
 import Button from '@mui/material/Button';
@@ -25,17 +25,46 @@ const Main = () => {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     await navigator.clipboard.writeText(copyUrl);
+    alert('Text copied');
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
     }, 1000);
+
   };
   const urlHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
   }, []);
   const [toggle, setToggle] = useState(true);
   const toggleState = () => setToggle(!toggle);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const nounPatchSubmit = (res: AxiosResponse<any, any>) => {
+    const hashedValue = res.data.s3_url.split('/');
+    const params: string = hashedValue[hashedValue.length - 1];
+    axios.patch(`${backUrl}/${params}`, {
+      target_url: res.data.target_url,
+      short_by_words: toggle
+    }).then().catch(() => window.alert('에러'));
+  };
+
+  const nounSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    axios.post(`${backUrl}/s3/`, {
+      target_url: url,
+      short_by_words: !toggle
+    }, {
+      withCredentials: true,
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        Authorization: `Bearer ${AccessToken}`,
+        'Content-Type': 'application/json',
+        accept: 'application/json'
+      }
+    })
+      //  call patch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      .then(res => nounPatchSubmit(res))
+      .catch(() => window.alert('에러'));
+  };
+  const hashSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios.post(`${backUrl}/s3/`, {
       target_url: url,
@@ -50,13 +79,18 @@ const Main = () => {
       }
     })
     //  data.s3_url!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      .then(json => setCopyUrl(json.data.s3_url))
+      .then(json => {
+        setCopyUrl(json.data.s3_url);
+        if (toggle) {
+          nounSubmit(e);
+        }
+      })
       .catch(() => window.alert('에러'));
   };
   return (
         <MainContainer>
           <MainDiv>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={hashSubmit}>
               <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" />&nbsp;
               <Button id="postUrl" type="submit" variant={'outlined'} >Make URL</Button>&nbsp;
               <Button onClick={toggleState} variant={'outlined'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
@@ -64,6 +98,16 @@ const Main = () => {
           </MainDiv>
           <FirstDiv>
             <Link className="slink">{copyUrl}</Link>
+            <Button onClick={copy}>Copy</Button>
+            { /* <Button onClick= { async () => { */ }
+            { /*  try { */ }
+            { /*    await navigator.clipboard.writeText(url); */ }
+            { /*    window.alert('카피 완료!'); */ }
+            { /*  } catch (error) { */ }
+            { /*    window.alert('카피 실패 ㅜㅜ'); */ }
+            { /*  } */ }
+            { /* }}>copy</Button> */ }
+
           </FirstDiv>
           {copied ? <Button variant={'contained'} color={'success'}>copied!</Button> : <Button onClick={copy} variant={'outlined'} >copy</Button>}
           <Br/>
@@ -170,12 +214,22 @@ const Input = styled.input`
 // border-radius: 10px;
 // `;
 
-const FirstDiv = styled.div`
+
+const Bts = styled.button`
   display: inline-block;
+  box-sizing: content-box;
+  font-size: 20px;
+  background-color: green;
+  color: whitesmoke;
+  border: 2px solid #2997ff;
+  border-radius: 10px;
+  
+`;
+const FirstDiv = styled.div`
+  display: inline-flex;
   font-weight: 400;
   outline: none;
-  position: center;
-  width:40%;
+  //width:40%;
   height:50px;
   font-size:20px;
   margin-top: 4%;
@@ -186,7 +240,9 @@ const Link = styled.div`
   border:#1d1d1f 0.1rem solid;
   border-radius: 8px;
   outline: none;
-  width:95%;
+  //width: auto;
+  min-width: 500px;
+  height: auto;
   margin:10px;
 `;
 const SecondDiv = styled.div`
