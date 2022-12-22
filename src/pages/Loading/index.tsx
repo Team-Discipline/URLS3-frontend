@@ -7,20 +7,19 @@ const Loading = () => {
   const [loading, setLoading] = useState(false);
   const initialLoadedTime = getUtcTime();
   const [targetUrl, setTargetUrl] = useState<string>();
-  let pageLoadedTime: string;
+  const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
+
   let pageLeaveTime: string;
   const WaitLoading = () => {
-    setTimeout(() => { console.log('Loading Button'); setLoading(true); }, 3000);
+    setTimeout(() => { console.log('Loading Button'); setLoading(true); setPageLoadedTime(initialLoadedTime); }, 3000);
   };
   useEffect(() => {
     WaitLoading();
   }, []);
-  window.addEventListener('load', function () {
-    pageLoadedTime = getUtcTime();
-  });
 
   window.onbeforeunload = () => {
     pageLeaveTime = getUtcTime();
+    console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
     setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime));
 
     // FIXME below message.
@@ -28,7 +27,6 @@ const Loading = () => {
     return 'you are going to out of this page!';
   };
   useEffect(() => {
-
   }, [targetUrl]);
   return (
       <Body >
