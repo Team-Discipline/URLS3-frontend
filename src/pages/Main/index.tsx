@@ -23,14 +23,15 @@ const Main = () => {
   const [url, setUrl] = useState('');
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
   const [copied, setCopied] = useState(false);
+  const [qrVision, setQR] = useState(false);
   const copy = async () => {
     await navigator.clipboard.writeText(copyUrl);
-    alert('Text copied');
     setCopied(true);
+    setQR(true);
     setTimeout(() => {
       setCopied(false);
-    }, 1000);
-
+      setQR(false);
+    }, 3000);
   };
   const urlHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
@@ -98,19 +99,11 @@ const Main = () => {
           </MainDiv>
           <FirstDiv>
             <Link className="slink">{copyUrl}</Link>
-            <Button onClick={copy}>Copy</Button>
-            { /* <Button onClick= { async () => { */ }
-            { /*  try { */ }
-            { /*    await navigator.clipboard.writeText(url); */ }
-            { /*    window.alert('카피 완료!'); */ }
-            { /*  } catch (error) { */ }
-            { /*    window.alert('카피 실패 ㅜㅜ'); */ }
-            { /*  } */ }
-            { /* }}>copy</Button> */ }
-
           </FirstDiv>
           {copied ? <Button variant={'contained'} color={'success'}>copied!</Button> : <Button onClick={copy} variant={'outlined'} >copy</Button>}
           <Br/>
+          <br/>
+          {qrVision ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'} style={{ margin: '1px' }}/> : <QRDiv></QRDiv>}
           <SecondDiv>
             <SDiv style={{ marginLeft: '10%', marginRight: '5%' }}>
               <QR
@@ -223,7 +216,7 @@ const Bts = styled.button`
   color: whitesmoke;
   border: 2px solid #2997ff;
   border-radius: 10px;
-  
+
 `;
 const FirstDiv = styled.div`
   display: inline-flex;
@@ -299,4 +292,10 @@ const TDiv = styled.div`
 //   margin-left:20px;
 //   margin-right:20px;
 // `;
+const QRDiv = styled.div`
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+
+`;
 export default Main;
