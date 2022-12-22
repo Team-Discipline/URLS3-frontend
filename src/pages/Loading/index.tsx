@@ -5,15 +5,16 @@ import { getUtcTime, makeClean } from './GetCaptureData';
 
 const Loading = () => {
   const [loading, setLoading] = useState(false);
-  const initialLoadedTime = getUtcTime();
+  const [initialLoadedTime, setInitalLoadedTime] = useState<string>('');
   const [targetUrl, setTargetUrl] = useState<string>();
   const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
 
   let pageLeaveTime: string;
   const WaitLoading = () => {
-    setTimeout(() => { console.log('Loading Button'); setLoading(true); setPageLoadedTime(initialLoadedTime); }, 3000);
+    setTimeout(() => { console.log('Loading Button'); setLoading(true); setPageLoadedTime(getUtcTime()); }, 3000);
   };
   useEffect(() => {
+    setInitalLoadedTime(getUtcTime());
     WaitLoading();
   }, []);
 
