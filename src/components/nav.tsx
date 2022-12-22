@@ -7,6 +7,9 @@ import ProfileComponent from './ProfileComponent';
 import { getMyUser } from '../features/getMyUser';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { useTranslation } from 'react-i18next';
+import i18n from '../locales/i18n';
+
 export const NavComponent = () => {
   const [loginStatus, setloginStatus] = useState(false);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -14,6 +17,16 @@ export const NavComponent = () => {
   const onClickToggleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
+
+  const { t } = useTranslation();
+
+  const changeLang = () => {
+    if (i18n.language === 'kr') {
+      i18n.changeLanguage('en');
+    } else {
+      i18n.changeLanguage('kr');
+    }
+  };
 
   useEffect(() => {
     if (AccessToken !== undefined) setloginStatus(true);
@@ -32,36 +45,39 @@ export const NavComponent = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="/action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="/action/3.1">{t('action')}</NavDropdown.Item>
                             <NavDropdown.Item href="/action/3.2">
-                                Another action
+                              {t('anoaction')}
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="/action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Item href="/action/3.3">{t('something')}</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="/action/3.4">
-                                Separated link
+                              {t('separatedlink')}
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <Nav>
                         {loginStatus &&
-                            <Nav.Link href="/analytics">Analytics</Nav.Link>
+                            <Nav.Link href="/analytics">{t('analytics')}</Nav.Link>
                         }
                         {loginStatus &&
                             <Nav.Link onClick={onClickToggleModal}>
-                                {(Boolean(image !== '-1')) && <img src={image} width="30" height="25" style={{ borderRadius: '4px' }} alt={'profile'}/> }  profile
+                                {(Boolean(image !== '-1')) && <img src={image} width="30" height="25" style={{ borderRadius: '4px' }} alt={'profile'}/> }  {t('profile')}
                             </Nav.Link>
                         }
                         {loginStatus &&
                             <Nav.Link onClick={LogOut}>
-                                LogOut
+                              {t('logout')}
                             </Nav.Link>
                         }
                         {!loginStatus &&
                             <Nav.Link href="/login">
-                                Sign In
+                              {t('signin')}
                             </Nav.Link>
                         }
+                        <Nav.Link onClick={changeLang}>
+                          {t('language')}
+                        </Nav.Link>
 
                     </Nav>
                 </Navbar.Collapse>
