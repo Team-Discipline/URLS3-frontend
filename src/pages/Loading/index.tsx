@@ -6,6 +6,7 @@ import { getUtcTime, makeClean } from './GetCaptureData';
 const Loading = () => {
   const [loading, setLoading] = useState(false);
   const initialLoadedTime = getUtcTime();
+  const [targetUrl, setTargetUrl] = useState<string>();
   let pageLoadedTime: string;
   let pageLeaveTime: string;
   const WaitLoading = () => {
@@ -20,13 +21,15 @@ const Loading = () => {
 
   window.onbeforeunload = () => {
     pageLeaveTime = getUtcTime();
-
-    makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime);
+    setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime));
 
     // FIXME below message.
 
     return 'you are going to out of this page!';
   };
+  useEffect(() => {
+
+  }, [targetUrl]);
   return (
       <Body >
 
@@ -44,7 +47,7 @@ const Loading = () => {
 
           {loading &&
               <p className="lead">
-                <a href="/" className="btn btn-lg btn-secondary fw-bold border-white bg-gray">Turn the page</a>
+                <a href={targetUrl} className="btn btn-lg btn-secondary fw-bold border-white bg-gray">Turn the page</a>
               </p>
 
           }

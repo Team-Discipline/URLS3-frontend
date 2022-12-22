@@ -10,17 +10,15 @@ export const getUtcTime = () => {
   console.log(`date: ${date.toISOString()}`);
   return date.toISOString();
 };
-
-export const makeClean = (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string) => {
-  console.log('on make_clean function');
+export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string): string {
   const bodyContent = {
-    s3: window.location,
-    js_reqeust_time_UTC: initialLoadedTime,
-    pageLoadedTime,
-    pageLeaveTime,
-    referer_url: document.referrer
+    s3: 'https://urls3.kreimben.com/1965dd',
+    js_request_time_UTC: initialLoadedTime,
+    page_loaded_time: pageLoadedTime,
+    page_leave_time: pageLeaveTime,
+    referer_url: 'document.referrer'
   };
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const fetch_init = {
     method: 'post',
     // mode: 'no-cors',
@@ -36,7 +34,15 @@ export const makeClean = (initialLoadedTime: string, pageLoadedTime: string, pag
     .then(async res => await res.json())
     .then(json => {
       console.log(`result json: ${JSON.stringify(json)}`);
+      // const ws = new WebSocket('ws://<backUrl>/ws/ad_page/<str:hashed_value>/');
+      // ws.send(JSON.stringify({ captured_data: json.data.id }));
+      // ws.onmessage = res => {
+      //   console.log(res);
+      //   return res.data.target_url;
+      // };
+      // ws.close();
     });
-};
+  return '0';
+}
 
 /// https://skalman.github.io/UglifyJS-online/
