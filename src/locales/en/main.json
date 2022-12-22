@@ -1,6 +1,8 @@
 {
-  "login": "Login",
+  "signin": "Sign in",
   "signup": "Sign up",
+  "logout": "Logout",
+  "profile": "Profile",
   "sub": "Sign up",
   "gtl": "Go to login",
   "gts": "Go to sign up",
@@ -23,5 +25,7 @@
   "pwdc": "Password check",
   "error": "error",
   "suerror": "Already used name, or simpled password.",
-  "mismatpwd": "Mismatch Password"
+  "mismatpwd": "Mismatch Password",
+  "language": "Language",
+  "analytics": "Analytics"
 }
