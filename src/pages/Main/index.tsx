@@ -99,7 +99,7 @@ const Main = () => {
             </form>
           </MainDiv>
           <FirstDiv style={{ backgroundColor: 'white' }}>
-            <Link className="slink" style={{ height: '40px', marginTop: '40%' }}>{copyUrl}</Link>
+            <Link className="slink" style={{ height: '40px', marginTop: '20%' }}>{copyUrl}</Link>
           </FirstDiv>
           {copied ? <Button variant={'contained'} color={'success'}>copied!</Button> : <Button onClick={copy} variant={'outlined'}>copy</Button>}
           <br/><br/>
@@ -113,19 +113,19 @@ const Main = () => {
             Technology - FourthDiv
           </FourthDiv>
           <FloatingDiv>
-            <FacebookShareButton style={{ bottom: '1em', position: 'fixed', right: '5em' }} url={url}>
+            <FacebookShareButton style={{ bottom: '0.5em', position: 'fixed', right: '5em' }} url={url}>
               <FacebookIcon size={30} round={true} borderRadius={24}></FacebookIcon>
             </FacebookShareButton>
-            <FacebookMessengerShareButton style={{ bottom: '1em', position: 'fixed', right: '7em' }} url={url} appId={''}>
+            <FacebookMessengerShareButton style={{ bottom: '0.5em', position: 'fixed', right: '7em' }} url={url} appId={''}>
               <FacebookMessengerIcon size={30} round={true} borderRadius={24}></FacebookMessengerIcon>
             </FacebookMessengerShareButton>
-            <TwitterShareButton style={{ bottom: '1em', position: 'fixed', right: '9em' }} url={url}>
+            <TwitterShareButton style={{ bottom: '0.5em', position: 'fixed', right: '9em' }} url={url}>
               <TwitterIcon size={30} round={true} borderRadius={24}></TwitterIcon>
             </TwitterShareButton>
-            <LineShareButton style={{ bottom: '1em', position: 'fixed', right: '11em' }} url={url}>
+            <LineShareButton style={{ bottom: '0.5em', position: 'fixed', right: '11em' }} url={url}>
               <LineIcon size={30} round={true} borderRadius={24}></LineIcon>
             </LineShareButton>
-            <p style={{ color: 'white', bottom: '0.5em', position: 'fixed', left: '2em', fontFamily: 'Arial', fontSize: '13px' }}>© 2022. Team-Discipline All rights reserved.</p>
+            <p style={{ color: 'white', bottom: '0.05em', position: 'fixed', left: '2em', fontFamily: 'Arial', fontSize: '13px' }}>© 2022. Team-Discipline All rights reserved.</p>
           </FloatingDiv>
         </MainContainer>
   );
@@ -162,7 +162,6 @@ const FirstDiv = styled.div`
   height:40%;
   font-size:20px;
   margin-top: 4%;
-  margin-bottom: 4%;
 `;
 const Link = styled.div`
   font-weight: 400;
@@ -175,8 +174,7 @@ const Link = styled.div`
   margin:10px;
 `;
 const FloatingDiv = styled.div`
-
-  background-color: black;
+  background: rgba(0, 0, 0, 0.6);
   width: 100%;
   height: 50px;
   position: fixed;
