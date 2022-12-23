@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp';
 import Main from './pages/Main';
 import { NavComponent } from './components/nav';
 import Analytics from './pages/Analytics';
+import Loading from './pages/Loading';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
               <Route path="/signup" element={<SignUp/>}/>
               <Route path="/login" element={<LogIn/>}/>
               <Route path="/analytics" element={<Analytics />}/>
+              <Route path="/loading" element={<Loading />} />
           </Routes>
       </BrowserRouter>
 
