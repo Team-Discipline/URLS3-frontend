@@ -45,13 +45,17 @@ const Loading = () => {
           {!loading &&
             <h1>Please wait a moment.....</h1>
           }
-          {loading &&
+          {loading && targetUrl !== '/' &&
 
               <h1>Success Load!!</h1>
           }
+          {loading && targetUrl === '/' &&
 
-          <p className="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit
-            the text, and add your own fullscreen background photo to make it your own.</p>
+              <h1>Failed to Load..</h1>
+
+          }
+
+          <p className="lead"><h4>If you succeed in loading the page, you can go to the original page, <br></br> but if it fails, you can go to the main page.</h4></p>
 
           {loading &&
               <p className="lead">
