@@ -14,7 +14,8 @@ const Loading = () => {
   const [HashedValue, setHashedValue] = useState<string>('');
 
   const GetHashedValue = async () => {
-    const Pathname: string = 'natural-concierge'; // window.location.pathname.substring[1];
+    const Pathname: string = window.location.pathname.substring(1);
+    console.log(Pathname);
     if (Pathname.includes('-')) {
       const Words = Pathname.split('-');
       await axios.post(`${backUrl}/s3/find/`, {
@@ -33,19 +34,21 @@ const Loading = () => {
   const WaitLoading = () => {
     setTimeout(() => {
       console.log('Loading Button');
-      setLoading(true); setPageLoadedTime(getUtcTime());
+      setPageLoadedTime(getUtcTime());
       setPageLeaveTime(getUtcTime());
+      setLoading(true);
     }, 3000);
   };
   useEffect(() => {
     setInitalLoadedTime(getUtcTime());
     WaitLoading();
+    void GetHashedValue();
   }, []);
 
   useEffect(() => {
     if (initialLoadedTime !== '' && pageLoadedTime !== '' && pageLeaveTime !== '') {
       console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
-      void GetHashedValue();
+
       setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer, HashedValue));
     }
   }, [loading]);
