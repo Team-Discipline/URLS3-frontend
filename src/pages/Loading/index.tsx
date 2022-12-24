@@ -8,7 +8,7 @@ import { backUrl } from '../../variable/url';
 const Loading = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoadedTime, setInitalLoadedTime] = useState<string>('');
-  const [targetUrl, setTargetUrl] = useState<string>('/analytics');
+  const [targetUrl, setTargetUrl] = useState<string>('');
   const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
   const [pageLeaveTime, setPageLeaveTime] = useState<string>('');
   const [HashedValue, setHashedValue] = useState<string>('');
@@ -47,7 +47,9 @@ const Loading = () => {
 
   useEffect(() => {
     if (initialLoadedTime !== '' && pageLoadedTime !== '' && pageLeaveTime !== '') {
-      console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
+      console.log('initialLoadedTime: ' + initialLoadedTime +
+          '\n pageLoadedTime: ' + pageLoadedTime +
+          '\n pageLeaveTime: ' + pageLeaveTime);
 
       setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer, HashedValue));
     }
