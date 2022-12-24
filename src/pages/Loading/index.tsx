@@ -2,12 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getUtcTime, makeClean } from './GetCaptureData';
+import axios from 'axios';
+import { backUrl } from '../../variable/url';
 
 const Loading = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoadedTime, setInitalLoadedTime] = useState<string>('');
   const [targetUrl, setTargetUrl] = useState<string>();
   const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
+  const [hashedValue, setHashedValue] = useState<string>('');
 
   let pageLeaveTime: string;
   const WaitLoading = () => {
@@ -18,7 +21,44 @@ const Loading = () => {
     setInitalLoadedTime(getUtcTime());
     WaitLoading();
   }, []);
+  window.onload = () => {
+    checkHyphen();
+    console.log(hashedValue);
+  };
+  function checkHyphen () {
+    const url = window.location.href;
+    // const url = 'https://urls3.kreimben.com/charismatic -lie';
+    const hashedValue = url.split('/');
+    const preProcessed: string = hashedValue[hashedValue.length - 1];
+    const params: string[] = preProcessed.split('-');
+    // console.log(params[0], params[1]);
+    // console.log(params.length);
+    if (params.length >= 2) {
+      // console.log(JSON.stringify(getFindValue(params)));
+      getFindValue(params);
+    } else {
+      getS3Value(preProcessed);
+    }
+  };
 
+  function getS3Value(preProcessed: string) {
+    setHashedValue(preProcessed);
+  };
+  function getFindValue (params: string[]): any {
+    axios.post(`${backUrl}/s3/find/`, {
+      first_word: params[0],
+      second_word: params[1],
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        'Content-Type': 'application/json',
+        accept: 'application/json'
+      }
+    }).then((res) => {
+      setHashedValue(JSON.stringify(res.data));
+      return JSON.stringify(res.data);
+    })
+      .catch((err) => console.log(err));
+  };
   window.onbeforeunload = () => {
     pageLeaveTime = getUtcTime();
     console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
