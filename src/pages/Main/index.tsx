@@ -1,7 +1,6 @@
 
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-// import axios, { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { backUrl } from '../../variable/url';
 import QR from 'qrcode.react';
@@ -19,7 +18,6 @@ import {
   LineIcon
 } from 'react-share';
 import { AccessToken } from '../../variable/token';
-
 const Main = () => {
   const [url, setUrl] = useState('');
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
@@ -39,7 +37,6 @@ const Main = () => {
   }, []);
   const [toggle, setToggle] = useState(true);
   const toggleState = () => setToggle(!toggle);
-
   // const nounPatchSubmit = (res: AxiosResponse<any, any>) => {
   //   const hashedValue = res.data.s3_url.split('/');
   //   const params: string = hashedValue[hashedValue.length - 1];
@@ -48,25 +45,26 @@ const Main = () => {
   //     short_by_words: toggle
   //   }).then().catch(() => window.alert('에러'));
   // };
-  const nounSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    axios.post(`${backUrl}/s3/`, {
-      target_url: url,
-      short_by_words: !toggle
-    }, {
-      withCredentials: true,
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        Authorization: `Bearer ${AccessToken}`,
-        'Content-Type': 'application/json',
-        accept: 'application/json'
-      }
-    })
-      //  call patch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // .then(res => nounPatchSubmit(res))
-      .catch(() => window.alert('에러'));
-  };
-  const hashSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //
+  // const nounSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   axios.post(`${backUrl}/s3/`, {
+  //     target_url: url,
+  //     short_by_words: !toggle
+  //   }, {
+  //     withCredentials: true,
+  //     headers: {
+  //       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //       Authorization: `Bearer ${AccessToken}`,
+  //       'Content-Type': 'application/json',
+  //       accept: 'application/json'
+  //     }
+  //   })
+  //     //  call patch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //     .then(res => nounPatchSubmit(res))
+  //     .catch(() => window.alert('에러'));
+  // };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios.post(`${backUrl}/s3/`, {
       target_url: url,
@@ -81,52 +79,73 @@ const Main = () => {
       }
     })
     //  data.s3_url!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      .then(json => {
-        setCopyUrl(json.data.s3_url);
-        if (toggle) {
-          nounSubmit(e);
-        }
-      })
+      .then(json =>
+        setCopyUrl(json.data.s3_url)
+      )
       .catch(() => window.alert('에러'));
   };
   return (
         <MainContainer>
           <MainDiv>
-            <form onSubmit={hashSubmit}>
-              <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" style={{ height: '40px' }}/>&nbsp;
-              <Button id="postUrl" type="submit" variant={'contained'} color={'primary'} >Make URL</Button>&nbsp;
-              <Button onClick={toggleState} variant={'contained'} color={'secondary'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
+            <form onSubmit={onSubmit}>
+              <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" />&nbsp;
+              <Button id="postUrl" type="submit" variant={'outlined'} >Make URL</Button>&nbsp;
+              <Button onClick={toggleState} variant={'outlined'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
             </form>
           </MainDiv>
-          <FirstDiv style={{ backgroundColor: 'white' }}>
-            <Link className="slink" style={{ height: '40px', marginTop: '20%' }}>{copyUrl}</Link>
+          <FirstDiv>
+            <Link className="slink">{copyUrl}</Link>
           </FirstDiv>
-          {copied ? <Button variant={'contained'} color={'success'}>copied!</Button> : <Button onClick={copy} variant={'outlined'}>copy</Button>}
-          <br/><br/>
+          {copied ? <Button variant={'contained'} color={'success'}>copied!</Button> : <Button onClick={copy} variant={'outlined'} >copy</Button>}
+          <Br/>
+          <br/>
           {qrVision ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'} style={{ margin: '1px' }}/> : <QRDiv></QRDiv>}
-
+          <SecondDiv>
+            <SDiv style={{ marginLeft: '10%', marginRight: '5%' }}>
+              <QR
+                id="qr-gen"
+                size={150}
+                value={url}
+                includeMargin={false}
+                fgColor={'black'}
+                style={{ margin: '15%' }}
+              />
+            </SDiv>
+            <SDiv>
+              <FacebookShareButton style={{ margin: '15%' }} url={url}>
+                <FacebookIcon size={150} round={true} borderRadius={24}></FacebookIcon>
+              </FacebookShareButton>
+            </SDiv>
+            <SDiv>
+              <FacebookMessengerShareButton style={{ margin: '15%' }} url={url} appId={''}>
+                <FacebookMessengerIcon size={150} round={true} borderRadius={24}></FacebookMessengerIcon>
+              </FacebookMessengerShareButton>
+            </SDiv>
+            <SDiv>
+              <TwitterShareButton style={{ margin: '15%' }} url={url}>
+                <TwitterIcon size={150} round={true} borderRadius={24}></TwitterIcon>
+              </TwitterShareButton>
+            </SDiv>
+            <SDiv>
+              <LineShareButton style={{ margin: '15%' }} url={url}>
+                <LineIcon size={150} round={true} borderRadius={24}></LineIcon>
+              </LineShareButton>
+            </SDiv>
+          </SecondDiv>
           <ThirdDiv>
-            Something Here - ThirdDiv
+            <TDiv style={{ marginLeft: '10%' }}>
+              QR
+            </TDiv>
+            <TDiv style={{ marginLeft: '30%' }}>
+              SNS
+            </TDiv>
           </ThirdDiv>
           <Br/>
           <FourthDiv>
-            Technology - FourthDiv
+            Technology
           </FourthDiv>
-          <FloatingDiv>
-            <FacebookShareButton style={{ bottom: '0.5em', position: 'fixed', right: '5em' }} url={url}>
-              <FacebookIcon size={30} round={true} borderRadius={24}></FacebookIcon>
-            </FacebookShareButton>
-            <FacebookMessengerShareButton style={{ bottom: '0.5em', position: 'fixed', right: '7em' }} url={url} appId={''}>
-              <FacebookMessengerIcon size={30} round={true} borderRadius={24}></FacebookMessengerIcon>
-            </FacebookMessengerShareButton>
-            <TwitterShareButton style={{ bottom: '0.5em', position: 'fixed', right: '9em' }} url={url}>
-              <TwitterIcon size={30} round={true} borderRadius={24}></TwitterIcon>
-            </TwitterShareButton>
-            <LineShareButton style={{ bottom: '0.5em', position: 'fixed', right: '11em' }} url={url}>
-              <LineIcon size={30} round={true} borderRadius={24}></LineIcon>
-            </LineShareButton>
-            <p style={{ color: 'white', bottom: '0.05em', position: 'fixed', left: '2em', fontFamily: 'Arial', fontSize: '13px' }}>© 2022. Team-Discipline All rights reserved.</p>
-          </FloatingDiv>
+          <div style={{ width: '100%', height: '50px' }}></div>
+
         </MainContainer>
   );
 };
@@ -140,6 +159,27 @@ const MainDiv = styled.div`
   text-align: center;
   background-color: black;
 `;
+// const ServeDiv = styled.div`
+//   display: inline-block;
+//   font-weight: 400;
+//   outline: none;
+//   position: center;
+//   background-color: white;
+//   width:90%;
+//   height:500px;
+//   margin-top: 25px;
+//   margin-bottom: 25px;
+// `;
+
+/* const Button = styled.button`
+  display: inline-block;
+  box-sizing: content-box;
+  font-size: 20px;
+  background-color: inherit;
+  color: #2997ff;
+  border: 2px solid #2997ff;
+  border-radius: 10px;
+`; */
 
 const Input = styled.input`
   display: inline-block;
@@ -151,17 +191,27 @@ const Input = styled.input`
   border: 0;
   color: white;
   outline: none;
-  padding-bottom: 10px;
 `;
+
+//  const Button = styled.button`
+//  display: inline-block;
+//  box-sizing: content-box;
+//  font-size: 20px;
+//  background-color: inherit;
+//  color: #2997ff;
+//  border: 2px solid #2997ff;
+// border-radius: 10px;
+// `;
 
 const FirstDiv = styled.div`
   display: inline-flex;
   font-weight: 400;
   outline: none;
   //width:40%;
-  height:40%;
+  height:50px;
   font-size:20px;
   margin-top: 4%;
+  margin-bottom: 4%;
 `;
 const Link = styled.div`
   font-weight: 400;
@@ -173,29 +223,20 @@ const Link = styled.div`
   height: auto;
   margin:10px;
 `;
-const FloatingDiv = styled.div`
-  background: rgba(0, 0, 0, 0.6);
-  width: 100%;
-  height: 50px;
-  position: fixed;
-  bottom: 0;
-`;
-/* const SecondDiv = styled.div`
+const SecondDiv = styled.div`
   display: inline-block;
   outline: none;
   position: center;
   width:100%;
   margin-top: 3%;
   margin-bottom:2%;
-  height: 100px;
-`; */
-/* const SDiv = styled.div`
-  display: inline-block;
+`;
+const SDiv = styled.div`
   font-weight: 400;
   font-size:20px;
   float:left;
   width:15%;
-`; */
+`;
 const Br = styled.div`
   background-color: grey;
   opacity: 0.5;
@@ -219,15 +260,15 @@ const FourthDiv = styled.div`
   padding-top:5%;
   padding-bottom:5%;
 `;
-// const TDiv = styled.div`
-//   font-weight: 400;
-//   text-align:center;
-//   font-size:20px;
-//   float:left;
-//   width:20%;
-//   color:grey;
-//   background-color: #fafafa;
-// `;
+const TDiv = styled.div`
+  font-weight: 400;
+  text-align:center;
+  font-size:20px;
+  float:left;
+  width:15%;
+  color:grey;
+  background-color: #fafafa;
+`;
 // const Line = styled.div`
 //   border-left:thin solid grey;
 //   height: 200px;
