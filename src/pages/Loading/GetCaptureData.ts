@@ -1,4 +1,5 @@
 import { backUrl } from '../../variable/url';
+import axios from 'axios';
 
 export const getUtcTime = () => {
   let date = new Date();
@@ -11,6 +12,27 @@ export const getUtcTime = () => {
   return date.toISOString();
 };
 export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string, refererUrl: string): string {
+  const Pathname: string = '37b56a';
+  let HashedValue = '';
+  console.log(Pathname);
+  const getHashedValue = async (first: string, second: string) => {
+    await axios.post(`${backUrl}/s3/find/`, {
+      first_word: { first },
+      second_word: { second }
+    })
+      .then((res) => {
+        HashedValue = res.data;
+      })
+      .catch((e) => console.log(e));
+  };
+
+  if (Pathname.includes('-')) {
+    const Words = Pathname.split('-');
+    void getHashedValue(Words[0], Words[1]);
+  } else {
+    HashedValue = Pathname;
+  }
+
   const bodyContent = {
     s3: 'https://urls3.kreimben.com/1965dd',
     js_request_time_UTC: initialLoadedTime,
@@ -34,13 +56,16 @@ export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pa
     .then(async res => await res.json())
     .then(json => {
       console.log(`result json: ${JSON.stringify(json)}`);
-      // const ws = new WebSocket('ws://<backUrl>/ws/ad_page/<str:hashed_value>/');
-      // ws.send(JSON.stringify({ captured_data: json.data.id }));
-      // ws.onmessage = res => {
-      //   console.log(res);
-      //   return res.data.target_url;
-      // };
-      // ws.close();
+      const ws = new WebSocket(`ws://api.urls3.kreimben.com/ws/ad_page/${HashedValue}/`);
+      ws.onopen = function (event) {
+        ws.send(JSON.stringify({ captured_data: json.id }));
+      };
+
+      ws.onmessage = res => {
+        console.log(res);
+        ws.close();
+        return res.data.target_url;
+      };
     });
   return '/';
 }
