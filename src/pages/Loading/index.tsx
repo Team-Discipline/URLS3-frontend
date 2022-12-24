@@ -55,7 +55,7 @@ const Loading = () => {
 
           }
 
-          <p className="lead"><h4>If you succeed in loading the page, you can go to the original page, <br></br> but if it fails, you can go to the main page.</h4></p>
+          <h4><p className="lead">If you succeed in loading the page, you can go to the original page, <br></br> but if it fails, you can go to the main page.</p></h4>
 
           {loading &&
               <p className="lead">
