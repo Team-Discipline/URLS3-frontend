@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getUtcTime, makeClean } from './GetCaptureData';
+import axios from 'axios';
+import { backUrl } from '../../variable/url';
 
 const Loading = () => {
   const [loading, setLoading] = useState(false);
@@ -9,6 +11,24 @@ const Loading = () => {
   const [targetUrl, setTargetUrl] = useState<string>('/analytics');
   const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
   const [pageLeaveTime, setPageLeaveTime] = useState<string>('');
+  const [HashedValue, setHashedValue] = useState<string>('');
+
+  const GetHashedValue = async () => {
+    const Pathname: string = 'natural-concierge'; // window.location.pathname.substring[1];
+    if (Pathname.includes('-')) {
+      const Words = Pathname.split('-');
+      await axios.post(`${backUrl}/s3/find/`, {
+        first_word: Words[0],
+        second_word: Words[1]
+      })
+        .then((res) => {
+          setHashedValue(res.data.hashed_value);
+        })
+        .catch((e) => console.log(e));
+    } else {
+      setHashedValue(Pathname);
+    }
+  };
 
   const WaitLoading = () => {
     setTimeout(() => {
@@ -21,10 +41,12 @@ const Loading = () => {
     setInitalLoadedTime(getUtcTime());
     WaitLoading();
   }, []);
+
   useEffect(() => {
     if (initialLoadedTime !== '' && pageLoadedTime !== '' && pageLeaveTime !== '') {
       console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
-      setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer));
+      void GetHashedValue();
+      setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer, HashedValue));
     }
   }, [loading]);
 
