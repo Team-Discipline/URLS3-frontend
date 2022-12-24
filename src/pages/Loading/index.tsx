@@ -6,28 +6,26 @@ import { getUtcTime, makeClean } from './GetCaptureData';
 const Loading = () => {
   const [loading, setLoading] = useState(false);
   const [initialLoadedTime, setInitalLoadedTime] = useState<string>('');
-  const [targetUrl, setTargetUrl] = useState<string>();
+  const [targetUrl, setTargetUrl] = useState<string>('/analytics');
   const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
+  const [pageLeaveTime, setPageLeaveTime] = useState<string>('');
 
-  let pageLeaveTime: string;
   const WaitLoading = () => {
-    setTimeout(() => { console.log('Loading Button'); setLoading(true); setPageLoadedTime(getUtcTime()); }, 3000);
+    setTimeout(() => {
+      console.log('Loading Button');
+      setLoading(true); setPageLoadedTime(getUtcTime());
+      setPageLeaveTime(getUtcTime());
+    }, 3000);
   };
   useEffect(() => {
-    const referrer = document.referrer;
     setInitalLoadedTime(getUtcTime());
     WaitLoading();
   }, []);
-
-  window.onbeforeunload = () => {
-    pageLeaveTime = getUtcTime();
+  useEffect(() => {
     console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
     setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer));
+  }, [loading]);
 
-    // FIXME below message.
-
-    return 'you are going to out of this page!';
-  };
   useEffect(() => {
   }, [targetUrl]);
   return (
