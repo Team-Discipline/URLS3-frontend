@@ -42,7 +42,7 @@ export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pa
       // };
       // ws.close();
     });
-  return '0';
+  return '/';
 }
 
 /// https://skalman.github.io/UglifyJS-online/
