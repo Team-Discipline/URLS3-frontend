@@ -22,8 +22,10 @@ const Loading = () => {
     WaitLoading();
   }, []);
   useEffect(() => {
-    console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
-    setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer));
+    if (initialLoadedTime !== '' && pageLoadedTime !== '' && pageLeaveTime !== '') {
+      console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
+      setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer));
+    }
   }, [loading]);
 
   useEffect(() => {
