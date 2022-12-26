@@ -1,7 +1,6 @@
 
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-// import axios, { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { backUrl } from '../../variable/url';
 import QR from 'qrcode.react';
@@ -19,7 +18,6 @@ import {
   LineIcon
 } from 'react-share';
 import { AccessToken } from '../../variable/token';
-
 const Main = () => {
   const [url, setUrl] = useState('');
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
@@ -39,7 +37,6 @@ const Main = () => {
   }, []);
   const [toggle, setToggle] = useState(true);
   const toggleState = () => setToggle(!toggle);
-
   // const nounPatchSubmit = (res: AxiosResponse<any, any>) => {
   //   const hashedValue = res.data.s3_url.split('/');
   //   const params: string = hashedValue[hashedValue.length - 1];
@@ -48,25 +45,26 @@ const Main = () => {
   //     short_by_words: toggle
   //   }).then().catch(() => window.alert('에러'));
   // };
-  const nounSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    axios.post(`${backUrl}/s3/`, {
-      target_url: url,
-      short_by_words: !toggle
-    }, {
-      withCredentials: true,
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        Authorization: `Bearer ${AccessToken}`,
-        'Content-Type': 'application/json',
-        accept: 'application/json'
-      }
-    })
-      //  call patch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // .then(res => nounPatchSubmit(res))
-      .catch(() => window.alert('에러'));
-  };
-  const hashSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //
+  // const nounSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   axios.post(`${backUrl}/s3/`, {
+  //     target_url: url,
+  //     short_by_words: !toggle
+  //   }, {
+  //     withCredentials: true,
+  //     headers: {
+  //       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //       Authorization: `Bearer ${AccessToken}`,
+  //       'Content-Type': 'application/json',
+  //       accept: 'application/json'
+  //     }
+  //   })
+  //     //  call patch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //     .then(res => nounPatchSubmit(res))
+  //     .catch(() => window.alert('에러'));
+  // };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios.post(`${backUrl}/s3/`, {
       target_url: url,
@@ -81,12 +79,9 @@ const Main = () => {
       }
     })
     //  data.s3_url!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      .then(json => {
-        setCopyUrl(json.data.s3_url);
-        if (toggle) {
-          nounSubmit(e);
-        }
-      })
+      .then(json =>
+        setCopyUrl(json.data.s3_url)
+      )
       .catch(() => window.alert('에러'));
   };
   return (
