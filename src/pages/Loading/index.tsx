@@ -37,24 +37,47 @@ const Loading = () => {
       setPageLoadedTime(getUtcTime());
       setPageLeaveTime(getUtcTime());
       setLoading(true);
-    }, 3000);
+    }, 7000);
   };
-  useEffect(() => {
-    setInitalLoadedTime(getUtcTime());
-    WaitLoading();
-    void GetHashedValue();
-  }, []);
 
   useEffect(() => {
-    if (initialLoadedTime !== '' && pageLoadedTime !== '' && pageLeaveTime !== '') {
+    void GetHashedValue();
+    setInitalLoadedTime(getUtcTime());
+  }, []);
+  useEffect(() => {
+    if (HashedValue !== '') {
       console.log('initialLoadedTime: ' + initialLoadedTime +
           '\n pageLoadedTime: ' + pageLoadedTime +
           '\n pageLeaveTime: ' + pageLeaveTime);
-      void makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer, HashedValue)
-        .then(value => { setTargetUrl(value); });
-    }
-  }, [loading]);
 
+      void makeClean(getUtcTime(), getUtcTime(), getUtcTime(), document.referrer)
+      // getUtcTime() 자리들은 차례대로 initialLoadedTime, pageLoadedTime, pageLeaveTime 가 오는 게 맞지만
+        .then(value => {
+          const ws = new WebSocket(`ws://api.urls3.kreimben.com/ws/ad_page/${HashedValue}/`);
+          ws.onerror = function (event) {
+            console.log(event);
+          };
+          ws.onopen = function (event) {
+            console.log('captured :', value);
+            ws.send(JSON.stringify({ captured_data: value }));
+          };
+          ws.onmessage = res => {
+            const jsonData = JSON.parse(res.data);
+            console.log('response msg:', res.data);
+            if (jsonData.success === true) {
+              console.log('target_url:', jsonData.target_url);
+              setTargetUrl(jsonData.target_url);
+              console.log(targetUrl);
+              ws.close();
+            }
+          };
+        });
+
+      WaitLoading();
+    }
+  }, [HashedValue]);
+  useEffect(() => {
+  }, [targetUrl]);
   return (
       <Body >
 
@@ -69,7 +92,7 @@ const Loading = () => {
 
           {
             (() => {
-              if (loading && targetUrl !== '') {
+              if (targetUrl !== '') {
                 if (targetUrl === '/') return (<h1>Failed to Load..</h1>);
                 if (targetUrl !== '/') return (<h1>Success Load!!</h1>);
               } else { return (<h1>Please wait a moment.....</h1>); }
