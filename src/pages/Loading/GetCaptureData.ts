@@ -11,10 +11,12 @@ export const getUtcTime = () => {
   return date.toISOString();
 };
 
-export const makeClean = async (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string, refererUrl: string, HashedValue: string) => {
-  let result: string = '/';
+export const makeClean = async (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string, refererUrl: string) => {
+  let result: string = '';
+
   const bodyContent = {
-    s3: 'https://urls3.kreimben.com/1965dd', // window.location
+    s3: 'https://urls3.kreimben.com/natural-concierge',
+    // (test) window.location로 수정해야함, 매번 collect되는 s3데이터가됨
     js_request_time_UTC: initialLoadedTime,
     page_loaded_time: pageLoadedTime,
     page_leave_time: pageLeaveTime,
@@ -37,20 +39,10 @@ export const makeClean = async (initialLoadedTime: string, pageLoadedTime: strin
     .then(async res => await res.json())
     .then(json => {
       console.log(`result json: ${JSON.stringify(json)}`);
-      const ws = new WebSocket(`ws://api.urls3.kreimben.com/ws/ad_page/${HashedValue}/`);
-      ws.onerror = function (event) {
-        console.log(event);
-      };
-      ws.onopen = function (event) {
-        ws.send(JSON.stringify({ captured_data: json.id }));
-      };
-      ws.onmessage = res => {
-        console.log(res);
-        ws.close();
-        result = res.data.target_url;
-      };
+      result = json.id;
     })
     .catch(e => { console.log(e); });
+
   return result;
 };
 
