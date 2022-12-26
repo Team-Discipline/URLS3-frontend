@@ -1,5 +1,5 @@
 
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LogOut } from '../features/Logout';
 import { AccessToken } from '../variable/token';
@@ -11,6 +11,7 @@ export const NavComponent = () => {
   const [loginStatus, setloginStatus] = useState(false);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const image = useSelector((state: RootState) => state.Image.id);
+  const username = useSelector((state: RootState) => state.User.username);
   const onClickToggleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
@@ -27,21 +28,11 @@ export const NavComponent = () => {
   return (
         <Navbar collapseOnSelect expand="lg" bg="black" style={ { zIndex: 10 } } variant="dark">
             <Container>
-                <Navbar.Brand href="/">URLS3</Navbar.Brand>
+                <a href="/" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'white' }}>URL</a>
+                <a href="/" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'deepskyblue' }}>S3</a>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="/action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="/action/3.2">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="/action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/action/3.4">
-                                Separated link
-                            </NavDropdown.Item>
-                        </NavDropdown>
                     </Nav>
                     <Nav>
                         {loginStatus &&
@@ -49,7 +40,7 @@ export const NavComponent = () => {
                         }
                         {loginStatus &&
                             <Nav.Link onClick={onClickToggleModal}>
-                                {(Boolean(image !== '-1')) && <img src={image} width="30" height="25" style={{ borderRadius: '4px' }} alt={'profile'}/> }  profile
+                                {(Boolean(image !== '-1')) && <img src={image} width="30" height="25" style={{ borderRadius: '4px' }} alt={'profile'}/> } {username}
                             </Nav.Link>
                         }
                         {loginStatus &&
