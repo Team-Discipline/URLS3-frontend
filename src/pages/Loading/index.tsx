@@ -50,8 +50,8 @@ const Loading = () => {
       console.log('initialLoadedTime: ' + initialLoadedTime +
           '\n pageLoadedTime: ' + pageLoadedTime +
           '\n pageLeaveTime: ' + pageLeaveTime);
-
-      setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer, HashedValue));
+      void makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer, HashedValue)
+        .then(value => { setTargetUrl(value); });
     }
   }, [loading]);
 
@@ -69,17 +69,13 @@ const Loading = () => {
 
         <main className="px-3">
 
-          {!loading &&
-            <h1>Please wait a moment.....</h1>
-          }
-          {loading && targetUrl !== '/' &&
-
-              <h1>Success Load!!</h1>
-          }
-          {loading && targetUrl === '/' &&
-
-              <h1>Failed to Load..</h1>
-
+          {
+            (() => {
+              if (loading && targetUrl !== '') {
+                if (targetUrl === '/') return (<h1>Failed to Load..</h1>);
+                if (targetUrl !== '/') return (<h1>Success Load!!</h1>);
+              } else { return (<h1>Please wait a moment.....</h1>); }
+            })()
           }
 
           <h4><p className="lead">If you succeed in loading the page, you can go to the original page, <br></br> but if it fails, you can go to the main page.</p></h4>

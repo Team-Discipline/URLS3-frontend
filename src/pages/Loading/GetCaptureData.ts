@@ -11,7 +11,8 @@ export const getUtcTime = () => {
   return date.toISOString();
 };
 
-export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string, refererUrl: string, HashedValue: string): string {
+export const makeClean = async (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string, refererUrl: string, HashedValue: string) => {
+  let result: string = '/';
   const bodyContent = {
     s3: 'https://urls3.kreimben.com/1965dd', // window.location
     js_request_time_UTC: initialLoadedTime,
@@ -30,7 +31,7 @@ export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pa
   };
 
   console.log(`fetch_init: ${JSON.stringify(fetch_init)}`);
-  void fetch(`${backUrl}/collect/`,
+  await fetch(`${backUrl}/collect/`,
     fetch_init
   )
     .then(async res => await res.json())
@@ -43,14 +44,14 @@ export function makeClean (initialLoadedTime: string, pageLoadedTime: string, pa
       ws.onopen = function (event) {
         ws.send(JSON.stringify({ captured_data: json.id }));
       };
-
       ws.onmessage = res => {
         console.log(res);
         ws.close();
-        return res.data.target_url;
+        result = res.data.target_url;
       };
-    });
-  return '/';
-}
+    })
+    .catch(e => { console.log(e); });
+  return result;
+};
 
 /// https://skalman.github.io/UglifyJS-online/
