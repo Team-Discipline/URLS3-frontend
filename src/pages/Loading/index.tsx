@@ -55,8 +55,6 @@ const Loading = () => {
     }
   }, [loading]);
 
-  useEffect(() => {
-  }, [targetUrl]);
   return (
       <Body >
 
