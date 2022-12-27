@@ -3,16 +3,14 @@
   "signup": "회원가입",
   "logout": "로그아웃",
   "profile": "프로필",
-  "sub": "가입하기",
   "gtl": "로그인 하러 가기",
   "gts": "회원가입 하러 가기",
   "features": "특징",
-  "syl": "링크를 줄이세요",
+  "syl": "링크를 줄이세요!",
   "copylink": "링크 복사하기",
   "copy": "복사",
+  "copied": "복사 완료",
   "technology": "기술",
-  "copysuccess": "복사 완료",
-  "copyfail": "복사 실패",
   "pricing": "가격",
   "dropdown": "리스트",
   "action": "행동",
@@ -27,5 +25,8 @@
   "suerror": "이미 있는 이름이거나 비밀번호가 너무 단순합니다.",
   "mismatpwd": "비밀번호가 일치하지 않습니다.",
   "language": "언어",
-  "analytics": "분석"
+  "analytics": "분석",
+  "makeurl": "URL 만들기",
+  "randencoding": "랜덤 인코딩",
+  "pasteurl": "짧게 만든 URL을 복사하세요."
 }

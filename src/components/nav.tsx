@@ -22,9 +22,9 @@ export const NavComponent = () => {
 
   const changeLang = () => {
     if (i18n.language === 'kr') {
-      i18n.changeLanguage('en');
+      void i18n.changeLanguage('en');
     } else {
-      i18n.changeLanguage('kr');
+      void i18n.changeLanguage('kr');
     }
   };
 
@@ -44,7 +44,7 @@ export const NavComponent = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                        <NavDropdown title={t('dropdown')} id="collasible-nav-dropdown">
                             <NavDropdown.Item href="/action/3.1">{t('action')}</NavDropdown.Item>
                             <NavDropdown.Item href="/action/3.2">
                               {t('anoaction')}

@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import { AccessToken } from '../../variable/token';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [Username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -57,7 +59,7 @@ const SignUp = () => {
             <Container>
                 <Wrap className="wrapper">
                     <Title className="title">
-                        <h1>Sign up</h1>
+                        <h1>{t('signup')}</h1>
                     </Title>
                     <Form onSubmit={onSubmit}>
                         <InputDiv className="email">
@@ -100,10 +102,10 @@ const SignUp = () => {
                             <h1>{mismatchErrorText}</h1>
                         }
 
-                        <Button id="signUpButton" type="submit">Sign up</Button>
+                        <Button id="signUpButton" type="submit">{t('signup')}</Button>
 
                     </Form>
-                        <StyledLink to="/login">Sign in</StyledLink>
+                        <StyledLink to="/login">{t('signin')}</StyledLink>
                 </Wrap>
 
             </Container>

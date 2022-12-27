@@ -5,6 +5,8 @@ import axios, { AxiosResponse } from 'axios';
 import { backUrl } from '../../variable/url';
 import QR from 'qrcode.react';
 import Button from '@mui/material/Button';
+import { useTranslation } from 'react-i18next';
+
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
 // import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
@@ -21,6 +23,7 @@ import {
 import { AccessToken } from '../../variable/token';
 
 const Main = () => {
+  const { t } = useTranslation();
   const [url, setUrl] = useState('');
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
   const [copied, setCopied] = useState(false);
@@ -94,14 +97,14 @@ const Main = () => {
           <MainDiv>
             <form onSubmit={hashSubmit}>
               <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" />&nbsp;
-              <Button id="postUrl" type="submit" variant={'contained'} color={'success'} >Make URL</Button>&nbsp;
+              <Button id="postUrl" type="submit" variant={'contained'} color={'success'} >{t('makeurl')}</Button>&nbsp;
               <Button onClick={toggleState} variant={'contained'} color={'success'}>{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
             </form>
           </MainDiv>
           <FirstDiv>
             <Link className="slink">{copyUrl}</Link>
           </FirstDiv>
-          {copied ? <Bts>copied!</Bts> : <Button onClick={copy} variant={'contained'} color={'success'}>copy</Button>}
+          {copied ? <Bts>{t('copied')}</Bts> : <Button onClick={copy} variant={'contained'} color={'success'}>{t('copy')}</Button>}
           <br/>
           {qrVision ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'} style={{ margin: '1px' }}/> : <QRDiv></QRDiv>}
 
@@ -147,7 +150,7 @@ const Main = () => {
           </ThirdDiv>
           <Br/>
           <FourthDiv>
-            Technology
+            {t('technology')}
           </FourthDiv>
           <div style={{ width: '100%', height: '50px' }}></div>
 

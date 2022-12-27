@@ -6,8 +6,10 @@ import { setCookie } from '../../variable/token';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 const LogIn = () => {
+  const { t } = useTranslation();
   const [Username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +38,7 @@ const LogIn = () => {
       <Container>
         <Wrap className="wrapper">
           <Title className="title">
-            <h1>Log in</h1>
+            <h1>{t('signin')}</h1>
           </Title>
           <Form onSubmit={onSubmit}>
             <InputDiv className="Username">
@@ -64,9 +66,9 @@ const LogIn = () => {
             </Line>
 
             {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-            <Button id="signUpButton" type="submit">Log in</Button>
+            <Button id="signUpButton" type="submit">{t('signin')}</Button>
           </Form>
-          <StyledLink to='/signup'>Sign up</StyledLink>
+          <StyledLink to='/signup'>{t('signup')}</StyledLink>
         </Wrap>
 
       </Container>
