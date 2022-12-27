@@ -92,7 +92,7 @@ const Loading = () => {
 
           {
             (() => {
-              if (targetUrl !== '') {
+              if (loading && targetUrl !== '') {
                 if (targetUrl === '/') return (<h1>Failed to Load..</h1>);
                 if (targetUrl !== '/') return (<h1>Success Load!!</h1>);
               } else { return (<h1>Please wait a moment.....</h1>); }
