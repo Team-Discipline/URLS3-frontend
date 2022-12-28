@@ -10,7 +10,7 @@ const Loading = () => {
   const [initialLoadedTime, setInitalLoadedTime] = useState<string>('');
   const [targetUrl, setTargetUrl] = useState<string>('');
   const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
-  const [pageLeaveTime, setPageLeaveTime] = useState<string>('');
+  let [pageLeaveTime, setPageLeaveTime] = useState<string>('');
   const [HashedValue, setHashedValue] = useState<string>('');
 
   const GetHashedValue = async () => {
@@ -30,7 +30,6 @@ const Loading = () => {
       setHashedValue(Pathname);
     }
   };
-
 
   const WaitLoading = () => {
     setTimeout(() => {
@@ -77,10 +76,10 @@ const Loading = () => {
       WaitLoading();
     }
   }, [HashedValue]);
-  
+
   window.onload = () => {
     checkHyphen();
-    console.log(hashedValue);
+    console.log(HashedValue);
   };
   function checkHyphen () {
     const url = window.location.href;
@@ -115,11 +114,11 @@ const Loading = () => {
       return JSON.stringify(res.data);
     })
       .catch((err) => console.log(err));
-  };
-  window.onbeforeunload = () => {
+  }
+  window.onbeforeunload = async () => {
     pageLeaveTime = getUtcTime();
     console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
-    setTargetUrl(makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer));
+    setTargetUrl(await makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer));
 
     // FIXME below message.
 
