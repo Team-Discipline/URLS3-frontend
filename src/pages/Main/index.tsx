@@ -5,6 +5,8 @@ import axios from 'axios';
 import { backUrl } from '../../variable/url';
 import QR from 'qrcode.react';
 import Button from '@mui/material/Button';
+import { useTranslation } from 'react-i18next';
+
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
 
 import {
@@ -19,6 +21,7 @@ import {
 } from 'react-share';
 import { AccessToken } from '../../variable/token';
 const Main = () => {
+  const { t } = useTranslation();
   const [url, setUrl] = useState('');
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
   const [copied, setCopied] = useState(false);
