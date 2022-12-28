@@ -41,8 +41,10 @@ export const NavComponent = () => {
   return (
         <Navbar collapseOnSelect expand="lg" bg="black" style={ { zIndex: 10 } } variant="dark">
             <Container>
+                <div>
                 <a href="/" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'white' }}>URL</a>
                 <a href="/" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'deepskyblue' }}>S3</a>
+                </div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">

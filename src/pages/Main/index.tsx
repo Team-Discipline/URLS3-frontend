@@ -40,33 +40,6 @@ const Main = () => {
   }, []);
   const [toggle, setToggle] = useState(true);
   const toggleState = () => setToggle(!toggle);
-  // const nounPatchSubmit = (res: AxiosResponse<any, any>) => {
-  //   const hashedValue = res.data.s3_url.split('/');
-  //   const params: string = hashedValue[hashedValue.length - 1];
-  //   axios.patch(`${backUrl}/${params}`, {
-  //     target_url: res.data.target_url,
-  //     short_by_words: toggle
-  //   }).then().catch(() => window.alert('에러'));
-  // };
-  //
-  // const nounSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   axios.post(`${backUrl}/s3/`, {
-  //     target_url: url,
-  //     short_by_words: !toggle
-  //   }, {
-  //     withCredentials: true,
-  //     headers: {
-  //       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-  //       Authorization: `Bearer ${AccessToken}`,
-  //       'Content-Type': 'application/json',
-  //       accept: 'application/json'
-  //     }
-  //   })
-  //     //  call patch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //     .then(res => nounPatchSubmit(res))
-  //     .catch(() => window.alert('에러'));
-  // };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios.post(`${backUrl}/s3/`, {
@@ -90,7 +63,7 @@ const Main = () => {
   return (
         <MainContainer>
           <MainDiv>
-            <form onSubmit={hashSubmit}>
+            <form onSubmit={onSubmit}>
               <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" style={{ height: '40px' }}/>&nbsp;
               <Button id="postUrl" type="submit" variant={'contained'} color={'primary'} >Make URL</Button>&nbsp;
               <Button onClick={toggleState} variant={'contained'} color={'secondary'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
@@ -99,7 +72,7 @@ const Main = () => {
           <FirstDiv style={{ backgroundColor: 'white' }}>
             <Link className="slink" style={{ height: '40px', marginTop: '20%' }}>{copyUrl}</Link>
           </FirstDiv>
-          {copied ? <Button variant={'contained'} color={'success'}>copied!</Button> : <Button onClick={copy} variant={'outlined'}>copy</Button>}
+          {copied ? <Button variant={'contained'} color={'success'}>{t('copied')}</Button> : <Button onClick={copy} variant={'outlined'}>{t('copy')}</Button>}
           <br/><br/>
           {qrVision ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'} style={{ margin: '1px' }}/> : <QRDiv></QRDiv>}
 
@@ -178,22 +151,6 @@ const FloatingDiv = styled.div`
   position: fixed;
   bottom: 0;
 `;
-/* const SecondDiv = styled.div`
-  display: inline-block;
-  outline: none;
-  position: center;
-  width:100%;
-  margin-top: 3%;
-  margin-bottom:2%;
-  height: 100px;
-`; */
-/* const SDiv = styled.div`
-  display: inline-block;
-  font-weight: 400;
-  font-size:20px;
-  float:left;
-  width:15%;
-`; */
 const Br = styled.div`
   background-color: grey;
   opacity: 0.5;
@@ -217,23 +174,7 @@ const FourthDiv = styled.div`
   padding-top:5%;
   padding-bottom:5%;
 `;
-// const TDiv = styled.div`
-//   font-weight: 400;
-//   text-align:center;
-//   font-size:20px;
-//   float:left;
-//   width:20%;
-//   color:grey;
-//   background-color: #fafafa;
-// `;
-// const Line = styled.div`
-//   border-left:thin solid grey;
-//   height: 200px;
-//   width:1px;
-//   float:left;
-//   margin-left:20px;
-//   margin-right:20px;
-// `;
+
 const QRDiv = styled.div`
   height: 100px;
   width: 100px;

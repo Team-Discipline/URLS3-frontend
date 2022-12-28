@@ -98,7 +98,7 @@ const Loading = () => {
     }
   };
 
-  function getS3Value(preProcessed: string) {
+  function getS3Value (preProcessed: string) {
     setHashedValue(preProcessed);
   };
   function getFindValue (params: string[]): any {
