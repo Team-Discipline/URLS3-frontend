@@ -64,7 +64,7 @@ const Main = () => {
         <MainContainer>
           <MainDiv>
             <form onSubmit={onSubmit}>
-              <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" style={{ height: '40px' }}/>&nbsp;
+              <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" style={{ height: '40px', backgroundColor: '#c5c5c5' }}/>&nbsp;
               <Button id="postUrl" type="submit" variant={'contained'} color={'primary'} >Make URL</Button>&nbsp;
               <Button onClick={toggleState} variant={'contained'} color={'secondary'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
             </form>
@@ -109,7 +109,7 @@ const MainDiv = styled.div`
   padding-top: 25px;
   padding-bottom: 25px;
   text-align: center;
-  background-color: black;
+  background-color: #222529;
 `;
 
 const Input = styled.input`
