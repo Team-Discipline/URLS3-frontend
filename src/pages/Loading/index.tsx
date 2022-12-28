@@ -17,7 +17,7 @@ const Loading = () => {
     setTimeout(() => { console.log('Loading Button'); setLoading(true); setPageLoadedTime(getUtcTime()); }, 3000);
   };
   useEffect(() => {
-    const referrer = document.referrer;
+    // const referrer = document.referrer;
     setInitalLoadedTime(getUtcTime());
     WaitLoading();
   }, []);
@@ -41,7 +41,7 @@ const Loading = () => {
     }
   };
 
-  function getS3Value(preProcessed: string) {
+  function getS3Value (preProcessed: string) {
     setHashedValue(preProcessed);
   };
   function getFindValue (params: string[]): any {
