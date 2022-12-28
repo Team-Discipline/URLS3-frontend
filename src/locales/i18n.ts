@@ -18,7 +18,12 @@ void i18n.use(initReactI18next).init({
   fallbackLng: 'en',
   debug: true,
   keySeparator: false,
-  interpolation: { escapeValue: false }
-});
+  interpolation: {
+    escapeValue: false
+  },
+  react: {
+    useSuspense: false
+  }
+}).then().catch(() => window.alert('에러'));
 
 export default i18n;
