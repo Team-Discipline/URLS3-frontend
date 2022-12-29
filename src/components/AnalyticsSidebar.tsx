@@ -50,6 +50,7 @@ const AnalyticsSidebar = () => {
 
     ).then(r => {
       setS3List(r.data);
+      console.log(S3List);
     }).catch(e => console.log(e));
   };
 
@@ -59,12 +60,12 @@ const AnalyticsSidebar = () => {
   return (
       <SideBarWrap>
               <Links>
-                  <S3URL url="url" s3="s3"/>
+                  <S3URL url="url" s3="s3_url"/>
                   {
                       S3List.filter(s3 => s3.issuer === user.pk).map(s3 => {
                         return (
                         // eslint-disable-next-line react/jsx-key
-                            <S3URL url={s3.target_url} s3={s3.url}/>
+                            <S3URL url={s3.target_url} s3={s3.s3_url}/>
                         );
                       })
 

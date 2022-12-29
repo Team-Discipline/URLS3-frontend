@@ -1,49 +1,49 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AnalyticsSidebar from '../../components/AnalyticsSidebar';
 import styled from 'styled-components';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Analytics = () => {
-  const [countries] = useState(['1st', '2nd', '3rd', '4th']);
-  // 서버에서 country들의 순위 특정 수까지 가져오기
-  const [countryData] = useState([20, 15, 10, 5]);
-  const [chartData, setChartData] = useState({});
-  const [chartOptions, setChartOptions] = useState({});
-
-  useEffect(() => {
-    setChartData({
-      labels: countries,
-      datasets: [
-        {
-          label: 'Member',
-          data: countryData,
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgb(53, 162, 235, 0.4)'
-        }]
-    });
-    setChartOptions({
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top'
-        },
-        title: {
-          display: true,
-          text: 'Country'
-        }
+  const [users] = useState(['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']);
+  const [userDatas] = useState([12, 19, 3, 5, 2, 3]);
+  const data = {
+    labels: users,
+    datasets: [
+      {
+        label: 'user',
+        data: userDatas,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
       }
-    });
-  }, []);
+    ]
+  };
+
   return (
             <Container>
                 <AnalyticsSidebar/>
                 <BarBox>
-                    <Bar options={chartOptions} data={chartData}/>
+                  <Doughnut data={data} />;
                 </BarBox>
-                </Container>
+            </Container>
 
   );
 };
@@ -57,5 +57,5 @@ const Container = styled.div`
 const BarBox = styled.div`
   margin-left: 25%;
   width: 90vw;
-  max-width: 900px;
+  max-width: 50%;
 `;
