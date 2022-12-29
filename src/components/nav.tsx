@@ -55,7 +55,7 @@ export const NavComponent = () => {
                         }
                         {loginStatus &&
                             <Nav.Link onClick={onClickToggleModal}>
-                                {(Boolean(image !== '-1')) && <img src={image} width="30" height="25" style={{ borderRadius: '4px' }} alt={'profile'}/> } {username}
+                                {(Boolean(image !== '-1')) && <img src={image} width="30" height="25" style={{ borderRadius: '4px' }} alt={''}/> } {username}
                             </Nav.Link>
                         }
                         {loginStatus &&
