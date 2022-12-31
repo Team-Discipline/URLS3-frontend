@@ -6,6 +6,7 @@ import axios from 'axios';
 import { AccessToken } from '../variable/token';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import Button from '@mui/material/Button';
 
 const SideBarWrap = styled.div`
   z-index: 1; 
@@ -29,6 +30,7 @@ const Links = styled.div`
   
 `;
 interface S3{
+  id: string
   url: string
   issuer: number
   s3_url: string
@@ -50,7 +52,20 @@ const AnalyticsSidebar = () => {
 
     ).then(r => {
       setS3List(r.data);
-      console.log(S3List);
+      console.log(r);
+    }).catch(e => console.log(e));
+  };
+
+  const s3Id = async (id: string) => {
+    await axios.get(`${backUrl}/analytics/${id}/`, {
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        Authorization: `Bearer ${AccessToken}`
+      }
+    }
+    ).then(r => {
+      console.log('test');
+      console.log(r);
     }).catch(e => console.log(e));
   };
 
@@ -60,12 +75,11 @@ const AnalyticsSidebar = () => {
   return (
       <SideBarWrap>
               <Links>
-                  <S3URL url="url" s3="s3_url"/>
                   {
                       S3List.filter(s3 => s3.issuer === user.pk).map(s3 => {
                         return (
                         // eslint-disable-next-line react/jsx-key
-                            <S3URL url={s3.target_url} s3={s3.s3_url}/>
+                            <Button key={s3.id} onClick={async () => (await s3Id(s3.id))} size={'large'} variant={'contained'} color={'secondary'}><S3URL url={s3.target_url} s3={s3.s3_url}/></Button>
                         );
                       })
 
