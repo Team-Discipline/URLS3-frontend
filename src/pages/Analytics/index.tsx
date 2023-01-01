@@ -41,7 +41,7 @@ const Analytics = () => {
             <Container>
                 <AnalyticsSidebar/>
                 <BarBox>
-                  <Doughnut data={data} />;
+                  <Doughnut data={data} />
                 </BarBox>
             </Container>
 

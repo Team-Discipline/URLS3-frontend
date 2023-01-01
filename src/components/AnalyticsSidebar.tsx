@@ -39,9 +39,39 @@ interface S3{
   updated_at: string
 
 }
+interface id{
+  id: number
+  ip_address: string
+  s3: object
+  js_request_time_UTC: string
+  page_loaded_time: string
+  page_leave_time: string
+  referer_url: string
+  created_at: string
+  country: string
+  city: string
+  latitude: number
+  longitude: number
+}
 const AnalyticsSidebar = () => {
   const [S3List, setS3List] = useState<S3[]>([]);
+  const [idList, setIdList] = useState<id[]>([]);
   const user = useSelector((state: RootState) => state.User);
+  const refine = () => {
+    const arr = idList;
+    const countryArr: {[index: string]: number} = {};
+    for (let i = 0; i < arr.length; i++) {
+      const a: string = `${arr[i].city}`;
+      if (!(a in countryArr)) {
+        countryArr[a] = 1;
+      } else {
+        countryArr[a] += 1;
+      }
+    }
+    const sortable = Object.fromEntries(Object.entries(countryArr).sort(([, a], [, b]) => b - a));
+    console.log(sortable);
+  };
+
   const getS3List = async () => {
     await axios.get(`${backUrl}/s3/`, {
       headers: {
@@ -64,9 +94,8 @@ const AnalyticsSidebar = () => {
       }
     }
     ).then(r => {
-      console.log('test');
-      console.log(r);
-    }).catch(e => console.log(e));
+      setIdList(r.data);
+    }).then(() => { refine(); }).catch(e => console.log(e));
   };
 
   useEffect(() => {
