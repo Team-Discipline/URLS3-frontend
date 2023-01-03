@@ -4,9 +4,11 @@ import { S3URL } from './S3URL';
 import { backUrl } from '../variable/url';
 import axios from 'axios';
 import { AccessToken } from '../variable/token';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
 import Button from '@mui/material/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../redux/store';
+import { countryRefine } from '../redux/slices/CountrySlice';
+
 
 const SideBarWrap = styled.div`
   z-index: 1; 
@@ -53,10 +55,14 @@ interface id{
   latitude: number
   longitude: number
 }
+
 const AnalyticsSidebar = () => {
   const [S3List, setS3List] = useState<S3[]>([]);
   const [idList, setIdList] = useState<id[]>([]);
   const user = useSelector((state: RootState) => state.User);
+
+  const dispatch = useDispatch();
+
   const refine = () => {
     const arr = idList;
     const countryArr: {[index: string]: number} = {};
@@ -69,7 +75,7 @@ const AnalyticsSidebar = () => {
       }
     }
     const sortable = Object.fromEntries(Object.entries(countryArr).sort(([, a], [, b]) => b - a));
-    console.log(sortable);
+    dispatch(countryRefine(sortable));
   };
 
   const getS3List = async () => {
@@ -95,7 +101,9 @@ const AnalyticsSidebar = () => {
     }
     ).then(r => {
       setIdList(r.data);
-    }).then(() => { refine(); }).catch(e => console.log(e));
+    }).then(() => {
+      refine();
+    }).catch(e => console.log(e));
   };
 
   useEffect(() => {

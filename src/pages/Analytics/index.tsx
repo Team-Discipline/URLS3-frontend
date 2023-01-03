@@ -1,15 +1,20 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AnalyticsSidebar from '../../components/AnalyticsSidebar';
 import styled from 'styled-components';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 const Analytics = () => {
-  const [users] = useState(['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']);
-  const [userDatas] = useState([12, 19, 3, 5, 2, 3]);
+  const [users, setUsers] = useState(['country']);
+  const [userDatas, setUserDatas] = useState([0]);
+  const country = useSelector((state: RootState) => state.Country.countries);
+  useEffect(() => {
+    setUsers(Object.keys(country));
+    setUserDatas(Object.values(country));
+  }, []);
   const data = {
     labels: users,
     datasets: [
