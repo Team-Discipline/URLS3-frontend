@@ -9,10 +9,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { countryRefine } from '../redux/slices/CountrySlice';
 
-
 const SideBarWrap = styled.div`
-  z-index: 1; 
-  
+  z-index: 1;
+  overflow: scroll;
   background-color: #e7e4e1; 
   height: 100%;  width:20%;  
   left: 0;  top: 57px;  
@@ -67,7 +66,7 @@ const AnalyticsSidebar = () => {
     const arr = idList;
     const countryArr: {[index: string]: number} = {};
     for (let i = 0; i < arr.length; i++) {
-      const a: string = `${arr[i].city}`;
+      const a: string = `${arr[i].country}`;
       if (!(a in countryArr)) {
         countryArr[a] = 1;
       } else {
@@ -116,7 +115,7 @@ const AnalyticsSidebar = () => {
                       S3List.filter(s3 => s3.issuer === user.pk).map(s3 => {
                         return (
                         // eslint-disable-next-line react/jsx-key
-                            <Button key={s3.id} onClick={async () => (await s3Id(s3.id))} size={'large'} variant={'contained'} color={'secondary'}><S3URL url={s3.target_url} s3={s3.s3_url}/></Button>
+                            <Button key={s3.id} onClick={async () => (await s3Id(s3.id))} size={'large'} variant={'text'} color={'success'}><S3URL url={s3.target_url} s3={s3.s3_url}/></Button>
                         );
                       })
 

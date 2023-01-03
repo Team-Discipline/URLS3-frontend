@@ -9,7 +9,7 @@ import { RootState } from '../../redux/store';
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Analytics = () => {
   const [users, setUsers] = useState(['country']);
-  const [userDatas, setUserDatas] = useState([0]);
+  const [userDatas, setUserDatas] = useState([1]);
   const country = useSelector((state: RootState) => state.Country.countries);
   useEffect(() => {
     setUsers(Object.keys(country));
@@ -61,6 +61,7 @@ const Container = styled.div`
 
 const BarBox = styled.div`
   margin-left: 25%;
-  width: 90vw;
-  max-width: 50%;
+  width: 100vw;
+  height: 100vw;
+  max-width: 45%;
 `;
