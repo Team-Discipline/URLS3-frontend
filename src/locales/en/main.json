@@ -7,12 +7,11 @@
   "gtl": "Go to login",
   "gts": "Go to sign up",
   "features": "Features",
-  "syl": "Shorten your link",
+  "syl": "Make your URL short!",
   "copylink": "Copy link",
   "copy": "Copy",
+  "copied": "Copied!",
   "technology": "Technology",
-  "copysuccess": "Copy success",
-  "copyfail": "Copy fail",
   "pricing": "Pricing",
   "dropdown": "Dropdown",
   "action": "Action",
@@ -27,5 +26,8 @@
   "suerror": "Already used name, or simpled password.",
   "mismatpwd": "Mismatch Password",
   "language": "Language",
-  "analytics": "Analytics"
+  "analytics": "Analytics",
+  "makeurl": "MAKE URL",
+  "randencoding": "RANDOM_ENCODING",
+  "pasteurl": "Paste here to make your URL short"
 }

@@ -5,6 +5,8 @@ import axios from 'axios';
 import { backUrl } from '../../variable/url';
 import QR from 'qrcode.react';
 import Button from '@mui/material/Button';
+import { useTranslation } from 'react-i18next';
+
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
 
 import {
@@ -19,6 +21,7 @@ import {
 } from 'react-share';
 import { AccessToken } from '../../variable/token';
 const Main = () => {
+  const { t } = useTranslation();
   const [url, setUrl] = useState('');
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
   const [copied, setCopied] = useState(false);
@@ -37,33 +40,6 @@ const Main = () => {
   }, []);
   const [toggle, setToggle] = useState(true);
   const toggleState = () => setToggle(!toggle);
-  // const nounPatchSubmit = (res: AxiosResponse<any, any>) => {
-  //   const hashedValue = res.data.s3_url.split('/');
-  //   const params: string = hashedValue[hashedValue.length - 1];
-  //   axios.patch(`${backUrl}/${params}`, {
-  //     target_url: res.data.target_url,
-  //     short_by_words: toggle
-  //   }).then().catch(() => window.alert('에러'));
-  // };
-  //
-  // const nounSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   axios.post(`${backUrl}/s3/`, {
-  //     target_url: url,
-  //     short_by_words: !toggle
-  //   }, {
-  //     withCredentials: true,
-  //     headers: {
-  //       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-  //       Authorization: `Bearer ${AccessToken}`,
-  //       'Content-Type': 'application/json',
-  //       accept: 'application/json'
-  //     }
-  //   })
-  //     //  call patch!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //     .then(res => nounPatchSubmit(res))
-  //     .catch(() => window.alert('에러'));
-  // };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios.post(`${backUrl}/s3/`, {
@@ -88,17 +64,16 @@ const Main = () => {
         <MainContainer>
           <MainDiv>
             <form onSubmit={onSubmit}>
-              <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" />&nbsp;
-              <Button id="postUrl" type="submit" variant={'outlined'} >Make URL</Button>&nbsp;
-              <Button onClick={toggleState} variant={'outlined'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
+              <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short" style={{ height: '40px', backgroundColor: '#c5c5c5' }}/>&nbsp;
+              <Button id="postUrl" type="submit" variant={'contained'} color={'primary'} >Make URL</Button>&nbsp;
+              <Button onClick={toggleState} variant={'contained'} color={'secondary'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
             </form>
           </MainDiv>
           <FirstDiv>
             <Link className="slink">{copyUrl}</Link>
           </FirstDiv>
-          {copied ? <Button variant={'contained'} color={'success'}>copied!</Button> : <Button onClick={copy} variant={'outlined'} >copy</Button>}
-          <Br/>
-          <br/>
+          {copied ? <Button variant={'contained'} color={'success'}>{t('copied')}</Button> : <Button onClick={copy} variant={'outlined'}>{t('copy')}</Button>}
+          <br/><br/>
           {qrVision ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'} style={{ margin: '1px' }}/> : <QRDiv></QRDiv>}
           <SecondDiv>
             <SDiv style={{ marginLeft: '10%', marginRight: '5%' }}>
@@ -157,7 +132,7 @@ const MainDiv = styled.div`
   padding-top: 25px;
   padding-bottom: 25px;
   text-align: center;
-  background-color: black;
+  background-color: #222529;
 `;
 // const ServeDiv = styled.div`
 //   display: inline-block;
@@ -223,19 +198,12 @@ const Link = styled.div`
   height: auto;
   margin:10px;
 `;
-const SecondDiv = styled.div`
-  display: inline-block;
-  outline: none;
-  position: center;
-  width:100%;
-  margin-top: 3%;
-  margin-bottom:2%;
-`;
-const SDiv = styled.div`
-  font-weight: 400;
-  font-size:20px;
-  float:left;
-  width:15%;
+const FloatingDiv = styled.div`
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  bottom: 0;
 `;
 const Br = styled.div`
   background-color: grey;
@@ -260,23 +228,6 @@ const FourthDiv = styled.div`
   padding-top:5%;
   padding-bottom:5%;
 `;
-const TDiv = styled.div`
-  font-weight: 400;
-  text-align:center;
-  font-size:20px;
-  float:left;
-  width:15%;
-  color:grey;
-  background-color: #fafafa;
-`;
-// const Line = styled.div`
-//   border-left:thin solid grey;
-//   height: 200px;
-//   width:1px;
-//   float:left;
-//   margin-left:20px;
-//   margin-right:20px;
-// `;
 const QRDiv = styled.div`
   height: 100px;
   width: 100px;

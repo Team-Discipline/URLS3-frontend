@@ -22,9 +22,9 @@ export const NavComponent = () => {
 
   const changeLang = () => {
     if (i18n.language === 'kr') {
-      i18n.changeLanguage('en');
+      void i18n.changeLanguage('en');
     } else {
-      i18n.changeLanguage('kr');
+      void i18n.changeLanguage('kr');
     }
   };
 
@@ -38,9 +38,12 @@ export const NavComponent = () => {
   }
 
   return (
-        <Navbar collapseOnSelect expand="lg" bg="black" style={ { zIndex: 10 } } variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" style={ { zIndex: 10 } } variant="dark">
             <Container>
-                <Navbar.Brand href="/">URLS3</Navbar.Brand>
+                <div>
+                <a href="/" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'whitesmoke', fontFamily: 'Segoe UI' }}>URL</a>
+                <a href="/" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'deepskyblue', fontFamily: 'Segoe UI' }}>S3</a>
+                </div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
@@ -62,7 +65,7 @@ export const NavComponent = () => {
                         }
                         {loginStatus &&
                             <Nav.Link onClick={onClickToggleModal}>
-                                {(Boolean(image !== '-1')) && <img src={image} width="30" height="25" style={{ borderRadius: '4px' }} alt={'profile'}/> }  {t('profile')}
+                                {(Boolean(image !== '-1')) && <img src={image} width="30" height="25" style={{ borderRadius: '4px' }} alt={''}/> } {username}
                             </Nav.Link>
                         }
                         {loginStatus &&

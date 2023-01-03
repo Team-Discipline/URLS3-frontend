@@ -1,24 +1,21 @@
-import i18n, { Resource } from 'i18next';
+import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as en from './en';
-import * as ko from './ko';
+import translationEn from './en/main.json';
+import translationKo from './ko/main.json';
 
-const resources: Resource = {
-  'en-US': {
-    ...en
+const resource = {
+  en: {
+    translation: translationEn
   },
-  'ko-KR': {
-    ...ko
+  kr: {
+    translation: translationKo
   }
-} as const;
-// @ts.ignore
-i18n.use(initReactI18next).init({
-  resources,
-  lng: 'ko-KR', // 초기 설정 언어
-  fallbackLng: {
-    'en-US': ['en-US'],
-    default: ['ko-KR']
-  },
+};
+
+void i18n.use(initReactI18next).init({
+  resources: resource,
+  lng: 'en',
+  fallbackLng: 'en',
   debug: true,
   keySeparator: false,
   interpolation: {
