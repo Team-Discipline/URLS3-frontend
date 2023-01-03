@@ -61,7 +61,7 @@ const Container = styled.div`
 
 const BarBox = styled.div`
   margin-left: 25%;
-  width: 100vw;
+  width: 200vw;
   height: 100vw;
   max-width: 45%;
 `;
