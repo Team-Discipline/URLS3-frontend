@@ -1,5 +1,5 @@
 
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LogOut } from '../features/Logout';
 import { AccessToken } from '../variable/token';
@@ -48,17 +48,6 @@ export const NavComponent = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="/action/3.1">{t('action')}</NavDropdown.Item>
-                            <NavDropdown.Item href="/action/3.2">
-                              {t('anoaction')}
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="/action/3.3">{t('something')}</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/action/3.4">
-                              {t('separatedlink')}
-                            </NavDropdown.Item>
-                        </NavDropdown>
                     </Nav>
                     <Nav>
                         {loginStatus &&
