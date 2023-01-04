@@ -1,5 +1,5 @@
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { backUrl } from '../../variable/url';
@@ -26,6 +26,13 @@ const Main = () => {
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
   const [copied, setCopied] = useState(false);
   const [qrVision, setQR] = useState(false);
+  const getUrlList = async () => {
+  await axios.get(`${backUrl}/s3/`, {
+    headers: {
+    Authorization: `Bearer ${AccessToken}`
+    }
+  }).then(data => console.log(data)).catch(e => console.log(e));
+  };
   const copy = async () => {
     await navigator.clipboard.writeText(copyUrl);
     setCopied(true);
@@ -60,6 +67,8 @@ const Main = () => {
       )
       .catch(() => window.alert('에러'));
   };
+  useEffect(() => {
+    void getUrlList()}, []);
   return (
         <MainContainer>
           <MainDiv>
