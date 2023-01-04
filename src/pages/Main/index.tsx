@@ -69,35 +69,58 @@ const Main = () => {
               <Button onClick={toggleState} variant={'contained'} color={'secondary'} >{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
             </form>
           </MainDiv>
-          <FirstDiv style={{ backgroundColor: 'white' }}>
-            <Link className="slink" style={{ height: '40px', marginTop: '20%' }}>{copyUrl}</Link>
+          <FirstDiv>
+            <Link className="slink">{copyUrl}</Link>
           </FirstDiv>
           {copied ? <Button variant={'contained'} color={'success'}>{t('copied')}</Button> : <Button onClick={copy} variant={'outlined'}>{t('copy')}</Button>}
           <br/><br/>
           {qrVision ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'} style={{ margin: '1px' }}/> : <QRDiv></QRDiv>}
-
+          <SecondDiv>
+            <SDiv style={{ marginLeft: '10%', marginRight: '5%' }}>
+              <QR
+                id="qr-gen"
+                size={150}
+                value={url}
+                includeMargin={false}
+                fgColor={'black'}
+                style={{ margin: '15%' }}
+              />
+            </SDiv>
+            <SDiv>
+              <FacebookShareButton style={{ margin: '15%' }} url={url}>
+                <FacebookIcon size={150} round={true} borderRadius={24}></FacebookIcon>
+              </FacebookShareButton>
+            </SDiv>
+            <SDiv>
+              <FacebookMessengerShareButton style={{ margin: '15%' }} url={url} appId={''}>
+                <FacebookMessengerIcon size={150} round={true} borderRadius={24}></FacebookMessengerIcon>
+              </FacebookMessengerShareButton>
+            </SDiv>
+            <SDiv>
+              <TwitterShareButton style={{ margin: '15%' }} url={url}>
+                <TwitterIcon size={150} round={true} borderRadius={24}></TwitterIcon>
+              </TwitterShareButton>
+            </SDiv>
+            <SDiv>
+              <LineShareButton style={{ margin: '15%' }} url={url}>
+                <LineIcon size={150} round={true} borderRadius={24}></LineIcon>
+              </LineShareButton>
+            </SDiv>
+          </SecondDiv>
           <ThirdDiv>
-            Something Here - ThirdDiv
+            <TDiv style={{ marginLeft: '10%' }}>
+              QR
+            </TDiv>
+            <TDiv style={{ marginLeft: '30%' }}>
+              SNS
+            </TDiv>
           </ThirdDiv>
           <Br/>
           <FourthDiv>
-            Technology - FourthDiv
+            Technology
           </FourthDiv>
-          <FloatingDiv>
-            <FacebookShareButton style={{ bottom: '0.5em', position: 'fixed', right: '5em' }} url={url}>
-              <FacebookIcon size={30} round={true} borderRadius={24}></FacebookIcon>
-            </FacebookShareButton>
-            <FacebookMessengerShareButton style={{ bottom: '0.5em', position: 'fixed', right: '7em' }} url={url} appId={''}>
-              <FacebookMessengerIcon size={30} round={true} borderRadius={24}></FacebookMessengerIcon>
-            </FacebookMessengerShareButton>
-            <TwitterShareButton style={{ bottom: '0.5em', position: 'fixed', right: '9em' }} url={url}>
-              <TwitterIcon size={30} round={true} borderRadius={24}></TwitterIcon>
-            </TwitterShareButton>
-            <LineShareButton style={{ bottom: '0.5em', position: 'fixed', right: '11em' }} url={url}>
-              <LineIcon size={30} round={true} borderRadius={24}></LineIcon>
-            </LineShareButton>
-            <p style={{ color: 'white', bottom: '0.05em', position: 'fixed', left: '2em', fontFamily: 'Arial', fontSize: '13px' }}>© 2022. Team-Discipline All rights reserved.</p>
-          </FloatingDiv>
+          <div style={{ width: '100%', height: '50px' }}></div>
+
         </MainContainer>
   );
 };
@@ -111,6 +134,27 @@ const MainDiv = styled.div`
   text-align: center;
   background-color: #222529;
 `;
+// const ServeDiv = styled.div`
+//   display: inline-block;
+//   font-weight: 400;
+//   outline: none;
+//   position: center;
+//   background-color: white;
+//   width:90%;
+//   height:500px;
+//   margin-top: 25px;
+//   margin-bottom: 25px;
+// `;
+
+/* const Button = styled.button`
+  display: inline-block;
+  box-sizing: content-box;
+  font-size: 20px;
+  background-color: inherit;
+  color: #2997ff;
+  border: 2px solid #2997ff;
+  border-radius: 10px;
+`; */
 
 const Input = styled.input`
   display: inline-block;
@@ -122,17 +166,27 @@ const Input = styled.input`
   border: 0;
   color: white;
   outline: none;
-  padding-bottom: 10px;
 `;
+
+//  const Button = styled.button`
+//  display: inline-block;
+//  box-sizing: content-box;
+//  font-size: 20px;
+//  background-color: inherit;
+//  color: #2997ff;
+//  border: 2px solid #2997ff;
+// border-radius: 10px;
+// `;
 
 const FirstDiv = styled.div`
   display: inline-flex;
   font-weight: 400;
   outline: none;
   //width:40%;
-  height:40%;
+  height:50px;
   font-size:20px;
   margin-top: 4%;
+  margin-bottom: 4%;
 `;
 const Link = styled.div`
   font-weight: 400;
@@ -174,7 +228,6 @@ const FourthDiv = styled.div`
   padding-top:5%;
   padding-bottom:5%;
 `;
-
 const QRDiv = styled.div`
   height: 100px;
   width: 100px;

@@ -7,7 +7,7 @@ interface propsType{
 }
 export const S3URL = (props: propsType) => {
   return (
-       <S3url>{props.url}:{props.s3}</S3url>
+       <S3url>{props.url} : {props.s3}</S3url>
   );
 };
 

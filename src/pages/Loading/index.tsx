@@ -76,7 +76,6 @@ const Loading = () => {
       WaitLoading();
     }
   }, [HashedValue]);
-
   window.onload = () => {
     checkHyphen();
     console.log(HashedValue);
