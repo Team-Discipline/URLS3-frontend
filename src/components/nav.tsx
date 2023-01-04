@@ -1,5 +1,5 @@
 
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LogOut } from '../features/Logout';
 import { AccessToken } from '../variable/token';
@@ -14,6 +14,7 @@ export const NavComponent = () => {
   const [loginStatus, setloginStatus] = useState(false);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const image = useSelector((state: RootState) => state.Image.id);
+  const username = useSelector((state: RootState) => state.User.username);
   const onClickToggleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
@@ -47,17 +48,6 @@ export const NavComponent = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="/action/3.1">{t('action')}</NavDropdown.Item>
-                            <NavDropdown.Item href="/action/3.2">
-                              {t('anoaction')}
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="/action/3.3">{t('something')}</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/action/3.4">
-                              {t('separatedlink')}
-                            </NavDropdown.Item>
-                        </NavDropdown>
                     </Nav>
                     <Nav>
                         {loginStatus &&
