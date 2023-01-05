@@ -95,11 +95,11 @@ const Loading = () => {
     } else {
       getS3Value(preProcessed);
     }
-  };
+  }
 
   function getS3Value (preProcessed: string) {
     setHashedValue(preProcessed);
-  };
+  }
   function getFindValue (params: string[]): any {
     axios.post(`${backUrl}/s3/find/`, {
       first_word: params[0],
