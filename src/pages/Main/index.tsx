@@ -28,6 +28,7 @@ interface S3{
   target_url: string
   created_at: string
   updated_at: string
+  short_by_words: boolean
 }
 interface Url{
   [index: string]: string
@@ -40,7 +41,8 @@ const Main = () => {
   const [copied, setCopied] = useState(false);
   const [qrVision, setQR] = useState(false);
   const [urlList, setUrlList] = useState<S3[]>([]);
-  const [urlArr, setUrlArr] = useState<Url>({});
+  const [urlTrueArr, setUrlTrueArr] = useState<Url>({});
+  const [urlFalseArr, setUrlFalseArr] = useState<Url>({});
   const getUrlList = async () => {
     await axios.get(`${backUrl}/s3/`, {
       headers: {
@@ -50,12 +52,59 @@ const Main = () => {
     }).then(r => setUrlList(r.data)).catch(e => console.log(e));
   };
   const check = () => {
+    void getUrlList();
     for (let i = 0; i < urlList.length; i++) {
       const checkTargetUrl = `${urlList[i].target_url}`;
       const checkUrl = `${urlList[i].s3_url}`;
-      if (!(checkTargetUrl in urlArr)) {
-        urlArr[checkTargetUrl] = checkUrl;
-        setUrlArr({ ...urlArr, checkTargetURl: checkUrl });
+      if (urlList[i].short_by_words) {
+        if (!(checkTargetUrl in urlTrueArr)) {
+          urlTrueArr[checkTargetUrl] = checkUrl;
+          setUrlTrueArr({ ...urlTrueArr, checkTargetURl: checkUrl });
+        }
+      } else {
+        if (!(checkTargetUrl in urlFalseArr)) {
+          urlFalseArr[checkTargetUrl] = checkUrl;
+          setUrlFalseArr({ ...urlFalseArr, checkTargetURl: checkUrl });
+        }
+      }
+    }
+  };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    check();
+    if (toggle) {
+      if (url in urlTrueArr) {
+        setCopyUrl(urlTrueArr[url]);
+      } else {
+        axios.post(`${backUrl}/s3/`, {
+          target_url: url,
+          short_by_words: toggle
+        }, {
+          withCredentials: true,
+          headers: {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            Authorization: `Bearer ${AccessToken}`,
+            'Content-Type': 'application/json',
+            accept: 'application/json'
+          }
+        }).then(json => setCopyUrl(json.data.s3_url)).catch(() => window.alert('에러'));
+      }
+    } else {
+      if (url in urlFalseArr) {
+        setCopyUrl(urlFalseArr[url]);
+      } else {
+        axios.post(`${backUrl}/s3/`, {
+          target_url: url,
+          short_by_words: toggle
+        }, {
+          withCredentials: true,
+          headers: {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            Authorization: `Bearer ${AccessToken}`,
+            'Content-Type': 'application/json',
+            accept: 'application/json'
+          }
+        }).then(json => setCopyUrl(json.data.s3_url)).catch(() => window.alert('에러'));
       }
     }
   };
@@ -73,26 +122,6 @@ const Main = () => {
   }, []);
   const [toggle, setToggle] = useState(true);
   const toggleState = () => setToggle(!toggle);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    check();
-    if (url in urlArr) {
-      setCopyUrl(urlArr[url]);
-    } else {
-      axios.post(`${backUrl}/s3/`, {
-        target_url: url,
-        short_by_words: toggle
-      }, {
-        withCredentials: true,
-        headers: {
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          Authorization: `Bearer ${AccessToken}`,
-          'Content-Type': 'application/json',
-          accept: 'application/json'
-        }
-      }).then(json => setCopyUrl(json.data.s3_url)).catch(() => window.alert('에러'));
-    }
-  };
   useEffect(() => {
     void getUrlList();
   }, []);
