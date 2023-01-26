@@ -1,11 +1,12 @@
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { backUrl } from '../../variable/url';
 import QR from 'qrcode.react';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
+import { AccessToken } from '../../variable/token';
 
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
 
@@ -19,13 +20,94 @@ import {
   LineShareButton,
   LineIcon
 } from 'react-share';
-import { AccessToken } from '../../variable/token';
+interface S3{
+  id: string
+  url: string
+  issuer: number
+  s3_url: string
+  target_url: string
+  created_at: string
+  updated_at: string
+  short_by_words: boolean
+}
+interface Url{
+  [index: string]: string
+}
+
 const Main = () => {
   const { t } = useTranslation();
   const [url, setUrl] = useState('');
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
   const [copied, setCopied] = useState(false);
   const [qrVision, setQR] = useState(false);
+  const [urlList, setUrlList] = useState<S3[]>([]);
+  const [urlTrueArr, setUrlTrueArr] = useState<Url>({});
+  const [urlFalseArr, setUrlFalseArr] = useState<Url>({});
+  const getUrlList = async () => {
+    await axios.get(`${backUrl}/s3/`, {
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        Authorization: `Bearer ${AccessToken}`
+      }
+    }).then(r => setUrlList(r.data)).catch(e => console.log(e));
+  };
+  const check = () => {
+    void getUrlList();
+    for (let i = 0; i < urlList.length; i++) {
+      const checkTargetUrl = `${urlList[i].target_url}`;
+      const checkUrl = `${urlList[i].s3_url}`;
+      if (urlList[i].short_by_words) {
+        if (!(checkTargetUrl in urlTrueArr)) {
+          urlTrueArr[checkTargetUrl] = checkUrl;
+          setUrlTrueArr({ ...urlTrueArr, checkTargetURl: checkUrl });
+        }
+      } else {
+        if (!(checkTargetUrl in urlFalseArr)) {
+          urlFalseArr[checkTargetUrl] = checkUrl;
+          setUrlFalseArr({ ...urlFalseArr, checkTargetURl: checkUrl });
+        }
+      }
+    }
+  };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    check();
+    if (toggle) {
+      if (url in urlTrueArr) {
+        setCopyUrl(urlTrueArr[url]);
+      } else {
+        axios.post(`${backUrl}/s3/`, {
+          target_url: url,
+          short_by_words: toggle
+        }, {
+          withCredentials: true,
+          headers: {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            Authorization: `Bearer ${AccessToken}`,
+            'Content-Type': 'application/json',
+            accept: 'application/json'
+          }
+        }).then(json => setCopyUrl(json.data.s3_url)).catch(() => window.alert('에러'));
+      }
+    } else {
+      if (url in urlFalseArr) {
+        setCopyUrl(urlFalseArr[url]);
+      } else {
+        axios.post(`${backUrl}/s3/`, {
+          target_url: url,
+          short_by_words: toggle
+        }, {
+          withCredentials: true,
+          headers: {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            Authorization: `Bearer ${AccessToken}`,
+            'Content-Type': 'application/json',
+            accept: 'application/json'
+          }
+        }).then(json => setCopyUrl(json.data.s3_url)).catch(() => window.alert('에러'));
+      }
+    }
+  };
   const copy = async () => {
     await navigator.clipboard.writeText(copyUrl);
     setCopied(true);
@@ -40,26 +122,9 @@ const Main = () => {
   }, []);
   const [toggle, setToggle] = useState(true);
   const toggleState = () => setToggle(!toggle);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    axios.post(`${backUrl}/s3/`, {
-      target_url: url,
-      short_by_words: toggle
-    }, {
-      withCredentials: true,
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        Authorization: `Bearer ${AccessToken}`,
-        'Content-Type': 'application/json',
-        accept: 'application/json'
-      }
-    })
-    //  data.s3_url!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      .then(json =>
-        setCopyUrl(json.data.s3_url)
-      )
-      .catch(() => window.alert('에러'));
-  };
+  useEffect(() => {
+    void getUrlList();
+  }, []);
   return (
         <MainContainer>
           <MainDiv>

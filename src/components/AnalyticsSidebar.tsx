@@ -84,7 +84,6 @@ const AnalyticsSidebar = () => {
         Authorization: `Bearer ${AccessToken}`
       }
     }
-
     ).then(r => {
       setS3List(r.data);
       console.log(r);
