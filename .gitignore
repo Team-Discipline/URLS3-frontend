@@ -2,6 +2,7 @@
 
 .idea/
 package-lock.json
+*.lock
 
 # dependencies
 /node_modules

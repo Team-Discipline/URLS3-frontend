@@ -1,78 +1,85 @@
-import React, { useCallback, useState } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
-import { backUrl } from '../../variable/url';
-import { setCookie } from '../../variable/token';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
-import { useTranslation } from 'react-i18next';
+import React, { useCallback, useState } from "react";
+import styled from "styled-components";
+import axios from "axios";
+import backUrl from "../../variable/url";
+import { setCookie } from "../../variable/token";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faKey, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 const LogIn = () => {
-  const { t } = useTranslation();
-  const [Username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  }, []);
-  const onChangeUsername = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  }, []);
-  const login = async () => {
-    await axios.post(`${backUrl}/token/login/`, {
-      username: Username,
-      password
+    const { t } = useTranslation();
+    const [Username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    }, []);
+    const onChangeUsername = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);
+    }, []);
+    const login = async () => {
+        await axios.post(`${backUrl}/token/login/`, {
+            username: Username,
+            password,
 
-    }, { withCredentials: true })
-      .then((res) => {
-        setCookie('accessToken', res.data.access);
-        setCookie('refreshToken', res.data.refresh);
-      }).catch(() => window.alert('로그인에러'));
-  };
+        }, { withCredentials: true })
+        .then((res) => {
+            setCookie("accessToken", res.data.access);
+            setCookie("refreshToken", res.data.refresh);
+        }).catch(() => window.alert("로그인에러"));
+    };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    login().then(res => { location.replace('/'); console.log(res); }).catch(err => { console.log(err); });
-  };
-  return (
-      <Container>
-        <Wrap className="wrapper">
-          <Title className="title">
-            <h1>{t('signin')}</h1>
-          </Title>
-          <Form onSubmit={onSubmit}>
-            <InputDiv className="Username">
-              <IconInput>
-                <Icon>
-                  <FontAwesomeIcon icon={faUser} />
-                </Icon>
-                <Input id="Username" type="text" value={Username} onChange={onChangeUsername} placeholder="Username" autoFocus />
-              </IconInput>
-              <div id="nameError" className="error"></div>
-            </InputDiv>
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        login().then(res => {
+            location.replace("/");
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+    };
+    return (
+        <Container>
+            <Wrap className="wrapper">
+                <Title className="title">
+                    <h1>{t("signin")}</h1>
+                </Title>
+                <Form onSubmit={onSubmit}>
+                    <InputDiv className="Username">
+                        <IconInput>
+                            <Icon>
+                                <FontAwesomeIcon icon={faUser} />
+                            </Icon>
+                            <Input id="Username" type="text" value={Username} onChange={onChangeUsername}
+                                   placeholder="Username" autoFocus />
+                        </IconInput>
+                        <div id="nameError" className="error"></div>
+                    </InputDiv>
 
-            <InputDiv className="password">
-              <IconInput>
-                <Icon>
-                  <FontAwesomeIcon icon={faKey} />
-                </Icon>
-                <Input id="password" type="password" value={password} onChange={onChangePassword} placeholder="Password"/>
-              </IconInput>
-              <div id="passwordError" className="error"></div>
-            </InputDiv>
+                    <InputDiv className="password">
+                        <IconInput>
+                            <Icon>
+                                <FontAwesomeIcon icon={faKey} />
+                            </Icon>
+                            <Input id="password" type="password" value={password} onChange={onChangePassword}
+                                   placeholder="Password" />
+                        </IconInput>
+                        <div id="passwordError" className="error"></div>
+                    </InputDiv>
 
-            <Line className="line">
-              <hr/>
-            </Line>
+                    <Line className="line">
+                        <hr />
+                    </Line>
 
-            {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-            <Button id="signUpButton" type="submit">{t('signin')}</Button>
-          </Form>
-          <StyledLink to='/signup'>{t('signup')}</StyledLink>
-        </Wrap>
+                    {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+                    <Button id="signUpButton" type="submit">{t("signin")}</Button>
+                </Form>
+                <StyledLink to="/signup">{t("signup")}</StyledLink>
+            </Wrap>
 
-      </Container>
-  );
+        </Container>
+    );
 };
 
 const Container = styled.div`
@@ -91,8 +98,8 @@ const Wrap = styled.div`
   width: 40%;
   display: flex;
   flex-direction: column;
-  text-align : center;
-  border-radius: 5px; 
+  text-align: center;
+  border-radius: 5px;
 `;
 
 const Form = styled.form`
@@ -133,16 +140,17 @@ const Icon = styled.div`
 const Input = styled.input`
   width: 80%;
   height: 100%;
-  border: none; 
-  -webkit-appearance: none; 
+  border: none;
+  -webkit-appearance: none;
   margin-left: 5%;
-  overflow: auto; 
+  overflow: auto;
   z-index: -1;
   font-size: 20px;
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
+
   &:focus, &:hover, &:visited, &:link, &:active {
     text-decoration: none;
   }

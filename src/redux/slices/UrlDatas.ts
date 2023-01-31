@@ -1,11 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const UrlDatasSlice = createSlice({
-    name: 'UrlDatas',
+    name: "UrlDatas",
     initialState: {
-        urls: []
+        urls: [],
     },
-    reducers: {
-
-    }
-})
+    reducers: {},
+});
