@@ -1,110 +1,84 @@
+import React, { useCallback } from "react";
+import styled from "styled-components";
+import { ImgUpload, onChange } from "../features/ImgUpload";
+import axios from "axios";
+import backUrl from "../variable/url";
+import { AccessToken } from "../variable/token";
 
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { ImgUpload, onChange } from '../features/ImgUpload';
-import axios from 'axios';
-import { backUrl } from '../variable/url';
-import { AccessToken } from '../variable/token';
-import { storeThumbnail } from '../redux/slices/ThumbnailSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { storeImage } from '../redux/slices/ImageSlice';
-interface Props{
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-  onClickToggleModal: (v: boolean) => void
+import { RootState } from "../redux/store";
+import { useSelector } from "react-redux";
+
+interface Props {
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    onClickToggleModal: (v: boolean) => void;
 }
 
 const ProfileComponent = ({ onClickToggleModal }: Props) => {
-  const thumbnail = useSelector((state: RootState) => state.Thumbnail.url);
-  const image = useSelector((state: RootState) => state.Image.id);
-  const user = useSelector((state: RootState) => state.User);
-  const dispatch = useDispatch();
-  // 1. getMyUser로 로그인한 내 정보들 불러옴
-  //   2. 위에서 불러온 pk로 ReadProfile() 실행, 썸네일 주소 리덕스에 저장
-  //   3. 썸네일 주소로 image 주소(get) 저장
-  //   4.UpdateProfile로 프로필 업데이트 후  위에서 불러온 image
-  const GetImg = async () => {
-    // const thumbnail = useAppSelector(state => state.ThumbnailReducer);
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    await axios.get(`${thumbnail}`, {
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        Authorization: `Bearer ${AccessToken}`
-      }
-    })
-      .then(r => { dispatch(storeImage(r.data.image)); })
-      .catch(err => console.log(err));
-  };
-  const ReadProfile = async () => {
-    console.log(user.pk);
-    if (user.pk !== -1) {
-      await axios.get(`${backUrl}/profile/${user.pk}/`, {
-        headers: {
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          Authorization: `Bearer ${AccessToken}`
-        }
-      })
-        .then(r => { dispatch(storeThumbnail(r.data.thumbnail)); })
-        .catch(err => console.log(err));
-    }
-  };
-  const UpdateProfile = async () => {
-    await axios.post(`${backUrl}/profile/`, {}, {
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        Authorization: `Bearer ${AccessToken}`
-      }
-    })
-      .then(r => {
-        dispatch(storeThumbnail(''));
-        console.log('Updated!!');
-      });
-  };
+    const user = useSelector((state: RootState) => state.User);
+    // 1. getMyUser()로 로그인한 내 정보들과 프로필 이미지 불러옴 (설정한 이미지가 없다면 안나옴)
+    // 2. 이미지를 선택하고 업로드를 누르면 이미지가 서버에 저장(ImgUpload)되고 그 이미지는 내 프로필이미지로 설정됨(UpdateProfile)
+    // 3. 프로필 창을 닫으면 새로 갱신된 이미지가 프로필 옆에 뜸
 
-  useEffect(() => {
-    void ReadProfile();
-    void GetImg();
-    console.log(image);
-  }, [thumbnail]);
-  const closeModal = () => {
-    onClickToggleModal(false);
-  };
+    const UpdateProfile = async () => {
+        await ImgUpload();
+        await axios.post(`${backUrl}/profile/`, {}, {
+            headers: {
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                Authorization: `Bearer ${AccessToken}`,
+            },
+        })
+        .then(r => {
+            console.log("Updated!!");
+        }).catch(e => console.log(e));
 
-  return (
-      <ModalContainer>
-          <DialogBox>
-              <Header>
-                  <h1>Profile Update</h1>
+        window.alert("프로필 이미지 수정완료");
+    };
 
-                  <Close onClick={closeModal}>
-                      X
-                  </Close>
-              </Header>
-              <BodyContainer>
-                  <h3>pk: {user.pk}</h3>
-                  <h3>username: {user.username}</h3>
-                  <h3>email: {user.email}</h3>
-                  <h3>first_name: {user.first_name}</h3>
-                  <h3>last_name: {user.last_name}</h3>
-                  <ImageContainer>
-                      <div>
-                          <input type='file'
-                                 accept='image/jpg,impge/png,image/jpeg,image/gif'
-                                 name='profile_img'
-                                 onChange={onChange}>
-                          </input>
-                      </div>
-                      <div>
-                          <input type='button' value ='업로드' onClick={() => { void ImgUpload(); }}/>
-                      </div>
-                  </ImageContainer>
-                  <img src={image}/>
-                  <input type='button' value ='확인' onClick={() => { void UpdateProfile(); }} />
-              </BodyContainer>
+    useCallback(() => {
+        void UpdateProfile();
+    }, []);
 
-          </DialogBox>
-      </ModalContainer>
-  );
+    const closeModal = () => {
+        onClickToggleModal(false);
+    };
+    return (
+        <ModalContainer>
+            <DialogBox>
+                <Header>
+                    <h1>Profile</h1>
+
+                    <Close onClick={closeModal}>
+                        X
+                    </Close>
+                </Header>
+                <BodyContainer>
+                    <h3>pk: {user.pk}</h3>
+                    <h3>username: {user.username}</h3>
+                    <h3>email: {user.email}</h3>
+                    <h3>first_name: {user.first_name}</h3>
+                    <h3>last_name: {user.last_name}</h3>
+                    <ImageContainer>
+                        <div>
+                            <input type="file"
+                                   accept="image/jpg,impge/png,image/jpeg,image/gif"
+                                   name="profile_img"
+                                   onChange={onChange}>
+                            </input>
+                        </div>
+                        <div>
+                            <input type="button" value="업로드" onClick={() => {
+                                void UpdateProfile();
+                            }} />
+
+                        </div>
+
+                    </ImageContainer>
+
+                </BodyContainer>
+
+            </DialogBox>
+        </ModalContainer>
+    );
 };
 const ModalContainer = styled.div`
   top: 50px;
@@ -116,20 +90,20 @@ const ModalContainer = styled.div`
   position: fixed;
 `;
 const Header = styled.div`
-    justify-content: space-between;
+  justify-content: space-between;
 `;
 const ImageContainer = styled.div`
   display: flex;
   justify-content: space-between;`;
 const BodyContainer = styled.div`
-  
+
   justify-content: space-between;
 `;
 const Close = styled.button`
   position: absolute;
   right: 10px;
   top: 10px;
-  `;
+`;
 const DialogBox = styled.dialog`
   width: 800px;
   height: 400px;
