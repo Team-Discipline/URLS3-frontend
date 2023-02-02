@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import QR from 'qrcode.react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { AccessToken } from '../../../variable/token';
@@ -119,13 +118,8 @@ const Main = () => {
   return (
         <MainContainer>
             <UrlShortForm onSubmit={onSubmit} urlHandler={urlHandler} toggle={toggle} toggleState={toggleState}/>
-            <ShortUrl copyUrl={copyUrl} copied={copied} copy={copy} translation={t}/>
+            <ShortUrl copyUrl={copyUrl} copied={copied} copy={copy} translation={t} qrVision={qrVision} url={url}/>
             <br/><br/>
-            {qrVision
-              ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'}
-                      style={{ margin: '1px' }}/>
-              : <QRDiv></QRDiv>}
-
             <ThirdDiv>
                 Something Here - advertisement
             </ThirdDiv>
@@ -165,10 +159,4 @@ const FourthDiv = styled.div`
   padding-bottom: 5%;
 `;
 
-const QRDiv = styled.div`
-  height: 100px;
-  width: 100px;
-  display: inline-block;
-
-`;
 export default Main;

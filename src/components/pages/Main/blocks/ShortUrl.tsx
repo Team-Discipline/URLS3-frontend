@@ -1,21 +1,28 @@
 import Button from '@mui/material/Button';
 import React from 'react';
 import styled from 'styled-components';
+import QR from 'qrcode.react';
 
 interface dataType {
   copied: boolean
   copy: () => void
   translation: any
   copyUrl: string
+  qrVision: boolean
+  url: string
 }
 
-export const ShortUrl = ({ copied, copy, translation, copyUrl }: dataType) => {
+export const ShortUrl = ({ copied, copy, translation, copyUrl, qrVision, url }: dataType) => {
   return (
         <Url style={{ backgroundColor: 'white' }}>
         <Link className="slink" style={{ height: '40px', marginTop: '20%' }}>{copyUrl}</Link>
         {copied
           ? <Button variant={'contained'} color={'success'}>{translation('copied')}</Button>
           : <Button onClick={copy} variant={'outlined'}>{translation('copy')}</Button>}
+          {qrVision
+            ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'}
+                    style={{ margin: '1px' }}/>
+            : <QRDiv></QRDiv>}
     </Url>
   );
 };
@@ -38,4 +45,10 @@ const Link = styled.div`
   min-width: 500px;
   height: auto;
   margin: 10px;
+`;
+const QRDiv = styled.div`
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+
 `;
