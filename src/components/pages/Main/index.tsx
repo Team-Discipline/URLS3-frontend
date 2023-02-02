@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import QR from 'qrcode.react';
 import axios from 'axios';
 import styled from 'styled-components';
-import Button from '@mui/material/Button';
 import { AccessToken } from '../../../variable/token';
 import { backUrl } from '../../../variable/url';
 import { UrlShortForm } from './blocks/UrlShortForm';
+import { ShortUrl } from './blocks/ShortUrl';
 
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
 import {
@@ -129,12 +129,7 @@ const Main = () => {
   return (
         <MainContainer>
             <UrlShortForm onSubmit={onSubmit} urlHandler={urlHandler} toggle={toggle} toggleState={toggleState}/>
-            <FirstDiv style={{ backgroundColor: 'white' }}>
-                <Link className="slink" style={{ height: '40px', marginTop: '20%' }}>{copyUrl}</Link>
-            </FirstDiv>
-            {copied
-              ? <Button variant={'contained'} color={'success'}>{t('copied')}</Button>
-              : <Button onClick={copy} variant={'outlined'}>{t('copy')}</Button>}
+            <ShortUrl copyUrl={copyUrl} copied={copied} copy={copy} translation={t}/>
             <br/><br/>
             {qrVision
               ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'}
@@ -177,26 +172,6 @@ const Main = () => {
 const MainContainer = styled.div`
   text-align: center;
   background-color: white;
-`;
-
-const FirstDiv = styled.div`
-  display: inline-flex;
-  font-weight: 400;
-  outline: none;
-  //width:40%;
-  height: 40%;
-  font-size: 20px;
-  margin-top: 4%;
-`;
-const Link = styled.div`
-  font-weight: 400;
-  border: #1d1d1f 0.1rem solid;
-  border-radius: 8px;
-  outline: none;
-  //width: auto;
-  min-width: 500px;
-  height: auto;
-  margin: 10px;
 `;
 const FloatingDiv = styled.div`
   background: rgba(0, 0, 0, 0.6);
