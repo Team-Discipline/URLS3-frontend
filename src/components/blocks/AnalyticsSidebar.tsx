@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { S3URL } from './S3URL';
-import { backUrl } from '../variable/url';
+import { backUrl } from '../../variable/url';
 import axios from 'axios';
-import { AccessToken } from '../variable/token';
+import { AccessToken } from '../../variable/token';
 import Button from '@mui/material/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../redux/store';
-import { countryRefine } from '../redux/slices/CountrySlice';
+import { RootState } from '../../redux/store';
+import { countryRefine } from '../../redux/slices/CountrySlice';
 
 const SideBarWrap = styled.div`
   z-index: 1;

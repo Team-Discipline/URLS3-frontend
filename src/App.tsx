@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LogIn from './pages/Login';
-import SignUp from './pages/SignUp';
-import Main from './pages/Main';
-import { NavComponent } from './components/nav';
-import Analytics from './pages/Analytics';
-import Loading from './pages/Loading';
+import LogIn from './components/pages/Login';
+import SignUp from './components/pages/SignUp';
+import Main from './components/pages/Main';
+import { NavComponent } from './components/blocks/nav';
+import Analytics from './components/pages/Analytics';
+import Loading from './components/pages/Loading';
 
 const App: React.FC = () => {
   return (

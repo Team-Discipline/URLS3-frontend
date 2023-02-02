@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getUtcTime, makeClean } from './GetCaptureData';
 import axios from 'axios';
-import { backUrl } from '../../variable/url';
+import { backUrl } from '../../../variable/url';
 
 const Loading = () => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +57,7 @@ const Loading = () => {
           ws.onerror = function (event) {
             console.log(event);
           };
-          ws.onopen = function (event) {
+          ws.onopen = function () {
             console.log('captured :', value);
             ws.send(JSON.stringify({ captured_data: value }));
           };
@@ -159,7 +159,7 @@ const Loading = () => {
         </main>
 
         <footer className="mt-auto text-white-50">
-          <p>Cover template for <a href="https://getbootstrap.com/" className="text-white">Bootstrap</a>, by <a
+          <p>Cover template for <a href="src/components/pages/Loading/index" className="text-white">Bootstrap</a>, by <a
               href="https://twitter.com/mdo" className="text-white">@mdo</a>.</p>
         </footer>
       </div>

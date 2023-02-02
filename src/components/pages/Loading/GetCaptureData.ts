@@ -1,4 +1,4 @@
-import { backUrl } from '../../variable/url';
+import { backUrl } from '../../../variable/url';
 
 export const getUtcTime = () => {
   let date = new Date();

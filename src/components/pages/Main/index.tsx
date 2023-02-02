@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import axios from 'axios';
-import { backUrl } from '../../variable/url';
-import QR from 'qrcode.react';
-import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
-import { AccessToken } from '../../variable/token';
+import QR from 'qrcode.react';
+import axios from 'axios';
+import styled from 'styled-components';
+import Button from '@mui/material/Button';
+import { AccessToken } from '../../../variable/token';
+import { backUrl } from '../../../variable/url';
+import { UrlShortForm } from './blocks/UrlShortForm';
 
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
 import {
@@ -127,15 +128,7 @@ const Main = () => {
   }, []);
   return (
         <MainContainer>
-            <MainDiv>
-                <form onSubmit={onSubmit}>
-                    <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short"
-                           style={{ height: '40px', backgroundColor: '#c5c5c5' }}/>&nbsp;
-                    <Button id="postUrl" type="submit" variant={'contained'} color={'primary'}>Make URL</Button>&nbsp;
-                    <Button onClick={toggleState} variant={'contained'}
-                            color={'secondary'}>{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
-                </form>
-            </MainDiv>
+            <UrlShortForm onSubmit={onSubmit} urlHandler={urlHandler} toggle={toggle} toggleState={toggleState}/>
             <FirstDiv style={{ backgroundColor: 'white' }}>
                 <Link className="slink" style={{ height: '40px', marginTop: '20%' }}>{copyUrl}</Link>
             </FirstDiv>
@@ -184,25 +177,6 @@ const Main = () => {
 const MainContainer = styled.div`
   text-align: center;
   background-color: white;
-`;
-const MainDiv = styled.div`
-  padding-top: 25px;
-  padding-bottom: 25px;
-  text-align: center;
-  background-color: #222529;
-`;
-
-const Input = styled.input`
-  display: inline-block;
-  font-weight: 400;
-  width: 50%;
-  font-size: 20px;
-  background-color: #1d1d1f;
-  border-radius: 8px;
-  border: 0;
-  color: white;
-  outline: none;
-  padding-bottom: 10px;
 `;
 
 const FirstDiv = styled.div`
