@@ -33,6 +33,7 @@ const Main = () => {
   const [urlList, setUrlList] = useState<S3[]>([]);
   const [urlTrueArr, setUrlTrueArr] = useState<Url>({});
   const [urlFalseArr, setUrlFalseArr] = useState<Url>({});
+  const [toggle, setToggle] = useState(true);
   const getUrlList = async () => {
     await axios.get(`${backUrl}/s3/`, {
       headers: {
@@ -110,7 +111,6 @@ const Main = () => {
   const urlHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
   }, []);
-  const [toggle, setToggle] = useState(true);
   const toggleState = () => setToggle(!toggle);
   useEffect(() => {
     void getUrlList();

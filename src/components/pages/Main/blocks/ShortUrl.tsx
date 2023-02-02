@@ -14,37 +14,41 @@ interface dataType {
 
 export const ShortUrl = ({ copied, copy, translation, copyUrl, qrVision, url }: dataType) => {
   return (
-        <Url style={{ backgroundColor: 'white' }}>
-        <Link className="slink" style={{ height: '40px', marginTop: '20%' }}>{copyUrl}</Link>
-        {copied
-          ? <Button variant={'contained'} color={'success'}>{translation('copied')}</Button>
-          : <Button onClick={copy} variant={'outlined'}>{translation('copy')}</Button>}
-          {qrVision
-            ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'}
-                    style={{ margin: '1px' }}/>
-            : <QRDiv></QRDiv>}
-    </Url>
+        <Url>
+          <LinkBox>
+            <Link className="slink" >{copyUrl}</Link>
+            {copied
+              ? <Button size={'medium'} variant={'contained'} color={'success'}>{translation('copied')}</Button>
+              : <Button size={'medium'} onClick={copy} variant={'outlined'}>{translation('copy')}</Button>}
+          </LinkBox>
+            {qrVision
+              ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'}
+                      style={{ margin: '1px' }}/>
+              : <QRDiv></QRDiv>}
+        </Url>
   );
 };
 
 const Url = styled.div`
-  display: inline-flex;
+  flex: 1;
+  border: black 1px solid;
   font-weight: 400;
   outline: none;
-  //width:40%;
-  height: 40%;
   font-size: 20px;
-  margin-top: 4%;
+`;
+const LinkBox = styled.div`
+  display: flex;
+  width:100%;
+  align-items: center;
 `;
 const Link = styled.div`
   font-weight: 400;
   border: #1d1d1f 0.1rem solid;
   border-radius: 8px;
   outline: none;
-  //width: auto;
-  min-width: 500px;
+  width: 80%;
   height: auto;
-  margin: 10px;
+  margin-left: 10px;
 `;
 const QRDiv = styled.div`
   height: 100px;
