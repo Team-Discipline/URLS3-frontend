@@ -7,18 +7,8 @@ import { AccessToken } from '../../../variable/token';
 import { backUrl } from '../../../variable/url';
 import { UrlShortForm } from './blocks/UrlShortForm';
 import { ShortUrl } from './blocks/ShortUrl';
-
+import { Footer } from './blocks/Footer';
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
-import {
-  FacebookIcon,
-  FacebookMessengerIcon,
-  FacebookMessengerShareButton,
-  FacebookShareButton,
-  LineIcon,
-  LineShareButton,
-  TwitterIcon,
-  TwitterShareButton
-} from 'react-share';
 
 interface S3 {
   id: string
@@ -37,7 +27,7 @@ interface Url {
 
 const Main = () => {
   const { t } = useTranslation();
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState('https://api.urls3.kreimben.com/');
   const [copyUrl, setCopyUrl] = useState('Make your URL short!');
   const [copied, setCopied] = useState(false);
   const [qrVision, setQR] = useState(false);
@@ -137,48 +127,19 @@ const Main = () => {
               : <QRDiv></QRDiv>}
 
             <ThirdDiv>
-                Something Here - ThirdDiv
+                Something Here - advertisement
             </ThirdDiv>
             <Br/>
             <FourthDiv>
-                Technology - FourthDiv
+                Technology - advertisement
             </FourthDiv>
-            <FloatingDiv>
-                <FacebookShareButton style={{ bottom: '0.5em', position: 'fixed', right: '5em' }} url={url}>
-                    <FacebookIcon size={30} round={true} borderRadius={24}></FacebookIcon>
-                </FacebookShareButton>
-                <FacebookMessengerShareButton style={{ bottom: '0.5em', position: 'fixed', right: '7em' }} url={url}
-                                              appId={''}>
-                    <FacebookMessengerIcon size={30} round={true} borderRadius={24}></FacebookMessengerIcon>
-                </FacebookMessengerShareButton>
-                <TwitterShareButton style={{ bottom: '0.5em', position: 'fixed', right: '9em' }} url={url}>
-                    <TwitterIcon size={30} round={true} borderRadius={24}></TwitterIcon>
-                </TwitterShareButton>
-                <LineShareButton style={{ bottom: '0.5em', position: 'fixed', right: '11em' }} url={url}>
-                    <LineIcon size={30} round={true} borderRadius={24}></LineIcon>
-                </LineShareButton>
-                <p style={{
-                  color: 'white',
-                  bottom: '0.05em',
-                  position: 'fixed',
-                  left: '2em',
-                  fontFamily: 'Arial',
-                  fontSize: '13px'
-                }}>© 2022. Team-Discipline All rights reserved.</p>
-            </FloatingDiv>
+            <Footer url={url} />
         </MainContainer>
   );
 };
 const MainContainer = styled.div`
   text-align: center;
   background-color: white;
-`;
-const FloatingDiv = styled.div`
-  background: rgba(0, 0, 0, 0.6);
-  width: 100%;
-  height: 50px;
-  position: fixed;
-  bottom: 0;
 `;
 const Br = styled.div`
   background-color: grey;
