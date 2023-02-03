@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { backUrl } from '../../../variable/url';
 import { setCookie } from '../../../variable/token';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
+import { LogInTitle } from './blocks/LogInTitle';
+import { LogInForm } from './blocks/LogInForm';
+import { HyperLink } from '../SignUp/atoms/HyperLink';
 
 const LogIn = () => {
   const { t } = useTranslation();
@@ -37,38 +37,15 @@ const LogIn = () => {
   return (
       <Container>
         <Wrap className="wrapper">
-          <Title className="title">
-            <h1>{t('signin')}</h1>
-          </Title>
-          <Form onSubmit={onSubmit}>
-            <InputDiv className="Username">
-              <IconInput>
-                <Icon>
-                  <FontAwesomeIcon icon={faUser} />
-                </Icon>
-                <Input id="Username" type="text" value={Username} onChange={onChangeUsername} placeholder="Username" autoFocus />
-              </IconInput>
-              <div id="nameError" className="error"></div>
-            </InputDiv>
-
-            <InputDiv className="password">
-              <IconInput>
-                <Icon>
-                  <FontAwesomeIcon icon={faKey} />
-                </Icon>
-                <Input id="password" type="password" value={password} onChange={onChangePassword} placeholder="Password"/>
-              </IconInput>
-              <div id="passwordError" className="error"></div>
-            </InputDiv>
-
-            <Line className="line">
-              <hr/>
-            </Line>
-
-            {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-            <Button id="signUpButton" type="submit">{t('signin')}</Button>
-          </Form>
-          <StyledLink to='/signup'>{t('signup')}</StyledLink>
+          <LogInTitle translation={t}/>
+          <LogInForm onSubmit={onSubmit}
+                     Username={Username}
+                     onChangeUsername={onChangeUsername}
+                     password={password}
+                     onChangePassword={onChangePassword}
+                     translation={t}
+          />
+          <HyperLink address="/signup" text="Sign in" translation={t}/>
         </Wrap>
 
       </Container>
@@ -82,10 +59,6 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const Title = styled.div`
-  margin-bottom: 5vh;
-`;
-
 const Wrap = styled.div`
   height: 80vh;
   width: 40%;
@@ -93,59 +66,6 @@ const Wrap = styled.div`
   flex-direction: column;
   text-align : center;
   border-radius: 5px; 
-`;
-
-const Form = styled.form`
-  width: 100%;
-  height: 100%;
-`;
-
-const Line = styled.div`
-  padding: 0 10% 0 10%;
-`;
-
-const Button = styled.button`
-  width: 80%;
-  border-radius: 5px;
-  border: solid 1px rgba(0, 0, 0, 0.3);
-  background-color: white;
-  font-size: 15px;
-  height: auto;
-`;
-const InputDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 10%;
-`;
-
-const IconInput = styled.div`
-  display: flex;
-  align-items: center;
-  width: 80%;
-  border-radius: 5px;
-  border: solid 1px rgba(0, 0, 0, 0.3);
-  z-index: 1;
-  opacity: 1;
-`;
-const Icon = styled.div`
-  margin-left: 5%;
-`;
-const Input = styled.input`
-  width: 80%;
-  height: 100%;
-  border: none; 
-  -webkit-appearance: none; 
-  margin-left: 5%;
-  overflow: auto; 
-  z-index: -1;
-  font-size: 20px;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  &:focus, &:hover, &:visited, &:link, &:active {
-    text-decoration: none;
-  }
 `;
 
 export default LogIn;
