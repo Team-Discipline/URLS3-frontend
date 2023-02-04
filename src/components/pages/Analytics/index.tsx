@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import AnalyticsSidebar from '../../blocks/AnalyticsSidebar';
-import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import { RootState } from '../../../redux/store';
+import AnalyticsSidebar from './blocks/AnalyticsSidebar';
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Analytics = () => {
   const [users, setUsers] = useState(['country']);

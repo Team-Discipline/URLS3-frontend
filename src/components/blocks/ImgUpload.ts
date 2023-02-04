@@ -1,7 +1,7 @@
 
 import axios from 'axios';
-import { backUrl } from '../../../variable/url';
-import { AccessToken } from '../../../variable/token';
+import { backUrl } from '../../variable/url';
+import { AccessToken } from '../../variable/token';
 
 export const formData = new FormData();
 export const ImgUpload = async () => {

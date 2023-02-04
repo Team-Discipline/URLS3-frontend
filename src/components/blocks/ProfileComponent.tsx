@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { ImgUpload, onChange } from './features/ImgUpload';
+import { ImgUpload, onChange } from './ImgUpload';
 import axios from 'axios';
 import { backUrl } from '../../variable/url';
 import { AccessToken } from '../../variable/token';

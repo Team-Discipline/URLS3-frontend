@@ -1,10 +1,10 @@
 
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import React, { useCallback, useEffect, useState } from 'react';
-import { LogOut } from './features/Logout';
+import { LogOut } from './Logout';
 import { AccessToken } from '../../variable/token';
 import ProfileComponent from './ProfileComponent';
-import { getMyUser } from './features/getMyUser';
+import { getMyUser } from './getMyUser';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';

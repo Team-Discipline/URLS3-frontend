@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { backUrl } from '../../../variable/url';
-import { rmToken } from '../../../variable/token';
+import { backUrl } from '../../variable/url';
+import { rmToken } from '../../variable/token';
 
 export const LogOut = async () => {
   await axios.post(`${backUrl}/token/logout/`)
