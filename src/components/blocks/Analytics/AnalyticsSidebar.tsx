@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 import Button from '@mui/material/Button';
-import { RootState } from '../../../../redux/store';
-import { backUrl } from '../../../../variable/url';
-import { AccessToken } from '../../../../variable/token';
-import { S3URL } from '../atoms/S3URL';
-import { countryRefine } from '../../../../redux/slices/CountrySlice';
+import { RootState } from '../../../redux/store';
+import { backUrl } from '../../../variable/url';
+import { AccessToken } from '../../../variable/token';
+import { S3URL } from '../../atoms/Analytics/S3URL';
+import { countryRefine } from '../../../redux/slices/CountrySlice';
 
 const SideBarWrap = styled.div`
   z-index: 1;

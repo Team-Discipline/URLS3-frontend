@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import styled from 'styled-components';
 import { RootState } from '../../../redux/store';
-import AnalyticsSidebar from './blocks/AnalyticsSidebar';
+import AnalyticsSidebar from '../../blocks/Analytics/AnalyticsSidebar';
+import { DoughnutChart } from '../../atoms/Analytics/DoughnutChart';
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Analytics = () => {
   const [users, setUsers] = useState(['country']);
@@ -45,9 +45,7 @@ const Analytics = () => {
   return (
             <Container>
                 <AnalyticsSidebar/>
-                <BarBox>
-                  <Doughnut data={data} />
-                </BarBox>
+                <DoughnutChart data={data}/>
             </Container>
 
   );
@@ -57,11 +55,4 @@ export default Analytics;
 
 const Container = styled.div`
     display: flex;
-`;
-
-const BarBox = styled.div`
-  margin-left: 25%;
-  width: 200vw;
-  height: 100vw;
-  max-width: 45%;
 `;

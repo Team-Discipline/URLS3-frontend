@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { ImgUpload, onChange } from './ImgUpload';
 import axios from 'axios';
-import { backUrl } from '../../variable/url';
-import { AccessToken } from '../../variable/token';
+import { backUrl } from '../../../variable/url';
+import { AccessToken } from '../../../variable/token';
 
-import { RootState } from '../../redux/store';
+import { RootState } from '../../../redux/store';
 import { useSelector } from 'react-redux';
 interface Props{
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type

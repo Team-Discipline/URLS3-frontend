@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { backUrl } from '../../../variable/url';
 import { getUtcTime, makeClean } from './GetCaptureData';
-import { LoadingFooter } from './atoms/LoadingFooter';
-import { LoadingMain } from './blocks/LoadingMain';
-import { LoadingHeader } from './atoms/LoadingHeader';
+import { LoadingFooter } from '../../atoms/Loading/LoadingFooter';
+import { LoadingMain } from '../../blocks/Loading/LoadingMain';
+import { LoadingHeader } from '../../atoms/Loading/LoadingHeader';
 
 const Loading = () => {
   const [loading, setLoading] = useState(false);

@@ -4,9 +4,9 @@ import axios from 'axios';
 import { backUrl } from '../../../variable/url';
 import { setCookie } from '../../../variable/token';
 import { useTranslation } from 'react-i18next';
-import { LogInTitle } from './blocks/LogInTitle';
-import { LogInForm } from './blocks/LogInForm';
-import { HyperLink } from '../SignUp/atoms/HyperLink';
+import { LogInForm } from '../../blocks/Login/LogInForm';
+import { HyperLink } from '../../atoms/HyperLink';
+import { SignTitle } from '../../atoms/SignTitle';
 
 const LogIn = () => {
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ const LogIn = () => {
   return (
       <Container>
         <Wrap className="wrapper">
-          <LogInTitle translation={t}/>
+          <SignTitle title='Sign up' translation={t}/>
           <LogInForm onSubmit={onSubmit}
                      Username={Username}
                      onChangeUsername={onChangeUsername}

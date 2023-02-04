@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LogIn from './components/pages/Login';
-import SignUp from './components/pages/SignUp';
+import SignUp from './components/pages/Signup';
 import Main from './components/pages/Main';
-import { NavComponent } from './components/blocks/nav';
+import { NavComponent } from './components/blocks/Nav/nav';
 import Analytics from './components/pages/Analytics';
 import Loading from './components/pages/Loading';
 

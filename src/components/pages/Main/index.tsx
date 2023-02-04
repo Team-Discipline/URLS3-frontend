@@ -4,9 +4,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { AccessToken } from '../../../variable/token';
 import { backUrl } from '../../../variable/url';
-import { UrlShortForm } from './blocks/UrlShortForm';
-import { ShortUrl } from './blocks/ShortUrl';
-import { Footer } from './blocks/Footer';
+import { UrlShortForm } from '../../blocks/Main/UrlShortForm';
+import { ShortUrl } from '../../blocks/Main/ShortUrl';
+import { Footer } from '../../blocks/Main/Footer';
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
 
 interface S3 {

@@ -4,9 +4,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { backUrl } from '../../../variable/url';
 import { AccessToken } from '../../../variable/token';
-import { SignUpTitle } from './blocks/SignUpTitle';
-import { SignUpForm } from './blocks/SignUpForm';
-import { HyperLink } from './atoms/HyperLink';
+import { SignTitle } from '../../atoms/SignTitle';
+import { SignUpForm } from '../../blocks/Signup/SignUpForm';
+import { HyperLink } from '../../atoms/HyperLink';
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -58,7 +58,7 @@ const SignUp = () => {
   return (
             <Container>
                 <Wrap className="wrapper">
-                    <SignUpTitle translation={t}/>
+                    <SignTitle title='Sign in' translation={t}/>
                     <SignUpForm SignUpErr={SignUpErr}
                                 Username={SignUpErr}
                                 email={email}

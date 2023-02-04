@@ -2,13 +2,13 @@
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import React, { useCallback, useEffect, useState } from 'react';
 import { LogOut } from './Logout';
-import { AccessToken } from '../../variable/token';
+import { AccessToken } from '../../../variable/token';
 import ProfileComponent from './ProfileComponent';
 import { getMyUser } from './getMyUser';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { RootState } from '../../../redux/store';
 import { useTranslation } from 'react-i18next';
-import i18n from './locales/i18n';
+import i18n from '../locales/i18n';
 
 export const NavComponent = () => {
   const [loginStatus, setloginStatus] = useState(false);
@@ -37,13 +37,13 @@ export const NavComponent = () => {
   if (AccessToken !== undefined) {
     void getMyUser();
   }
-
+  // href="/src/components/pages" 인 이유 물어보기
   return (
         <Navbar collapseOnSelect expand="lg" bg="dark" style={ { zIndex: 10 } } variant="dark">
             <Container>
                 <div>
-                <a href="/src/components/pages" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'whitesmoke', fontFamily: 'Segoe UI' }}>URL</a>
-                <a href="/src/components/pages" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'deepskyblue', fontFamily: 'Segoe UI' }}>S3</a>
+                <a href="/" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'whitesmoke', fontFamily: 'Segoe UI' }}>URL</a>
+                <a href="/" style={{ textDecoration: 'none', fontSize: '40px', fontWeight: 'bold', color: 'deepskyblue', fontFamily: 'Segoe UI' }}>S3</a>
                 </div>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
