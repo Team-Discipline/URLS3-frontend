@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { Form, Line, Button, InputDiv, IconInput, Icon } from '../SignStyled';
-import { InputBox } from '../../atoms/InputBox';
+import { SignInput } from '../../atoms/SignInput';
 
 interface dataType{
   onSubmit: any
@@ -21,7 +21,7 @@ export const LogInForm = ({ ...data }: dataType) => {
                     <Icon>
                         <FontAwesomeIcon icon={faUser} />
                     </Icon>
-                    <InputBox id="Username" type="text" value={data.Username} onChange={data.onChangeUsername} placeholder="Username" autoFocus={true} />
+                    <SignInput id="Username" type="text" value={data.Username} onChange={data.onChangeUsername} placeholder="Username" autoFocus={true} />
                 </IconInput>
                 <div id="nameError" className="error"></div>
             </InputDiv>
@@ -31,7 +31,7 @@ export const LogInForm = ({ ...data }: dataType) => {
                     <Icon>
                         <FontAwesomeIcon icon={faKey} />
                     </Icon>
-                    <InputBox id="password" type="password" value={data.password} onChange={data.onChangePassword} placeholder="Password"/>
+                    <SignInput id="password" type="password" value={data.password} onChange={data.onChangePassword} placeholder="Password"/>
                 </IconInput>
                 <div id="passwordError" className="error"></div>
             </InputDiv>

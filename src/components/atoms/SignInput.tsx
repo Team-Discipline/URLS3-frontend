@@ -10,7 +10,7 @@ interface propsType{
   email?: string
   autoFocus?: boolean
 }
-export const InputBox = ({ ...props }: propsType) => {
+export const SignInput = ({ ...props }: propsType) => {
   return (
         <Input id={props.id}
                type={props.type}

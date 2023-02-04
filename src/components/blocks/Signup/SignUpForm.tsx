@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { Form, Line, Button, InputDiv, IconInput, Icon } from '../SignStyled';
-import { InputBox } from '../../atoms/InputBox';
+import { SignInput } from '../../atoms/SignInput';
 
 interface dataType {
   SignUpErr: string
@@ -25,19 +25,19 @@ export const SignUpForm: React.FC<dataType> = ({ ...data }) => {
         <Form onSubmit={data.onSubmit}>
             <InputDiv className="email">
                 <IconInput>
-                    <InputBox id="email" type="email" value={data.email} onChange={data.onChangeEmail} placeholder="E-mail"/>
+                    <SignInput id="email" type="email" value={data.email} onChange={data.onChangeEmail} placeholder="E-mail"/>
                     <div id="emailError" className="error"></div>
                 </IconInput>
             </InputDiv>
             <InputDiv className="Username">
                 <IconInput>
-                    <InputBox id="Username" type="text" value={data.Username} onChange={data.onChangeUsername} placeholder="Name"/>
+                    <SignInput id="Username" type="text" value={data.Username} onChange={data.onChangeUsername} placeholder="Name"/>
                     <div id="nameError" className="error"></div>
                 </IconInput>
             </InputDiv>
             <InputDiv className="password">
                 <IconInput>
-                    <InputBox id="password" type="password" value={data.password} onChange={data.onChangePassword} placeholder="Password"/>
+                    <SignInput id="password" type="password" value={data.password} onChange={data.onChangePassword} placeholder="Password"/>
                     <Icon>
                         <FontAwesomeIcon icon={faLock} />
                     </Icon>
@@ -46,7 +46,7 @@ export const SignUpForm: React.FC<dataType> = ({ ...data }) => {
             </InputDiv>
             <InputDiv className="passwordCheck">
                 <IconInput>
-                    <InputBox id="passwordCheck" type="password" value={data.passwordCheck} onChange={data.onChangePasswordCheck} placeholder="Check Password"/>
+                    <SignInput id="passwordCheck" type="password" value={data.passwordCheck} onChange={data.onChangePasswordCheck} placeholder="Check Password"/>
                     <Icon>
                         <FontAwesomeIcon icon={faCheck} />
                     </Icon>
