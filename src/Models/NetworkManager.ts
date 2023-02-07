@@ -20,7 +20,7 @@ class NetworkManager {
         .catch(error => NetworkManager.dealWithError(error));
     }
 
-    static async post(
+    static post(
         accessToken: string,
         urlDetails: string,
         body: object,
