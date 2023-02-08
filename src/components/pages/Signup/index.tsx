@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import styled from 'styled-components';
 import { backUrl } from '../../../variable/url';
+import styled from 'styled-components';
 import { AccessToken } from '../../../variable/token';
 import { SignTitle } from '../../atoms/SignTitle';
 import { SignUpForm } from '../../blocks/Signup/SignUpForm';
 import { HyperLink } from '../../atoms/HyperLink';
+import { NetworkManager } from "../../../Models/NetworkManager";
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -31,12 +32,20 @@ const SignUp = () => {
   }, []);
 
   const registration = async () => {
+    // NetworkManager.post(AccessToken, "/registration/", {
+    //   username: Username,
+    //     email,
+    //     password1: password,
+    //     password2: passwordCheck,
+    // }, (() => {
+    //       console.log(AccessToken),
+    //       location.replace('/login');
+    //     }), () => { setSignUpErr('이미 있는 이름이거나 비밀번호가 너무 단순합니다'); });
     await axios.post(`${backUrl}/registration/`, {
       username: Username,
       email,
       password1: password,
       password2: passwordCheck
-
     })
       .then(() => {
         location.replace('/login');
@@ -58,9 +67,9 @@ const SignUp = () => {
   return (
             <Container>
                 <Wrap className="wrapper">
-                    <SignTitle title='Sign in' translation={t}/>
+                    <SignTitle title='Sign up' translation={t}/>
                     <SignUpForm SignUpErr={SignUpErr}
-                                Username={SignUpErr}
+                                Username={Username}
                                 email={email}
                                 mismatchError={mismatchError}
                                 mismatchErrorText={mismatchErrorText}
@@ -73,7 +82,7 @@ const SignUp = () => {
                                 passwordCheck={passwordCheck}
                                 translation={t}
                     />
-                    <HyperLink address="/login" text="Sign up" translation={t} />
+                    <HyperLink address="/login" text="Sign in" translation={t} />
                 </Wrap>
 
             </Container>

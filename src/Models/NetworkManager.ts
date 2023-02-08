@@ -1,4 +1,4 @@
-import backUrl from "../variable/url";
+import { backUrl } from "../variable/url";
 import axios, { AxiosError } from "axios";
 
 
@@ -13,7 +13,7 @@ class NetworkManager {
             Authorization: `Bearer ${accessToken}`,
             accept: "application/json",
         };
-        const defaultUrl = `${backUrl}/${urlDetails}`;
+        const defaultUrl = `${backUrl}${urlDetails}`;
 
         axios.get(defaultUrl, { headers: defaultHeader })
         .then(res => completion(res))
@@ -25,16 +25,24 @@ class NetworkManager {
         urlDetails: string,
         body: object,
         completion: (res: any) => void,
+        // withCredentials?: boolean,
+        err_completion?: (err: any) => void,
     ) {
         const defaultHeader = {
             Authorization: `Bearer ${accessToken}`,
-            accept: "application/json",
+            accept: "application/json"
         };
-        const defaultUrl = `${backUrl}/${urlDetails}`;
+        const defaultUrl = `${backUrl}${urlDetails}`;
 
         axios.post(defaultUrl, body, { headers: defaultHeader })
         .then(res => completion(res))
-        .catch(error => NetworkManager.dealWithError(error));
+        .catch(error =>  {
+            if (err_completion) {
+                err_completion(error);
+            } else {
+                NetworkManager.dealWithError(error)
+            }
+        });
     }
 
     private static dealWithError(error: AxiosError) {

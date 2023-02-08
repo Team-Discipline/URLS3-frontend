@@ -1,12 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { backUrl } from '../../../variable/url';
 import { getUtcTime, makeClean } from './GetCaptureData';
 import { LoadingFooter } from '../../atoms/Loading/LoadingFooter';
 import { LoadingMain } from '../../blocks/Loading/LoadingMain';
 import { LoadingHeader } from '../../atoms/Loading/LoadingHeader';
+import {NetworkManager} from "../../../Models/NetworkManager";
+import {AccessToken} from "../../../variable/token";
 
 const Loading = () => {
   const [loading, setLoading] = useState(false);
@@ -20,14 +20,23 @@ const Loading = () => {
     console.log(Pathname);
     if (Pathname.includes('-')) {
       const Words = Pathname.split('-');
-      await axios.post(`${backUrl}/s3/find/`, {
+
+      NetworkManager.post(AccessToken, "/s3/find/", {
         first_word: Words[0],
         second_word: Words[1]
-      })
-        .then((res) => {
-          setHashedValue(res.data.hashed_value);
-        })
-        .catch((e) => console.log(e));
+      }, (res) => {
+        setHashedValue(res.data.hashed_value);
+      });
+
+      // await axios.post(`${backUrl}/s3/find/`, {
+      //   first_word: Words[0],
+      //   second_word: Words[1]
+      // })
+      //   .then((res) => {
+      //     setHashedValue(res.data.hashed_value);
+      //   })
+      //   .catch((e) => console.log(e));
+
     } else {
       setHashedValue(Pathname);
     }
@@ -99,19 +108,28 @@ const Loading = () => {
     setHashedValue(preProcessed);
   }
   function getFindValue (params: string[]): any {
-    axios.post(`${backUrl}/s3/find/`, {
+
+    NetworkManager.post(AccessToken, "/s3/find/", {
       first_word: params[0],
       second_word: params[1],
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        'Content-Type': 'application/json',
-        accept: 'application/json'
-      }
-    }).then((res) => {
+    }, (res) => {
       setHashedValue(JSON.stringify(res.data));
       return JSON.stringify(res.data);
-    })
-      .catch((err) => console.log(err));
+    });
+
+    // axios.post(`${backUrl}/s3/find/`, {
+    //   first_word: params[0],
+    //   second_word: params[1],
+    //   headers: {
+    //     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    //     'Content-Type': 'application/json',
+    //     accept: 'application/json'
+    //   }
+    // }).then((res) => {
+    //   setHashedValue(JSON.stringify(res.data));
+    //   return JSON.stringify(res.data);
+    // })
+    //   .catch((err) => console.log(err));
   }
   window.onbeforeunload = async () => {
     pageLeaveTime = getUtcTime();

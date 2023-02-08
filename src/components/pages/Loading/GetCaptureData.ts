@@ -1,4 +1,4 @@
-import backUrl from "../../../variable/url";
+import { backUrl } from "../../../variable/url";
 
 export const getUtcTime = () => {
     let date = new Date();
@@ -22,7 +22,6 @@ export const makeClean = async (initialLoadedTime: string, pageLoadedTime: strin
         page_leave_time: pageLeaveTime,
         referer_url: refererUrl,
     };
-    // eslint-disable-next-line @typesript-eslint/naming-convention
     const fetch_init = {
         method: "post",
         // mode: 'no-cors',

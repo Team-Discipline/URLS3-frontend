@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
 import styled from "styled-components";
 import { AccessToken } from "../../../variable/token";
-import backUrl from "../../../variable/url";
 import { UrlShortForm } from "../../blocks/Main/UrlShortForm";
 import { ShortUrl } from "../../blocks/Main/ShortUrl";
 import { Footer } from "../../blocks/Main/Footer";
@@ -33,7 +31,7 @@ const Main = () => {
     const [copied, setCopied] = useState(false);
     const [qrVision, setQR] = useState(false);
     const [urlList, setUrlList] = useState<S3[]>([]);
-    const [urlTrueArr, setUrlTrueArr] = useState<Url>({});
+    const [urlTwoWordArr, setUrlTwoWordArr] = useState<Url>({});
     const [urlFalseArr, setUrlFalseArr] = useState<Url>({});
     const [toggle, setToggle] = useState(true);
 
@@ -45,9 +43,9 @@ const Main = () => {
             const checkTargetUrl = `${urlList[i].target_url}`;
             const checkUrl = `${urlList[i].s3_url}`;
             if (urlList[i].short_by_words) {
-                if (!(checkTargetUrl in urlTrueArr)) {
-                    urlTrueArr[checkTargetUrl] = checkUrl;
-                    setUrlTrueArr({ ...urlTrueArr, checkTargetURl: checkUrl });
+                if (!(checkTargetUrl in urlTwoWordArr)) {
+                    urlTwoWordArr[checkTargetUrl] = checkUrl;
+                    setUrlTwoWordArr({ ...urlTwoWordArr, checkTargetURl: checkUrl });
                 }
             } else {
                 if (!(checkTargetUrl in urlFalseArr)) {
@@ -61,10 +59,10 @@ const Main = () => {
         e.preventDefault();
         check();
         if (toggle) {
-            if (url in urlTrueArr) {
-                setCopyUrl(urlTrueArr[url]);
+            if (url in urlTwoWordArr) {
+                setCopyUrl(urlTwoWordArr[url]);
             } else {
-                NetworkManager.post(AccessToken, "s3/", {
+                NetworkManager.post(AccessToken, "/s3/", {
                     target_url: url,
                     short_by_words: toggle,
                 }, (res => setCopyUrl(res.data.s3_url)));
@@ -73,18 +71,10 @@ const Main = () => {
             if (url in urlFalseArr) {
                 setCopyUrl(urlFalseArr[url]);
             } else {
-                axios.post(`${backUrl}/s3/`, {
+                NetworkManager.post(AccessToken, "/s3/", {
                     target_url: url,
                     short_by_words: toggle,
-                }, {
-                    withCredentials: true,
-                    headers: {
-                        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                        Authorization: `Bearer ${AccessToken}`,
-                        "Content-Type": "application/json",
-                        accept: "application/json",
-                    },
-                }).then(json => setCopyUrl(json.data.s3_url)).catch(() => window.alert("에러"));
+                }, (res => setCopyUrl(res.data.s3_url)));
             }
         }
     };
@@ -102,7 +92,7 @@ const Main = () => {
     }, []);
     const toggleState = () => setToggle(!toggle);
     useEffect(() => {
-        void getUrlList();
+        NetworkManager.get(AccessToken, "/s3/", (res: any) => setUrlList(res.data));
     }, []);
     return (
         <MainContainer>

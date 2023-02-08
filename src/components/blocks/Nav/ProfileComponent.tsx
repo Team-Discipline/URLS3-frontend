@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { ImgUpload, onChange } from './ImgUpload';
-import axios from 'axios';
-import { backUrl } from '../../../variable/url';
 import { AccessToken } from '../../../variable/token';
 
 import { RootState } from '../../../redux/store';
 import { useSelector } from 'react-redux';
+import {NetworkManager} from "../../../Models/NetworkManager";
 interface Props{
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   onClickToggleModal: (v: boolean) => void
@@ -20,16 +19,18 @@ const ProfileComponent = ({ onClickToggleModal }: Props) => {
 
   const UpdateProfile = async () => {
     void await ImgUpload();
-    await axios.post(`${backUrl}/profile/`, {}, {
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        Authorization: `Bearer ${AccessToken}`
-      }
-    })
-      .then(() => {
-        console.log('Updated!!');
-      }).catch(e => console.log(e));
 
+    NetworkManager.post(AccessToken, "/profile/", {
+      }, (() => {console.log('Updated!!')}));
+    // await axios.post(`${backUrl}/profile/`, {}, {
+    //   headers: {
+    //     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    //     Authorization: `Bearer ${AccessToken}`
+    //   }
+    // })
+    //   .then(() => {
+    //     console.log('Updated!!');
+    //   }).catch(e => console.log(e));
     window.alert('프로필 이미지 수정완료');
   };
 
