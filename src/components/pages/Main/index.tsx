@@ -36,7 +36,6 @@ const Main = () => {
     const [toggle, setToggle] = useState(true);
 
     const check = () => {
-        // getUrlList();
         NetworkManager.get(AccessToken, "/s3/", (res: any) => setUrlList(res.data));
 
         for (let i = 0; i < urlList.length; i++) {

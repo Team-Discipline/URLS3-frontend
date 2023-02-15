@@ -1,11 +1,11 @@
 import React from "react";
 import { Props } from "./Props";
-import styled, {css} from "styled-components";
+import styled from "styled-components";
 import {sizeStyle} from "./ButtonSize";
 import {buttonRoleStyle} from "./ButtonRoleStyled";
 import {blockStyle} from "./ButtonBlockStyle";
 
-export const Button = ({ ...props }: Props) => {
+export const ButtonComponent = ({ ...props }: Props) => {
   return (
       <ButtonBase {...props}/>
   )
@@ -34,4 +34,4 @@ const ButtonBase = styled.button`
   ${blockStyle};
 `;
 
-export default ButtonBase;
+export default ButtonComponent;

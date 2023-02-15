@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
+import ButtonComponent from "../../atoms/Btn/ButtonComponent";
 
 interface dataProp {
   toggleState: () => void
@@ -12,13 +13,10 @@ interface dataProp {
 export const UrlShortForm = ({ onSubmit, urlHandler, toggleState, toggle }: dataProp) => {
   return (
         <UrlForm>
-            <form onSubmit={onSubmit}>
                 <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short"
-                       style={{ height: '40px', backgroundColor: '#c5c5c5' }}/>&nbsp;
-                <Button id="postUrl" type="submit" variant={'contained'} color={'primary'}>Make URL</Button>&nbsp;
-                <Button onClick={toggleState} variant={'contained'}
-                        color={'secondary'}>{toggle ? 'random_encoding' : 'noun-adj_combination'}</Button>
-            </form>
+                       style={{ height: '40px', backgroundColor: '#c5c5c5' }}/>&nbsp;;
+                <ButtonComponent onClick={onSubmit} type="submit" variant={'default'} size={'sm'}>Make URL</ButtonComponent>&nbsp;
+                <ButtonComponent onClick={toggleState} variant={'default'} size={'sm'}>{toggle ? 'random_encoding' : 'noun-adj_combination'}</ButtonComponent>
         </UrlForm>
   );
 };
