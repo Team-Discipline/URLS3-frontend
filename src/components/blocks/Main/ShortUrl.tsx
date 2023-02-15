@@ -1,6 +1,6 @@
-import Button from '@mui/material/Button';
 import React from 'react';
 import styled from 'styled-components';
+import Button from '@mui/material/Button';
 import QR from 'qrcode.react';
 
 interface dataType {

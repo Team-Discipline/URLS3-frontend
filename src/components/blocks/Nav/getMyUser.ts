@@ -18,6 +18,7 @@ export const getMyUser = async () => {
       dispatch(storeUser(r.data));
     })
     .catch((err) => { console.log(err); });
+
   await axios.get(`${backUrl}/profile/image/`, {
     headers: {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
