@@ -1,12 +1,15 @@
 import styled from "styled-components";
-import { Tooltip } from "bootstrap";
+import Tooltip from '@mui/material/Tooltip';
 import React from "react";
 
-export const a = () => {
+interface Props{
+    toggleState: () => void
+}
+export const ToggleButton = ({ toggleState }: Props) => {
     return (
         <Tooltip title='You can choose one or two words' placement="bottom">
             <CheckBoxWrapper>
-                <CheckBox onClick={toggleState} id="checkbox" type="checkbox"/>
+                <CheckBox onClick={ toggleState } id="checkbox" type="checkbox"/>
                 <CheckBoxLabel htmlFor="checkbox"/>
             </CheckBoxWrapper>
         </Tooltip>
@@ -17,6 +20,7 @@ export const a = () => {
 const CheckBoxWrapper = styled.div`
   position: relative;
   display: inline;
+  top: 4px;
 `;
 const CheckBoxLabel = styled.label`
   position: absolute;
@@ -27,7 +31,6 @@ const CheckBoxLabel = styled.label`
   border-radius: 15px;
   background: #bebebe;
   cursor: pointer;
-
   &::after {
     content: "";
     display: block;

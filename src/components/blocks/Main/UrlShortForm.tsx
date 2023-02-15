@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import styled from 'styled-components';
 import ButtonComponent from "../../atoms/Btn/ButtonComponent";
+import {ToggleButton} from "../../atoms/ToggleButton";
 
 interface dataProp {
   toggleState: () => void
@@ -13,10 +13,12 @@ interface dataProp {
 export const UrlShortForm = ({ onSubmit, urlHandler, toggleState, toggle }: dataProp) => {
   return (
         <UrlForm>
-                <Input name="url" onChange={urlHandler} placeholder="paste here to make your URL short"
-                       style={{ height: '40px', backgroundColor: '#c5c5c5' }}/>&nbsp;;
-                <ButtonComponent onClick={onSubmit} type="submit" variant={'default'} size={'sm'}>Make URL</ButtonComponent>&nbsp;
-                <ButtonComponent onClick={toggleState} variant={'default'} size={'sm'}>{toggle ? 'random_encoding' : 'noun-adj_combination'}</ButtonComponent>
+            <Form>
+                <Input name="url" onChange={urlHandler} placeholder={toggle ? 'random_encoding' : 'noun-adj_combination'}
+                       style={{ height: '40px', backgroundColor: '#c5c5c5' }}/>&nbsp;
+                <ButtonComponent onClick={onSubmit} variant={'default'} size={'sm'}>Make URL</ButtonComponent>&nbsp;
+                <ToggleButton toggleState={toggleState}/>
+            </Form>
         </UrlForm>
   );
 };
@@ -26,10 +28,22 @@ const UrlForm = styled.div`
   padding-bottom: 25px;
   text-align: center;
   background-color: #222529;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 `;
 
+const Form = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 40px;
+`;
 const Input = styled.input`
   display: inline-block;
+  text-align: center;
   font-weight: 400;
   width: 50%;
   font-size: 20px;

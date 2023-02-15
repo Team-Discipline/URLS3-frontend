@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '@mui/material/Button';
 import QR from 'qrcode.react';
+import ButtonComponent from "../../atoms/Btn/ButtonComponent";
 
 interface dataType {
   copied: boolean
@@ -16,10 +16,13 @@ export const ShortUrl = ({ copied, copy, translation, copyUrl, qrVision, url }: 
   return (
         <Url>
           <LinkBox>
-            <Link className="slink" >{copyUrl}</Link>
-            {copied
-              ? <Button size={'medium'} variant={'contained'} color={'success'}>{translation('copied')}</Button>
-              : <Button size={'medium'} onClick={copy} variant={'outlined'}>{translation('copy')}</Button>}
+            <Link className="slink" >{copyUrl}</Link>&nbsp;
+            {copied ?
+               <ButtonComponent variant={'success'} size={'sm'}>{translation('copied')}</ButtonComponent>
+                // <Button size={'medium'} variant={'contained'} color={'success'}>{translation('copied')}</Button>
+              : <ButtonComponent onClick={copy} size={'sm'}>{translation('copy')}</ButtonComponent>
+                // <Button size={'medium'} onClick={copy} variant={'outlined'}>{translation('copy')}</Button>
+            }
           </LinkBox>
             {qrVision
               ? <QR id="qr-gen" size={100} value={url} includeMargin={false} fgColor={'black'}

@@ -57,6 +57,9 @@ const Main = () => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         check();
+        if (url === "https://api.urls3.kreimben.com/"){
+         return
+        }
         if (toggle) {
             if (url in urlTwoWordArr) {
                 setCopyUrl(urlTwoWordArr[url]);

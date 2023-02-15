@@ -1,13 +1,13 @@
 import React from "react";
 import { Props } from "./Props";
 import styled from "styled-components";
-import {sizeStyle} from "./ButtonSize";
-import {buttonRoleStyle} from "./ButtonRoleStyled";
-import {blockStyle} from "./ButtonBlockStyle";
+import { sizeStyle } from "./ButtonSize";
+import { buttonRoleStyle } from "./ButtonRoleStyled";
+import { blockStyle } from "./ButtonBlockStyle";
 
-export const ButtonComponent = ({ ...props }: Props) => {
+export const ButtonComponent = ({variant,  ...props }: Props) => {
   return (
-      <ButtonBase {...props}/>
+      <ButtonBase variant={variant} {...props}/>
   )
 };
 
@@ -18,7 +18,8 @@ const ButtonBase = styled.button`
   align-items: center;
   vertical-align: center;
   position: relative;
-  min-width: 64px;
+  min-width: 80px;
+  height: 100%;
   border: none;
   border-radius: 6px;
   padding: 10px 12px;
