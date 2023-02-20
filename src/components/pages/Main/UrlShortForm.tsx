@@ -4,23 +4,26 @@ import ButtonComponent from "../../atoms/Btn/ButtonComponent";
 import {ToggleButton} from "../../atoms/ToggleButton";
 
 interface dataProp {
-  toggleState: () => void
-  toggle: boolean
-  urlHandler: any
-  onSubmit: any
+    toggleState: () => void
+    toggle: boolean
+    urlHandler: any
+    onSubmit: any
+    translation: any
 }
 
-export const UrlShortForm = ({ onSubmit, urlHandler, toggleState, toggle }: dataProp) => {
-  return (
+export const UrlShortForm = ({onSubmit, urlHandler, toggleState, toggle, translation}: dataProp) => {
+    return (
         <UrlForm>
             <Form>
-                <Input name="url" onChange={urlHandler} placeholder={toggle ? 'random_encoding' : 'noun-adj_combination'}
-                       style={{ height: '40px', backgroundColor: '#c5c5c5' }}/>&nbsp;
-                <ButtonComponent onClick={onSubmit} variant={'default'} size={'sm'}>Make URL</ButtonComponent>&nbsp;
+                <Input name="url" onChange={urlHandler}
+                       placeholder={toggle ? translation('Double Hash') : translation('Single Hash')}
+                       style={{height: '40px', backgroundColor: '#c5c5c5'}}/>&nbsp;
+                <ButtonComponent onClick={onSubmit} variant={'default'}
+                                 size={'sm'}>{translation(`Short`)}</ButtonComponent>&nbsp;
                 <ToggleButton toggleState={toggleState}/>
             </Form>
         </UrlForm>
-  );
+    );
 };
 
 const UrlForm = styled.div`

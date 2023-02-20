@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, {useCallback, useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 import styled from "styled-components";
-import { AccessToken } from "../../../variable/token";
-import { UrlShortForm } from "../../blocks/Main/UrlShortForm";
-import { ShortUrl } from "../../blocks/Main/ShortUrl";
-import { Footer } from "../../blocks/Main/Footer";
-import { NetworkManager } from "../../../Models/NetworkManager";
+import {AccessToken} from "../../../variable/token";
+import {UrlShortForm} from "./UrlShortForm";
+import {ShortUrl} from "./ShortUrl";
+import {Footer} from "./Footer";
+import {NetworkManager} from "../../../Models/NetworkManager";
 
 // 버튼 쓸때 여기 참고 https://mui.com/material-ui/react-button/#outlined-buttons
-
 interface S3 {
     id: string;
     url: string;
@@ -25,9 +24,9 @@ interface Url {
 }
 
 const Main = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [url, setUrl] = useState("https://api.urls3.kreimben.com/");
-    const [copyUrl, setCopyUrl] = useState("Make your URL short!");
+    const [copyUrl, setCopyUrl] = useState("");
     const [copied, setCopied] = useState(false);
     const [qrVision, setQR] = useState(false);
     const [urlList, setUrlList] = useState<S3[]>([]);
@@ -44,12 +43,12 @@ const Main = () => {
             if (urlList[i].short_by_words) {
                 if (!(checkTargetUrl in urlTwoWordArr)) {
                     urlTwoWordArr[checkTargetUrl] = checkUrl;
-                    setUrlTwoWordArr({ ...urlTwoWordArr, checkTargetURl: checkUrl });
+                    setUrlTwoWordArr({...urlTwoWordArr, checkTargetURl: checkUrl});
                 }
             } else {
                 if (!(checkTargetUrl in urlFalseArr)) {
                     urlFalseArr[checkTargetUrl] = checkUrl;
-                    setUrlFalseArr({ ...urlFalseArr, checkTargetURl: checkUrl });
+                    setUrlFalseArr({...urlFalseArr, checkTargetURl: checkUrl});
                 }
             }
         }
@@ -57,8 +56,8 @@ const Main = () => {
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         check();
-        if (url === "https://api.urls3.kreimben.com/"){
-         return
+        if (url === "https://api.urls3.kreimben.com/") {
+            return
         }
         if (toggle) {
             if (url in urlTwoWordArr) {
@@ -98,17 +97,21 @@ const Main = () => {
     }, []);
     return (
         <MainContainer>
-            <UrlShortForm onSubmit={onSubmit} urlHandler={urlHandler} toggle={toggle} toggleState={toggleState} />
-            <ShortUrl copyUrl={copyUrl} copied={copied} copy={copy} translation={t} qrVision={qrVision} url={url} />
-            <br /><br />
+            <UrlShortForm onSubmit={onSubmit} urlHandler={urlHandler} translation={t} toggle={toggle}
+                          toggleState={toggleState}/>
+            <ShortUrl copyUrl={Boolean(copyUrl === "") ? t('Make your URL short!') : copyUrl} copied={copied}
+                      copy={copy}
+                      translation={t}
+                      qrVision={qrVision} url={url}/>
+            <br/><br/>
             <ThirdDiv>
                 Something Here - advertisement
             </ThirdDiv>
-            <Br />
+            <Br/>
             <FourthDiv>
                 Technology - advertisement
             </FourthDiv>
-            <Footer url={url} />
+            <Footer url={url}/>
         </MainContainer>
     );
 };

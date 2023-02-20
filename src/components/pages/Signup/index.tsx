@@ -1,15 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, {useCallback, useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 import styled from "styled-components";
-import { AccessToken } from "../../../variable/token";
-import { SignTitle } from "../../atoms/SignTitle";
-import { SignUpForm } from "../../blocks/Signup/SignUpForm";
-import { HyperLink } from "../../atoms/HyperLink";
-import { backUrl } from "../../../variable/url";
+import {AccessToken} from "../../../variable/token";
+import {SignTitle} from "../../atoms/SignTitle";
+import {SignUpForm} from "./SignUpForm";
+import {HyperLink} from "../../atoms/HyperLink";
+import {backUrl} from "../../../variable/url";
 import axios from "axios";
 
 const SignUp = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [email, setEmail] = useState("");
     const [Username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -50,14 +50,14 @@ const SignUp = () => {
             password1: password,
             password2: passwordCheck,
         })
-        .then((res) => {
-            // console.log(`res: ${JSON.stringify(res)}`);
-            location.replace("/login");
-        })
-        .catch((err) => {
-            // console.error(err);
-            setSignUpErr("이미 있는 이름이거나 비밀번호가 너무 단순합니다");
-        });
+            .then((res) => {
+                // console.log(`res: ${JSON.stringify(res)}`);
+                location.replace("/login");
+            })
+            .catch((err) => {
+                // console.error(err);
+                setSignUpErr("이미 있는 이름이거나 비밀번호가 너무 단순합니다");
+            });
     };
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -80,7 +80,7 @@ const SignUp = () => {
     return (
         <Container>
             <Wrap className="wrapper">
-                <SignTitle title="Sign up" translation={t} />
+                <SignTitle title="Sign up" translation={t}/>
                 <SignUpForm SignUpErr={SignUpErr}
                             Username={Username}
                             email={email}
@@ -95,7 +95,7 @@ const SignUp = () => {
                             passwordCheck={passwordCheck}
                             translation={t}
                 />
-                <HyperLink address="/login" text="Sign in" translation={t} />
+                <HyperLink address="/login" text="Sign in" translation={t}/>
             </Wrap>
 
         </Container>

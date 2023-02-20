@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {ArcElement, Chart as ChartJS, Legend, Tooltip} from "chart.js";
 import styled from "styled-components";
-import { RootState } from "../../../redux/store";
-import AnalyticsSidebar from "../../blocks/Analytics/AnalyticsSidebar";
-import { DoughnutChart } from "../../atoms/Analytics/DoughnutChart";
+import {RootState} from "../../../redux/store";
+import AnalyticsSidebar from "./AnalyticsSidebar";
+import {DoughnutChart} from "./DoughnutChart";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Analytics = () => {
-    const [users, setUsers] = useState(["country"]);
-    const [userDatas, setUserDatas] = useState([1]);
+    const [users, setUsers] = useState([""]);
+    const [userData, setUserData] = useState([]);
+    const [visited, setVisited] = useState(true)
     const country = useSelector((state: RootState) => state.Country.countries);
     useEffect(() => {
         setUsers(Object.keys(country));
-        setUserDatas(Object.values(country));
-    }, []);
+        setUserData(Object.values(country));
+    }, [country]);
     const data = {
         labels: users,
         datasets: [
             {
                 label: "user",
-                data: userDatas,
+                data: userData,
                 backgroundColor: [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -44,8 +45,8 @@ const Analytics = () => {
 
     return (
         <Container>
-            <AnalyticsSidebar />
-            <DoughnutChart data={data} />
+            <AnalyticsSidebar/>
+            {visited ? <DoughnutChart data={data}/> : <h1>No data in here</h1>}
         </Container>
 
     );
