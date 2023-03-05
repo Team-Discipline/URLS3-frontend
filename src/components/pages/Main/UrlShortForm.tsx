@@ -27,8 +27,7 @@ export const UrlShortForm = ({onSubmit, urlHandler, toggleState, toggle, transla
 };
 
 const UrlForm = styled.div`
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding: 25px 0;
   text-align: center;
   background-color: #222529;
   display: flex;

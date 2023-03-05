@@ -42,7 +42,9 @@ const Url = styled.div`
 const LinkBox = styled.div`
   display: flex;
   width: 100%;
+  justify-content: center;
   align-items: center;
+  margin-top: 100px;
 `;
 const Link = styled.div`
   font-weight: 400;
