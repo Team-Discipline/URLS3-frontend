@@ -9,7 +9,7 @@ import {AccessToken} from "../../../variable/token";
 
 const Loading = () => {
     const [loading, setLoading] = useState(false);
-    const [initialLoadedTime, setInitalLoadedTime] = useState<string>('');
+    const [initialLoadedTime, setInitialLoadedTime] = useState<string>('');
     const [targetUrl, setTargetUrl] = useState<string>('');
     const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
     let [pageLeaveTime, setPageLeaveTime] = useState<string>('');
@@ -50,7 +50,7 @@ const Loading = () => {
     };
     useEffect(() => {
         void GetHashedValue();
-        setInitalLoadedTime(getUtcTime());
+        setInitialLoadedTime(getUtcTime());
     }, []);
     useEffect(() => {
         if (HashedValue !== '') {

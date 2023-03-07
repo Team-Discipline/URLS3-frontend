@@ -5,12 +5,14 @@ import styled from "styled-components";
 import {RootState} from "../../../redux/store";
 import AnalyticsSidebar from "./AnalyticsSidebar";
 import {DoughnutChart} from "./DoughnutChart";
+import {useTranslation} from "react-i18next";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Analytics = () => {
-    const [users, setUsers] = useState([""]);
-    const [userData, setUserData] = useState([]);
-    const [visited, setVisited] = useState(true)
+    const {t} = useTranslation();
+    const [users, setUsers] = useState(['a', 'b', 'c', 'd']);
+    const [userData, setUserData] = useState([10, 20, 30, 40]);
+    const [visited, setVisited] = useState(true);
     const country = useSelector((state: RootState) => state.Country.countries);
     useEffect(() => {
         setUsers(Object.keys(country));
@@ -20,7 +22,7 @@ const Analytics = () => {
         labels: users,
         datasets: [
             {
-                label: "user",
+                label: "users",
                 data: userData,
                 backgroundColor: [
                     "rgba(255, 99, 132, 0.2)",
@@ -46,9 +48,9 @@ const Analytics = () => {
     return (
         <Container>
             <AnalyticsSidebar/>
+            <h2>{t('Number of URL visitors by country')}</h2>
             {visited ? <DoughnutChart data={data}/> : <h1>No data in here</h1>}
         </Container>
-
     );
 };
 
@@ -56,4 +58,8 @@ export default Analytics;
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 `;

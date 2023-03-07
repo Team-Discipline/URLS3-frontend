@@ -1,18 +1,17 @@
-import { Doughnut } from 'react-chartjs-2';
+import {Doughnut} from 'react-chartjs-2';
 import React from 'react';
 import styled from 'styled-components';
 
-export const DoughnutChart = ({ data }: any) => {
-  return (
+export const DoughnutChart = ({data}: any) => {
+    return (
         <BarBox>
-            <Doughnut data={data} />
+            <Doughnut data={data}/>
         </BarBox>
-  );
+    );
 };
 
 const BarBox = styled.div`
-  margin-left: 25%;
-  width: 200vw;
-  height: 100vw;
+  width: 100%;
+  height: 100%;
   max-width: 45%;
 `;

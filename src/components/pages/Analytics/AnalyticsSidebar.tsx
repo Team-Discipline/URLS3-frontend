@@ -9,36 +9,6 @@ import {AccessToken} from '../../../variable/token';
 import {S3URL} from './S3URL';
 import {countryRefine} from '../../../redux/slices/CountrySlice';
 
-const SideBarWrap = styled.div`
-  z-index: 1;
-  overflow: scroll;
-  background-color: #e7e4e1;
-  height: 100%;
-  width: 20%;
-  left: 0;
-  top: 57px;
-  position: absolute;
-  transition: 0.5s ease;
-
-  &.open {
-    right: 0;
-    transition: 0.5s ease;
-  }`;
-const Links = styled.div`
-  align-items: center;
-  cursor: pointer;
-
-  > h3 {
-    font-weight: 500;
-    word-break: break-all;
-  }
-
-  > h3 > span {
-    padding: 15px;
-  }
-
-`;
-
 interface S3 {
     id: string
     url: string
@@ -137,4 +107,34 @@ const AnalyticsSidebar = () => {
         </SideBarWrap>
     );
 };
+
+const SideBarWrap = styled.div`
+  z-index: 1;
+  overflow: scroll;
+  background-color: #e7e4e1;
+  height: 95%;
+  width: 20%;
+  left: 0;
+  top: 57px;
+  position: absolute;
+  transition: 0.5s ease;
+
+  &.open {
+    right: 0;
+    transition: 0.5s ease;
+  }`;
+const Links = styled.div`
+  align-items: center;
+  cursor: pointer;
+
+  > h3 {
+    font-weight: 500;
+    word-break: break-all;
+  }
+
+  > h3 > span {
+    padding: 15px;
+  }
+
+`;
 export default AnalyticsSidebar;
