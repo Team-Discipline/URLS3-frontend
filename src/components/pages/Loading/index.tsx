@@ -14,7 +14,7 @@ const Loading = () => {
     const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
     let [pageLeaveTime, setPageLeaveTime] = useState<string>('');
     const [HashedValue, setHashedValue] = useState<string>('');
-    const GetHashedValue = async () => {
+    const GetHashedValue = () => {
         const Pathname: string = window.location.pathname.substring(1);
         console.log(Pathname);
         if (Pathname.includes('-')) {
@@ -24,6 +24,7 @@ const Loading = () => {
                 first_word: Words[0],
                 second_word: Words[1]
             }, (res) => {
+                console.log(`res data: ${res.data.hashed_value}`);
                 setHashedValue(res.data.hashed_value);
             });
 
@@ -42,32 +43,32 @@ const Loading = () => {
     };
     const WaitLoading = () => {
         setTimeout(() => {
-            console.log('Loading Button');
             setPageLoadedTime(getUtcTime());
             setPageLeaveTime(getUtcTime());
             setLoading(true);
         }, 7000);
     };
     useEffect(() => {
-        void GetHashedValue();
         setInitialLoadedTime(getUtcTime());
-    }, []);
-    useEffect(() => {
+        GetHashedValue();
+        // }, []);
+        // useEffect(() => {
+        console.log(`hashed value: ${HashedValue}`)
         if (HashedValue !== '') {
-            console.log('initialLoadedTime: ' + initialLoadedTime +
-                '\n pageLoadedTime: ' + pageLoadedTime +
-                '\n pageLeaveTime: ' + pageLeaveTime);
+            // console.log('initialLoadedTime: ' + initialLoadedTime +
+            //     '\n pageLoadedTime: ' + pageLoadedTime +
+            //     '\n pageLeaveTime: ' + pageLeaveTime);
 
             void makeClean(getUtcTime(), getUtcTime(), getUtcTime(), document.referrer)
                 // getUtcTime() 자리들은 차례대로 initialLoadedTime, pageLoadedTime, pageLeaveTime 가 오는 게 맞지만
                 .then(value => {
-                    const ws = new WebSocket(`ws://api.urls3.kreimben.com/ws/ad_page/${HashedValue}/`);
-                    ws.onerror = function (event) {
-                        console.log(event);
-                    };
+                    const ws = new WebSocket(`wss://api.urls3.kreimben.com/ws/ad_page/${HashedValue}/`);
                     ws.onopen = function () {
                         console.log('captured :', value);
                         ws.send(JSON.stringify({captured_data: value}));
+                    };
+                    ws.onerror = function (event) {
+                        console.log(event);
                     };
                     ws.onmessage = res => {
                         const jsonData = JSON.parse(res.data);
@@ -80,14 +81,14 @@ const Loading = () => {
                         }
                     };
                 });
-
             WaitLoading();
         }
-    }, [HashedValue]);
-    window.onload = () => {
-        checkHyphen();
-        console.log(HashedValue);
-    };
+    }, []);
+
+    // window.onload = () => {
+    //     checkHyphen();
+    //     console.log(HashedValue);
+    // };
 
     function checkHyphen() {
         const url = window.location.href;
@@ -95,8 +96,8 @@ const Loading = () => {
         const hashedValue = url.split('/');
         const preProcessed: string = hashedValue[hashedValue.length - 1];
         const params: string[] = preProcessed.split('-');
-        // console.log(params[0], params[1]);
-        // console.log(params.length);
+        console.log(params[0], params[1]);
+        console.log(params.length);
         if (params.length >= 2) {
             // console.log(JSON.stringify(getFindValue(params)));
             getFindValue(params);
@@ -115,7 +116,8 @@ const Loading = () => {
             first_word: params[0],
             second_word: params[1],
         }, (res) => {
-            setHashedValue(JSON.stringify(res.data));
+            console.log((res.data.hashed_vlaue));
+            setHashedValue(JSON.stringify(res.data.hashed_value));
             return JSON.stringify(res.data);
         });
 
