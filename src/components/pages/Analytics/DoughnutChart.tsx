@@ -13,5 +13,5 @@ export const DoughnutChart = ({data}: any) => {
 const BarBox = styled.div`
   width: 100%;
   height: 100%;
-  max-width: 45%;
+  max-width: 50%;
 `;

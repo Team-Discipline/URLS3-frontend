@@ -46,7 +46,7 @@ const AnalyticsSidebar = () => {
         const arr = idList;
         const countryArr: { [index: string]: number } = {};
         for (let i = 0; i < arr.length; i++) {
-            const a: string = `${arr[i].country}`;
+            const a: string = `${arr[i].city}`;
             if (!(a in countryArr)) {
                 countryArr[a] = 1;
             } else {
@@ -125,6 +125,7 @@ const SideBarWrap = styled.div`
   }`;
 const Links = styled.div`
   align-items: center;
+  margin-top: 10%;
   cursor: pointer;
 
   > h3 {
