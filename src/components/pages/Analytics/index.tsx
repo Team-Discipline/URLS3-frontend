@@ -12,11 +12,11 @@ const Analytics = () => {
     const {t} = useTranslation();
     const [users, setUsers] = useState(['a', 'b', 'c', 'd']);
     const [userData, setUserData] = useState([10, 20, 30, 40]);
-    const [visited, setVisited] = useState(true);
     const country = useSelector((state: RootState) => state.Country.countries);
     useEffect(() => {
         setUsers(Object.keys(country));
         setUserData(Object.values(country));
+        console.log(users, userData);
     }, [country]);
     const data = {
         labels: users,
@@ -48,8 +48,13 @@ const Analytics = () => {
     return (
         <Container>
             <AnalyticsSidebar/>
-            <h2>{t('Number of URL visitors by country')}</h2>
-            {visited ? <DoughnutChart data={data}/> : <h1>No data in here</h1>}
+            <Chart>
+                <h2>{t('Number of URL visitors by country')}</h2>
+                {userData.toString() !== [].toString() ? <DoughnutChart data={data}/> :
+                    <NoData>
+                        <h1>No data in here</h1>
+                    </NoData>}
+            </Chart>
         </Container>
     );
 };
@@ -58,8 +63,26 @@ export default Analytics;
 
 const Container = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+`;
+const Chart = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  margin-top: 5%;
+  margin-left: 20%;
+  width: 80%;
+  height: 90%;
+`;
+const NoData = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  margin-top: 20%;
+  max-width: 60%;
 `;
