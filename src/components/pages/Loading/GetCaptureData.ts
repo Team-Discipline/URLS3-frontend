@@ -11,11 +11,11 @@ export const getUtcTime = () => {
     return date.toISOString();
 };
 
-export const makeClean = async (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string, refererUrl: string) => {
+export const makeClean = async (initialLoadedTime: string, pageLoadedTime: string, pageLeaveTime: string, pathUrl: string, refererUrl: string) => {
     let result: string = "";
 
     const bodyContent = {
-        s3: "https://urls3.kreimben.com/reliable-direction",
+        s3: `https://urls3.kreimben.com/${pathUrl}`,
         // (test) window.location로 수정해야함, 매번 collect되는 s3데이터가됨
         js_request_time_UTC: initialLoadedTime,
         page_loaded_time: pageLoadedTime,

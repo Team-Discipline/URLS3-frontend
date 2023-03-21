@@ -14,12 +14,13 @@ const Loading = () => {
     const [pageLoadedTime, setPageLoadedTime] = useState<string>('');
     let [pageLeaveTime, setPageLeaveTime] = useState<string>('');
     const [HashedValue, setHashedValue] = useState<string>('');
+    const [pathUrl, setPathUrl] = useState('');
     const GetHashedValue = () => {
         const Pathname: string = window.location.pathname.substring(1);
         console.log(Pathname);
+        setPathUrl(Pathname);
         if (Pathname.includes('-')) {
             const Words = Pathname.split('-');
-
             NetworkManager.post(AccessToken, "/s3/find/", {
                 first_word: Words[0],
                 second_word: Words[1]
@@ -46,22 +47,23 @@ const Loading = () => {
             setPageLoadedTime(getUtcTime());
             setPageLeaveTime(getUtcTime());
             setLoading(true);
-        }, 7000);
+        }, 3000);
     };
     useEffect(() => {
         setInitialLoadedTime(getUtcTime());
         GetHashedValue();
+        WaitLoading();
         // }, []);
         // useEffect(() => {
-        console.log(`hashed value: ${HashedValue}`)
         if (HashedValue !== '') {
             // console.log('initialLoadedTime: ' + initialLoadedTime +
             //     '\n pageLoadedTime: ' + pageLoadedTime +
             //     '\n pageLeaveTime: ' + pageLeaveTime);
 
-            void makeClean(getUtcTime(), getUtcTime(), getUtcTime(), document.referrer)
+            void makeClean(getUtcTime(), getUtcTime(), getUtcTime(), pathUrl, document.referrer)
                 // getUtcTime() 자리들은 차례대로 initialLoadedTime, pageLoadedTime, pageLeaveTime 가 오는 게 맞지만
                 .then(value => {
+                    console.log("work");
                     const ws = new WebSocket(`wss://api.urls3.kreimben.com/ws/ad_page/${HashedValue}/`);
                     ws.onopen = function () {
                         console.log('captured :', value);
@@ -83,7 +85,7 @@ const Loading = () => {
                 });
             WaitLoading();
         }
-    }, []);
+    }, [HashedValue]);
 
     // window.onload = () => {
     //     checkHyphen();
@@ -139,7 +141,7 @@ const Loading = () => {
     window.onbeforeunload = async () => {
         pageLeaveTime = getUtcTime();
         console.log('initialLoadedTime: ' + initialLoadedTime + '\n pageLoadedTime: ' + pageLoadedTime + '\n pageLeaveTime: ' + pageLeaveTime);
-        setTargetUrl(await makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, document.referrer));
+        setTargetUrl(await makeClean(initialLoadedTime, pageLoadedTime, pageLeaveTime, pathUrl, document.referrer));
 
         // FIXME below message.
 
