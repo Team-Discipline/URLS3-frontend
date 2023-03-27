@@ -8,12 +8,15 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../../redux/store';
 import {useTranslation} from 'react-i18next';
 import i18n from '../../blocks/locales/i18n';
+import {useCookies} from "react-cookie";
+
 
 export const NavComponent = () => {
     const [loginStatus, setloginStatus] = useState(false);
     const [isOpenModal, setOpenModal] = useState<boolean>(false);
     const image = useSelector((state: RootState) => state.Image.id);
     const username = useSelector((state: RootState) => state.User.username);
+    const [cookies, setCookies] = useCookies(['translation']);
     const onClickToggleModal = useCallback(() => {
         setOpenModal(!isOpenModal);
     }, [isOpenModal]);
@@ -23,10 +26,23 @@ export const NavComponent = () => {
     const changeLang = () => {
         if (i18n.language === 'kr') {
             void i18n.changeLanguage('en');
+            setCookies('translation', 'en')
         } else {
             void i18n.changeLanguage('kr');
+            setCookies('translation', 'kr')
         }
     };
+
+    useEffect(() => {
+        if (cookies.translation !== undefined) {
+            if (cookies.translation === 'en') {
+                void i18n.changeLanguage('en');
+            } else {
+                void i18n.changeLanguage('kr');
+            }
+        }
+        console.log(cookies.translation)
+    }, [])
 
     useEffect(() => {
         if (AccessToken !== undefined) setloginStatus(true);

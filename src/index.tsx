@@ -4,16 +4,20 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { store } from './redux/store';
-import { Provider } from 'react-redux';
+import {store} from './redux/store';
+import {Provider} from 'react-redux';
 import './components/blocks/locales';
+import {CookiesProvider} from "react-cookie";
+
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 root.render(
     <Provider store={store}>
-    <App />
+        <CookiesProvider>
+            <App/>
+        </CookiesProvider>
     </Provider>
 );
 
