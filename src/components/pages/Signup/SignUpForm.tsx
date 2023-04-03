@@ -26,21 +26,21 @@ export const SignUpForm: React.FC<dataType> = ({...data}) => {
             <InputDiv className="email">
                 <IconInput>
                     <SignInput id="email" type="email" value={data.email} onChange={data.onChangeEmail}
-                               placeholder="E-mail"/>
+                               placeholder={data.translation(`E-mail`)}/>
                     <div id="emailError" className="error"></div>
                 </IconInput>
             </InputDiv>
             <InputDiv className="Username">
                 <IconInput>
                     <SignInput id="Username" type="text" value={data.Username} onChange={data.onChangeUsername}
-                               placeholder="Name"/>
+                               placeholder={data.translation(`Name`)}/>
                     <div id="nameError" className="error"></div>
                 </IconInput>
             </InputDiv>
             <InputDiv className="password">
                 <IconInput>
                     <SignInput id="password" type="password" value={data.password} onChange={data.onChangePassword}
-                               placeholder="Password"/>
+                               placeholder={data.translation(`Password`)}/>
                     <Icon>
                         <FontAwesomeIcon icon={faLock}/>
                     </Icon>
@@ -50,7 +50,7 @@ export const SignUpForm: React.FC<dataType> = ({...data}) => {
             <InputDiv className="passwordCheck">
                 <IconInput>
                     <SignInput id="passwordCheck" type="password" value={data.passwordCheck}
-                               onChange={data.onChangePasswordCheck} placeholder="Check Password"/>
+                               onChange={data.onChangePasswordCheck} placeholder={data.translation(`Check Password`)}/>
                     <Icon>
                         <FontAwesomeIcon icon={faCheck}/>
                     </Icon>
@@ -66,7 +66,7 @@ export const SignUpForm: React.FC<dataType> = ({...data}) => {
                 <h1>{data.mismatchErrorText}</h1>
             }
 
-            <Button id="signUpButton" type="submit">{data.translation('signup')}</Button>
+            <Button id="signUpButton" type="submit">{data.translation('Sign up')}</Button>
 
         </Form>
     );

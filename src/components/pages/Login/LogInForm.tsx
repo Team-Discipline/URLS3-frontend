@@ -22,7 +22,7 @@ export const LogInForm = ({...data}: dataType) => {
                         <FontAwesomeIcon icon={faUser}/>
                     </Icon>
                     <SignInput id="Username" type="text" value={data.Username} onChange={data.onChangeUsername}
-                               placeholder="Username" autoFocus={true}/>
+                               placeholder={data.translation(`Username`)} autoFocus={true}/>
                 </IconInput>
                 <div id="nameError" className="error"></div>
             </InputDiv>
@@ -33,7 +33,7 @@ export const LogInForm = ({...data}: dataType) => {
                         <FontAwesomeIcon icon={faKey}/>
                     </Icon>
                     <SignInput id="password" type="password" value={data.password} onChange={data.onChangePassword}
-                               placeholder="Password"/>
+                               placeholder={data.translation("Password")}/>
                 </IconInput>
                 <div id="passwordError" className="error"></div>
             </InputDiv>

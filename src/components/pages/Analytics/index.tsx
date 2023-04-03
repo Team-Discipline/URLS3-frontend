@@ -52,7 +52,7 @@ const Analytics = () => {
                 <h2>{t('Number of URL visitors by country')}</h2>
                 {userData.toString() !== [].toString() ? <DoughnutChart data={data}/> :
                     <NoData>
-                        <h1>No data in here</h1>
+                        <h3>{t(`No data in here`)}</h3>
                     </NoData>}
             </Chart>
         </Container>

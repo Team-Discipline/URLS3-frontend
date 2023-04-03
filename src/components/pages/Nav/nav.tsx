@@ -96,7 +96,7 @@ export const NavComponent = () => {
                         }
                         {!loginStatus &&
                             <Nav.Link href="/login">
-                                {t('signin')}
+                                {t('Sign in')}
                             </Nav.Link>
                         }
                         <Nav.Link onClick={changeLang}>
