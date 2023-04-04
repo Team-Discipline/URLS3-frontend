@@ -6,8 +6,10 @@ import {LoadingMain} from './LoadingMain';
 import {LoadingHeader} from './LoadingHeader';
 import {NetworkManager} from "../../../Models/NetworkManager";
 import {AccessToken} from "../../../variable/token";
+import {useTranslation} from "react-i18next";
 
 const Loading = () => {
+    const {t} = useTranslation();
     const [loading, setLoading] = useState(false);
     const [initialLoadedTime, setInitialLoadedTime] = useState<string>('');
     const [targetUrl, setTargetUrl] = useState<string>('');
@@ -15,6 +17,10 @@ const Loading = () => {
     let [pageLeaveTime, setPageLeaveTime] = useState<string>('');
     const [HashedValue, setHashedValue] = useState<string>('');
     const [pathUrl, setPathUrl] = useState('');
+
+    const moveToUrl = (targetUrl: string) => {
+        window.location.href = targetUrl;
+    }
     const GetHashedValue = () => {
         const Pathname: string = window.location.pathname.substring(1);
         console.log(Pathname);
@@ -78,8 +84,9 @@ const Loading = () => {
                         if (jsonData.success === true) {
                             console.log('target_url:', jsonData.target_url);
                             setTargetUrl(jsonData.target_url);
-                            console.log(targetUrl);
+                            console.log('set target_url:', targetUrl);
                             ws.close();
+                            moveToUrl(jsonData.target_url);
                         }
                     };
                 });
@@ -153,7 +160,7 @@ const Loading = () => {
         <Body>
             <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
                 <LoadingHeader/>
-                <LoadingMain loading={loading} targetUrl={targetUrl}/>
+                <LoadingMain t={t} loading={loading} targetUrl={targetUrl}/>
                 <LoadingFooter/>
             </div>
         </Body>
@@ -161,7 +168,7 @@ const Loading = () => {
 };
 
 const Body = styled.div`
-  height: 100vh;
+  height: 90vh;
   flex-grow: initial;
   background-color: #232323;
   text-align: center;

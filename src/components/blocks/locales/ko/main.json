@@ -1,4 +1,8 @@
 {
+  "If you succeed in loading the page, you can go to the original page,": "페이지 로드에 성공하면 원래 페이지로 이동할 수 있습니다,",
+  "but if it fails, you can go to the main page.": "하지만 실패하면 메인 페이지로 이동할 수 있습니다.",
+  "Please wait a moment.....": "잠시만 기다려주십시오.....",
+  "Loading...": "로딩중...",
   "No data in here": "데이터가 없습니다",
   "Username": "유저이름",
   "E-mail": "이메일",

@@ -104,13 +104,13 @@ const Main = () => {
                       translation={t}
                       qrVision={qrVision} url={url}/>
             <br/><br/>
-            <ThirdDiv>
+            <Advertisement>
                 Something Here - advertisement
-            </ThirdDiv>
+            </Advertisement>
             <Br/>
-            <FourthDiv>
+            <Advertisement>
                 Technology - advertisement
-            </FourthDiv>
+            </Advertisement>
             <Footer url={url}/>
         </MainContainer>
     );
@@ -127,20 +127,13 @@ const Br = styled.div`
   margin-left: 5%;
   margin-right: 5%;
 `;
-const ThirdDiv = styled.div`
+const Advertisement = styled.div`
   display: inline-block;
   outline: none;
   position: center;
   width: 100%;
   padding-bottom: 4%;
 `;
-const FourthDiv = styled.div`
-  display: inline-block;
-  outline: none;
-  position: center;
-  width: 100%;
-  padding-top: 5%;
-  padding-bottom: 5%;
-`;
+
 
 export default Main;
