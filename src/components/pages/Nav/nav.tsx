@@ -34,17 +34,6 @@ export const NavComponent = () => {
     };
 
     useEffect(() => {
-        if (cookies.translation !== undefined) {
-            if (cookies.translation === 'en') {
-                void i18n.changeLanguage('en');
-            } else {
-                void i18n.changeLanguage('kr');
-            }
-        }
-        console.log(cookies.translation)
-    }, [])
-
-    useEffect(() => {
         if (AccessToken !== undefined) setloginStatus(true);
         else {
             setloginStatus(false);
