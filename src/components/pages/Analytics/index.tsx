@@ -10,8 +10,8 @@ import {useTranslation} from "react-i18next";
 ChartJS.register(ArcElement, Tooltip, Legend);
 const Analytics = () => {
     const {t} = useTranslation();
-    const [users, setUsers] = useState(['a', 'b', 'c', 'd']);
-    const [userData, setUserData] = useState([10, 20, 30, 40]);
+    const [users, setUsers] = useState(['']);
+    const [userData, setUserData] = useState([]);
     const country = useSelector((state: RootState) => state.Country.countries);
     useEffect(() => {
         setUsers(Object.keys(country));
@@ -50,7 +50,7 @@ const Analytics = () => {
             <AnalyticsSidebar/>
             <Chart>
                 <h2>{t('Number of URL visitors by country')}</h2>
-                {userData.toString() !== [].toString() ? <DoughnutChart data={data}/> :
+                {userData.toString() !== [].toString() ? <DoughnutChart data={data} key={JSON.stringify(data)}/> :
                     <NoData>
                         <h3>{t(`No data in here`)}</h3>
                     </NoData>}
