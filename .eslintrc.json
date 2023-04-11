@@ -12,14 +12,14 @@
         "@typescript-eslint",
         "import"
     ],
-    "extends": [
+//    "extends": [
         //        "plugin:react/recommended",
         //        "eslint:recommended",
         //        "prettier/react",
         //        "plugin:@typescript-eslint/recommended",
         //        "prettier/@typescript-eslint",
         //        "plugin:prettier/recommended"
-    ],
+//    ],
     //    "parsers": "@typescript-eslint/parser",
     //    "parserOptions": {
     //        "sourceType": "module",
